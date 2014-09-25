@@ -19,9 +19,8 @@
 					<th><input type="password" name="password" size="12" /></th>
 				</tr>
 		</table>
-		<input type="submit" value="Enter"></input>
-		<a href="createAccount.jsp">Create Account</a>
+		<button type="button"> Submit </button>
 	</center>
-	
+	asdasd
 </body>
 </html>
