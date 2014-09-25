@@ -13,7 +13,7 @@ public class Photo implements Serializable {
 	private ArrayList<Integer> HashTagID = new ArrayList<Integer>();;
 	
 	
-	
+	// GIT HUB SUCKS
 	public Photo(){
 		
 		
