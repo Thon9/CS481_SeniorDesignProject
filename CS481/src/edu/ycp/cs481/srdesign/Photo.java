@@ -2,7 +2,7 @@ package edu.ycp.cs481.srdesign;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
+//import java.util.Iterator;
 
 public class Photo implements Serializable {
 
@@ -34,6 +34,10 @@ public class Photo implements Serializable {
 	}
 	public int getphotoID() {
 		return photoID;
+	}
+	
+	public ArrayList<Integer> getHashTagIDs(){
+		return HashTagID;
 	}
 
 }

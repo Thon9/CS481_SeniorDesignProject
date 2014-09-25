@@ -13,7 +13,6 @@ public class User implements Serializable {
 		private String firstName;
 		private String lastName;
 		private int userID;
-		// ArrayList for hashtags
 		private ArrayList<Integer> HashTagID = new ArrayList<Integer>();
 		
 		 public User() {
@@ -73,5 +72,10 @@ public class User implements Serializable {
 				return lastName;
 			}
 			
+			// Get hashtag IDs
+			public ArrayList<Integer> getHashTagIDs(){
+				return HashTagID;
+			}
 			
+		
 }
