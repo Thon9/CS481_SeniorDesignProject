@@ -8,19 +8,22 @@
 </head>
 <body>
 	<center>
+		<form action="login">
 		<h1>Welcome to MyPhotoSpace 2</h1>
 		<table>
 				<tr>
-					<th>UserName: </th>
-					<th><input type="text" name="username" size="12" /></th>
+					<th>UserName </th>
+					<th><input type="text" name="userName" size="12" /></th>
 				</tr>
 				<tr>
-					<th>Password: </th>
+					<th>Password </th>
 					<th><input type="password" name="password" size="12" /></th>
 				</tr>
 		</table>
 		<input type="submit" value="Enter"></input>
 		<a href="createAccount.jsp">Create Account</a>
+		</form>
+		
 	</center>
 	
 </body>

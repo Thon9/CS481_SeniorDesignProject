@@ -7,7 +7,20 @@
 <title>Create Account</title>
 </head>
 <body>
-	insert account information here
+	<table>
+			
+			<tr>
+				<th><input type="text" name="firstName" value="First Name" size="12" /></th>
+				<th><input type="text" name="lastName" value="Last Name" size="12" /></th>
+			</tr>
+			<tr>
+				<th><input type="text" name="userName" value="User Name" size="12" /></th>
+			</tr>
+			<tr>
+				<th>Enter Password </th>
+				<th><input type="password" name="password" size="12" /></th>
+			</tr>
+	</table>
 	<br>
 	<a href="login.jsp">Back to Login link</a>
 </body>
