@@ -11,6 +11,7 @@ public class HashTag implements Serializable {
 	// following, and the ID will be used to display what the hash tag actually is
 	private int ID;
 	// ArrayList which stores which users are following the individual hashtags.
-	private ArrayList<User> users = new ArrayList<User>();
+	// Potentially show other trends that users following the same hashTag is following
+	private ArrayList<Integer> users = new ArrayList<Integer>();
 	
 }
