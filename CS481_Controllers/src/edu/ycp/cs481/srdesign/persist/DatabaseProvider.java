@@ -1,4 +1,5 @@
-package edu.ycp.cs481.srdesign.controllers;
+package edu.ycp.cs481.srdesign.persist;
+
 
 public class DatabaseProvider {
 	private static IDatabase theInstance;
