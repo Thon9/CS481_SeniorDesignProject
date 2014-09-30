@@ -15,67 +15,67 @@ public class User implements Serializable {
 		private int userID;
 		private ArrayList<Integer> HashTagID = new ArrayList<Integer>();
 		
-		 public User() {
+		public User() {
 		   	 
 			 
-			}
-			
-			public void setuserID(int id){
-				this.userID = id;
-			}
-			
-			public int getuserID(){
-				return userID;
-			}
-			
-			
-			// Set/Get User Name
-			public void setUserName(String userName) {
-				this.userName = userName;
-			}
-			public String getUserName() {
-				return userName;
-			}
-						
-			// Set/Get User password
-			public void setPassword(String password){
-				this.password = password;
-			}
-			public String getPassword(){
-				return password;
-			}
-			
-			
-			// Set/Get User email
-			public void setUserEmail(String email){
-				this.Email = email;
-			}
-			public String getUserEmail(){
-				return Email;
-			}
-			
-			
-			// Set/Get first name of user
-			public void setFirstName(String firstName){
-				this.firstName = firstName;
-			}
-			public String getFirstName(){
-				return firstName;
-			}
-			
-			
-			// Set/Get last name of user
-			public void setLastName(String lastName){
-				this.lastName = lastName;
-			}
-			public String getLastName(){
-				return lastName;
-			}
-			
-			// Get hashtag IDs
-			public ArrayList<Integer> getHashTagIDs(){
-				return HashTagID;
-			}
+		}
+		
+		public void setuserID(int id){
+			this.userID = id;
+		}
+		
+		public int getuserID(){
+			return userID;
+		}
+		
+		
+		// Set/Get User Name
+		public void setUserName(String userName) {
+			this.userName = userName;
+		}
+		public String getUserName() {
+			return userName;
+		}
+					
+		// Set/Get User password
+		public void setPassword(String password){
+			this.password = password;
+		}
+		public String getPassword(){
+			return password;
+		}
+		
+		
+		// Set/Get User email
+		public void setUserEmail(String email){
+			this.Email = email;
+		}
+		public String getUserEmail(){
+			return Email;
+		}
+		
+		
+		// Set/Get first name of user
+		public void setFirstName(String firstName){
+			this.firstName = firstName;
+		}
+		public String getFirstName(){
+			return firstName;
+		}
+		
+		
+		// Set/Get last name of user
+		public void setLastName(String lastName){
+			this.lastName = lastName;
+		}
+		public String getLastName(){
+			return lastName;
+		}
+		
+		// Get hashtag IDs
+		public ArrayList<Integer> getHashTagIDs(){
+			return HashTagID;
+		}
 			
 		
 }

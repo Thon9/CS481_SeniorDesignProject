@@ -10,15 +10,33 @@
 	<table>
 			
 			<tr>
-				<th><input type="text" name="firstName" value="First Name" size="12" /></th>
-				<th><input type="text" name="lastName" value="Last Name" size="12" /></th>
+				<th>First Name: </th>
+				<th><input type="text" name="firstName" value="" size="12" /></th>
+				
+				<th>Last Name: </th>
+				<th><input type="text" name="lastName" value="" size="12" /></th>
 			</tr>
 			<tr>
-				<th><input type="text" name="userName" value="User Name" size="12" /></th>
+				<th>User Name: </th>
+				<th><input type="text" name="userName" value="" size="12" /></th>
 			</tr>
 			<tr>
-				<th>Enter Password </th>
+				<th>Enter Password: </th>
 				<th><input type="password" name="password" size="12" /></th>
+				
+			</tr>
+			<tr>
+				<th>Re-Enter Password: </th>
+				<th><input type="password" name="passwordConfirm" size="12" /></th>
+			</tr>
+			<tr>
+				<th>E-mail address: </th>
+				<th><input type="password" name="email" size="12" /></th>
+				
+			</tr>
+			<tr>
+				<th>Confirm E-mail: </th>
+				<th><input type="password" name="emailConfirm" size="12" /></th>
 			</tr>
 	</table>
 	<br>

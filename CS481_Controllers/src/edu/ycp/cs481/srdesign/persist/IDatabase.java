@@ -15,6 +15,13 @@ public interface IDatabase {
 		public boolean createAccount(String username, String password, int userID ,
 				String firstname, String lastname, String email);
 		
+		//Removes user from database
+		public void deleteUser(int userID);
+		
+		// Add new photo to the fakeDatabase
+		public void addPhoto(Photo photo);
+		
+		
 		// Verifys the user based on input userName and password
 		public boolean verifyAccount(String userName, String password);
 		
@@ -25,8 +32,12 @@ public interface IDatabase {
 		public boolean checkExistence(String username);
 
 		public void createAccountUser(User user);
+		
+		// Add new photo to the fakeDatabase
+		public void addHashtag(HashTag hashtag);
 
 		
 
 		
 }
+
