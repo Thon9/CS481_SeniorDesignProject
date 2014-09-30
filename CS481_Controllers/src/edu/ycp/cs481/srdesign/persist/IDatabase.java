@@ -1,3 +1,4 @@
+
 package edu.ycp.cs481.srdesign.persist;
 
 import edu.ycp.cs481.srdesign.User;
@@ -6,6 +7,7 @@ import edu.ycp.cs481.srdesign.Photo;
 
 public interface IDatabase {
 
+	
 	
 		// Returns the user based on an ID
 		public User getUserID(int id);
@@ -16,7 +18,7 @@ public interface IDatabase {
 		// Creating account with user's credentials
 		public boolean createAccount(String username, String password, int userID ,
 				String firstname, String lastname, String email);
-		
+
 		//Removes user from database
 		public void deleteUser(int userID);
 		
@@ -31,6 +33,17 @@ public interface IDatabase {
 		
 		// Simply checks to see if UserName already exists
 		public boolean checkExistence(String username);
+		
+
+		// Verifys the user based on input userName and password
+		public boolean verifyAccount(String userName, String password);
+		
+		// Login handling for the User
+		public User login(String username, String password);
+		
+		// Simply checks to see if UserName already exists
+		public boolean checkExistence(String username);
+
 
 		public void createAccountUser(User user);
 		
