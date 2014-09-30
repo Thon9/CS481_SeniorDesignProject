@@ -1,3 +1,4 @@
+
 package edu.ycp.cs481.srdesign;
 
 import java.util.ArrayList;
@@ -9,10 +10,28 @@ import edu.ycp.cs481.srdesign.persist.IDatabase;
 
 
 public class FakeDatabase implements IDatabase {
-	ArrayList<User>users = new ArrayList<User>();
-	ArrayList<Photo> photos = new ArrayList<Photo>();
-	ArrayList<HashTag>hashtags = new ArrayList<HashTag>();
+	ArrayList<User>users;
+	ArrayList<Photo> photos;
+	ArrayList<HashTag>hashtags;
+	private int userID;
 	
+	public FakeDatabase(){
+		
+	users = new ArrayList<User>();
+	photos = new ArrayList<Photo>();
+	hashtags = new ArrayList<HashTag>();
+	userID = 1;
+		
+		User test = new User();
+			test.setFirstName("Test");
+			test.setLastName("Testy");
+			test.setPassword("password");
+			test.setUserName("TestUser");
+			test.setUserEmail("Test@Test.com");
+			test.setuserID(userID);
+		
+	}
+
 	@Override
 	public User getUserID(int id) {
 		for (User user : users){
@@ -116,3 +135,4 @@ public class FakeDatabase implements IDatabase {
 	}
 
 }
+
