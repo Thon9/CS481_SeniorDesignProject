@@ -9,6 +9,6 @@ public class AddNewUserController {
 			IDatabase db = DatabaseProvider.getInstance();
 			
 			// TODO: use db to add the account
-			db.addNewUser(user);
+			db.createAccountUser(user);
 		}
 }
