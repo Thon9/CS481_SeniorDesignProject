@@ -1,5 +1,7 @@
 package edu.ycp.cs481.srdesign.persist;
 
+import edu.ycp.cs481.srdesign.HashTag;
+import edu.ycp.cs481.srdesign.Photo;
 import edu.ycp.cs481.srdesign.User;
 
 public interface IDatabase {
@@ -14,6 +16,15 @@ public interface IDatabase {
 		// Adds the new user to the fakeDatabase
 		public void addNewUser(User user);
 		
+		//Removes user from database
+		public void deleteUser(int userID);
+		
+		// Add new photo to the fakeDatabase
+		public void addPhoto(Photo photo);
+		
+		// Add new photo to the fakeDatabase
+		public void addHashtag(HashTag hashtag);
+						
 		// Login handling for the User
 		public User login(String username, String password);
 		
