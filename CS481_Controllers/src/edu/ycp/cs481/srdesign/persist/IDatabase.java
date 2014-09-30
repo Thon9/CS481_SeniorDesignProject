@@ -1,6 +1,8 @@
 package edu.ycp.cs481.srdesign.persist;
 
 import edu.ycp.cs481.srdesign.User;
+import edu.ycp.cs481.srdesign.HashTag;
+import edu.ycp.cs481.srdesign.Photo;
 
 public interface IDatabase {
 
@@ -20,8 +22,7 @@ public interface IDatabase {
 		
 		// Add new photo to the fakeDatabase
 		public void addPhoto(Photo photo);
-		
-		
+
 		// Verifys the user based on input userName and password
 		public boolean verifyAccount(String userName, String password);
 		
