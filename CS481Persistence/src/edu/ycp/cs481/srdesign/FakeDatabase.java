@@ -12,7 +12,8 @@ public class FakeDatabase implements IDatabase {
 	ArrayList<User>users = new ArrayList<User>();
 	ArrayList<Photo> photos = new ArrayList<Photo>();
 	ArrayList<HashTag>hashtags = new ArrayList<HashTag>();
-	
+
+
 	@Override
 	public User getUserID(int id) {
 		for (User user : users){
