@@ -8,7 +8,6 @@ import edu.ycp.cs481.srdesign.Photo;
 public interface IDatabase {
 
 	
-	
 		// Returns the user based on an ID
 		public User getUserID(int id);
 		
@@ -25,32 +24,19 @@ public interface IDatabase {
 		// Add new photo to the fakeDatabase
 		public void addPhoto(Photo photo);
 
-		// Verifys the user based on input userName and password
-		public boolean verifyAccount(String userName, String password);
-		
 		// Login handling for the User
 		public User login(String username, String password);
-		
-		// Simply checks to see if UserName already exists
-		public boolean checkExistence(String username);
-		
 
 		// Verifys the user based on input userName and password
 		public boolean verifyAccount(String userName, String password);
 		
-		// Login handling for the User
-		public User login(String username, String password);
-		
 		// Simply checks to see if UserName already exists
 		public boolean checkExistence(String username);
-
 
 		public void createAccountUser(User user);
 		
 		// Add new photo to the fakeDatabase
 		public void addHashtag(HashTag hashtag);
-
-		
 
 		
 }
