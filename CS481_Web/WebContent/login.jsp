@@ -8,7 +8,7 @@
 </head>
 <body>
 	<center>
-		<form action="login">
+		<form action="${pageContext.servletContext.contextPath}/Login" method="post">
 		<h1>Welcome to MyPhotoSpace 2</h1>
 		<table>
 				<tr>
@@ -22,6 +22,7 @@
 		</table>
 		<input type="submit" value="Enter"></input>
 		<a href="createAccount.jsp">Create Account</a>
+		
 		</form>
 		
 	</center>
