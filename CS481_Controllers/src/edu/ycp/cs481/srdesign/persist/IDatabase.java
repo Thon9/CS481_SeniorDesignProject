@@ -1,5 +1,7 @@
 package edu.ycp.cs481.srdesign.persist;
 
+import edu.ycp.cs481.srdesign.HashTag;
+import edu.ycp.cs481.srdesign.Photo;
 import edu.ycp.cs481.srdesign.User;
 
 public interface IDatabase {
