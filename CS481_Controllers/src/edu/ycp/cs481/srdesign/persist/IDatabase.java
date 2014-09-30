@@ -1,4 +1,3 @@
-
 package edu.ycp.cs481.srdesign.persist;
 
 import edu.ycp.cs481.srdesign.User;
