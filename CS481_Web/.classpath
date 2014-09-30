@@ -13,5 +13,9 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="WebContent/createAccount.jsp"/>
+	<classpathentry kind="lib" path="WebContent/login.jsp"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CS481"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CS481_Controllers"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

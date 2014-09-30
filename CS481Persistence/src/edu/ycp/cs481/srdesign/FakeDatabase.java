@@ -10,7 +10,8 @@ import edu.ycp.cs481.srdesign.persist.IDatabase;
 
 public class FakeDatabase implements IDatabase {
 	ArrayList<User>users = new ArrayList<User>();
-	
+	ArrayList<Photo> photos = new ArrayList<Photo>();
+	ArrayList<HashTag>hashtags = new ArrayList<HashTag>();
 	
 	@Override
 	public User getUserID(int id) {
@@ -90,6 +91,28 @@ public class FakeDatabase implements IDatabase {
 	@Override
 	public void createAccountUser(User user) {
 		users.add(user);
+	}
+
+	@Override
+	public void deleteUser(int userID) {
+		for (User user : users){
+			if(user.getuserID() == userID){
+				users.remove(userID);
+			}
+		}
+		
+	}
+
+	@Override
+	public void addPhoto(Photo photo) {
+		photos.add(photo);
+		
+	}
+
+	@Override
+	public void addHashtag(HashTag hashtag) {
+		hashtags.add(hashtag);
+		
 	}
 
 }
