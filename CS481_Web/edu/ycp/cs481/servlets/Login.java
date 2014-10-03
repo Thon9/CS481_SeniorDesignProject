@@ -14,7 +14,6 @@ import org.apache.catalina.connector.Request;
 import edu.ycp.cs481.srdesign.User;
 import edu.ycp.cs481.srdesign.controllers.CheckExistUserController;
 import edu.ycp.cs481.srdesign.controllers.LoginController;
-import edu.ycp.cs481.srdesign.persist.DatabaseProvider;
 
 /**
  * Servlet implementation class Login
@@ -29,23 +28,32 @@ public class Login extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		//get username and password
 		String userName = request.getParameter("userName");
-		String password = request.getParameter("userName");
+		String password = request.getParameter("password");
+		System.out.println("test 1");
 		
 		//if username and password is NOT null or empty
 		if (userName != null && password != null && !userName.isEmpty() && !password.isEmpty()){
+			
 			//check if user exist
+			System.out.println(userName + " "+ password);
 			LoginController controller = new LoginController();
+			System.out.println("test 2");
 			User user = controller.login(userName, password);
+			System.out.println("test 3");
 			
 			if (user != null){
 				//user exist
 				HttpSession session = request.getSession();
 				session.setAttribute("User", user);
 			}
+			
 			//to main
 			response.sendRedirect(request.getContextPath()+"/main.jsp");
+			request.setAttribute("result", "");
+			this.doGet(request, response);
 		}
 		else {
 			request.setAttribute("result", "user and/or password fields are empty");

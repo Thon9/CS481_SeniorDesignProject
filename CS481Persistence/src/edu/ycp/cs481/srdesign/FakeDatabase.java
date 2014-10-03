@@ -29,7 +29,7 @@ public class FakeDatabase implements IDatabase {
 			test.setUserName("TestUser");
 			test.setUserEmail("Test@Test.com");
 			test.setuserID(userID);
-		
+			users.add(test);
 	}
 
 	@Override
