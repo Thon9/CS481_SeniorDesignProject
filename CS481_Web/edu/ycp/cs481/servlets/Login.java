@@ -37,11 +37,11 @@ public class Login extends HttpServlet {
 		
 		//if username and password is NOT null or empty
 		if (userName != null && password != null && !userName.isEmpty() && !password.isEmpty()){
-			
+		
 			//check if user exist
 			System.out.println(userName + " "+ password);
 			LoginController controller = new LoginController();
-			System.out.println("test 2");
+			System.out.println("test 2: "+controller.login(userName, password).getUserName());
 			User user = controller.login(userName, password);
 			System.out.println("test 3");
 			
@@ -55,6 +55,11 @@ public class Login extends HttpServlet {
 			response.sendRedirect(request.getContextPath()+"/main.jsp");
 			request.setAttribute("result", "");
 			this.doGet(request, response);
+
+			System.out.println("Yay?");
+			response.sendRedirect(request.getContextPath()+"/main.jsp");
+//			request.setAttribute("result", "");
+//			this.doGet(request, response);
 		}
 		else {
 			request.setAttribute("result", "user and/or password fields are empty");
