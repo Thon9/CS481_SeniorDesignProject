@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.connector.Request;
+// import org.apache.catalina.connector.Request;
 
 import edu.ycp.cs481.srdesign.User;
-import edu.ycp.cs481.srdesign.controllers.CheckExistUserController;
+// import edu.ycp.cs481.srdesign.controllers.CheckExistUserController;
 import edu.ycp.cs481.srdesign.controllers.LoginController;
 
 /**
