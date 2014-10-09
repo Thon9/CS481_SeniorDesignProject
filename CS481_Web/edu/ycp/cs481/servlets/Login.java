@@ -9,10 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.connector.Request;
-
 import edu.ycp.cs481.srdesign.User;
-import edu.ycp.cs481.srdesign.controllers.CheckExistUserController;
 import edu.ycp.cs481.srdesign.controllers.LoginController;
 
 /**
@@ -39,26 +36,29 @@ public class Login extends HttpServlet {
 		
 			//check if user exist
 			System.out.println(userName + " "+ password);
+			//controller should check for the user in the database
 			LoginController controller = new LoginController();
-			System.out.println("test 2: "+controller.login(userName, password).getUserName());
-			User user = controller.login(userName, password);
-			System.out.println("test 3");
-			
-			if (user != null){
+			System.out.println("test 2 ");
+
+			//if user is null 
+			if (controller.login(userName, password) == null){
+					
+				System.out.println("test 3a");
+				request.setAttribute("result", "incorrect user/password");
+				this.doGet(request, response);
+			}
+			else {
+				System.out.println("test 3b");
+				System.out.println(controller.login(userName, password).getUserName());
 				//user exist
 				HttpSession session = request.getSession();
-				session.setAttribute("User", user);
-			}
+				session.setAttribute("UserName", controller.login(userName, password).getUserName());
 			
-			//to main
-			response.sendRedirect(request.getContextPath()+"/main.jsp");
-			request.setAttribute("result", "");
-			this.doGet(request, response);
-
-			System.out.println("Yay?");
-			response.sendRedirect(request.getContextPath()+"/main.jsp");
-//			request.setAttribute("result", "");
-//			this.doGet(request, response);
+				//to main
+				response.sendRedirect(request.getContextPath()+"/main.jsp");
+				request.setAttribute("result", "");
+				this.doGet(request, response);
+			}
 		}
 		else {
 			request.setAttribute("result", "user and/or password fields are empty");
