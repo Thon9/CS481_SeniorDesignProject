@@ -4,10 +4,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<<<<<<< HEAD
 <title>Insert title here</title>
 </head>
 <body>
 	<h1>Welcome ${"user"} </h1>
+=======
+<title>User Page</title>
+</head>
+<body>
+	<h1>Welcome ${"userName"} </h1>
+>>>>>>> branch 'master' of git@github.com:Thon9/CS481_SeniorDesignProject.git
 	
 </body>
 </html>

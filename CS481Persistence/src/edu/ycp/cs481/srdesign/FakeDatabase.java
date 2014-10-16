@@ -12,14 +12,14 @@ public class FakeDatabase implements IDatabase {
 	ArrayList<User>users;
 	ArrayList<Photo> photos;
 	ArrayList<HashTag>hashtags;
-	private int userID;
+	private int userID = 1;
 	
 	public FakeDatabase(){
 		
 	users = new ArrayList<User>();
 	photos = new ArrayList<Photo>();
 	hashtags = new ArrayList<HashTag>();
-	userID = 1;
+	
 		
 		User test = new User();
 			test.setFirstName("Test");
@@ -87,13 +87,13 @@ public class FakeDatabase implements IDatabase {
 
 	@Override
 	public User login(String username, String password) {
+		User loggedIn = null;
 		for (User user : users) {
 			if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
-				return user;
+				loggedIn = user;
 			}
 		}
-		// No such username/password
-		return null;
+		return loggedIn;
 	}
 
 	@Override
