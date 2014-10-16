@@ -13,7 +13,7 @@
 <title>User Page</title>
 </head>
 <body>
-	<h1>Welcome ${"userName"} </h1>
+	<h1>Welcome ${userName} </h1>
 >>>>>>> branch 'master' of git@github.com:Thon9/CS481_SeniorDesignProject.git
 	
 </body>

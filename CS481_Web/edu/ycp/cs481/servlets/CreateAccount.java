@@ -41,16 +41,22 @@ public class CreateAccount extends HttpServlet {
 		}
 		//check passwords are the same
 		else if (!password.equals(checkPassword)){
+
+		
 			request.setAttribute("result", "both passwords dont match");
 			this.doGet(request, response);
 		}
 		//check email are same
 		else if (!email.equals(checkEmail)){
+
+			
 			request.setAttribute("result", "both emails are incorrect");
 			this.doGet(request, response);
 		}
 		//then go to main page with user info
 		else {
+
+		
 			//add user
 			User newUser = new User();
 			newUser.setUserName(userName);
@@ -59,8 +65,18 @@ public class CreateAccount extends HttpServlet {
 			newUser.setLastName(lastName);
 			newUser.setUserEmail(email);
 			
+			newUser.setUserEmail(email);			
+		
 			AddNewUserController controller = new AddNewUserController();
+
+		
+			//controller should add user to DB
 			controller.addNewUser(newUser);
+
+	
+			request.setAttribute("result", "success");
+			//this.doGet(request, response);
+			response.sendRedirect(request.getContextPath()+"/login.jsp");
 			
 			response.sendRedirect(request.getContextPath()+"/main.jsp");
 			

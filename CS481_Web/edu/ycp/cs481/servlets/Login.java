@@ -37,8 +37,7 @@ public class Login extends HttpServlet {
 		//get username and password
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
-		System.out.println("test 1");
-		System.out.println(userName + " "+ password + "received from TextBoxes");
+		
 		
 		
 		//if username and password is NOT null or empty
@@ -49,37 +48,33 @@ public class Login extends HttpServlet {
 			//controller should check for the user in the database
 			
 			LoginController controller = new LoginController();
-				System.out.println("test 2: "); // TEST
+	
 			user = controller.login(userName, password);
-				System.out.println(user.getUserName() + user.getPassword());
-				System.out.println("test 3"); // Test
 			
-			if (userName != null){
 				
-				System.out.println("test 2 ");
+				
 				
 				//if user is null 
-				if (controller.login(userName, password) == null){
-						
-					System.out.println("test 3a");
+				if (controller.login(userName, password) == null){	
+					System.out.println("Incorrect username/password");
 					request.setAttribute("result", "incorrect user/password");
 					this.doGet(request, response);
 				}
 				else {
-					System.out.println("test 3b");
+					System.out.println("Success");
+					
 					System.out.println(controller.login(userName, password).getUserName());
 	
 					//user exist
 					HttpSession session = request.getSession();
-					session.setAttribute("UserName", controller.login(userName, password).getUserName());
+					session.setAttribute("userName", controller.login(userName, password).getUserName());
 				
 					//to main
+					//request.setAttribute("UserName", "");
 					response.sendRedirect(request.getContextPath()+"/main.jsp");
-					request.setAttribute("result", "");
-					this.doGet(request, response);
+					
+					//this.doGet(request, response);
 				}
-			
-			}
 		}
 		else {
 			request.setAttribute("result", "user and/or password fields are empty");
