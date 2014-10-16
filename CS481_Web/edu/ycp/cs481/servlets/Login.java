@@ -40,7 +40,7 @@ public class Login extends HttpServlet {
 			//check if user exist
 			System.out.println(userName + " "+ password);
 			LoginController controller = new LoginController();
-			System.out.println("test 2: "+controller.login(userName, password).getUserName());
+			System.out.println("test 2: "+ controller.login(userName, password).getUserName());
 			User user = controller.login(userName, password);
 			System.out.println("test 3");
 			

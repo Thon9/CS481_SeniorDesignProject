@@ -5,6 +5,7 @@ import edu.ycp.cs481.srdesign.persist.DatabaseProvider;
 
 public class LoginController {
 	public User login(String username, String password) {
+		
 		return DatabaseProvider.getInstance().login(username, password);
 		
 	}
