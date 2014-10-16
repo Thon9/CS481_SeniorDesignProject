@@ -1,11 +1,9 @@
 package edu.ycp.cs481.srdesign.persist;
 
-import edu.ycp.cs481.srdesign.FakeDatabase;
-
 
 
 public class DatabaseProvider {
-	private static IDatabase theInstance = new FakeDatabase();
+	private static IDatabase theInstance;
 	
 	public static void setInstance(IDatabase db) {
 		System.out.println("Setting database instance");
