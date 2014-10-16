@@ -5,8 +5,10 @@ import edu.ycp.cs481.srdesign.persist.DatabaseProvider;
 
 public class LoginController {
 	public User login(String username, String password) {
-		
-		return DatabaseProvider.getInstance().login(username, password);
-		
+		User user = new User();
+		System.out.println("LOGIN CONTROLLER TESTING");
+		//System.out.println(DatabaseProvider.getInstance().login(username, password));
+		user = DatabaseProvider.getInstance().login(username, password);
+		return user;
 	}
 }

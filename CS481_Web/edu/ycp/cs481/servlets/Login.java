@@ -23,6 +23,8 @@ import edu.ycp.cs481.srdesign.controllers.LoginController;
 @WebServlet("/Login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private User user;
+	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setStatus(HttpServletResponse.SC_OK);
@@ -35,6 +37,8 @@ public class Login extends HttpServlet {
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
 		System.out.println("test 1");
+		System.out.println(userName + " "+ password + "received from TextBoxes");
+		
 		
 		//if username and password is NOT null or empty
 		if (userName != null && password != null && !userName.isEmpty() && !password.isEmpty()){
@@ -42,16 +46,17 @@ public class Login extends HttpServlet {
 			//check if user exist
 			System.out.println(userName + " "+ password);
 			//controller should check for the user in the database
-			LoginController controller = new LoginController();
-
-			System.out.println("test 2: "+ controller.login(userName, password).getUserName());
-			User user = controller.login(userName, password);
-			System.out.println("test 3");
 			
-			if (user != null){
-
+			LoginController controller = new LoginController();
+				System.out.println("test 2: "); // TEST
+			user = controller.login(userName, password);
+				System.out.println(user.getUserName() + user.getPassword());
+				System.out.println("test 3"); // Test
+			
+			if (userName != null){
+				
 				System.out.println("test 2 ");
-	
+				
 				//if user is null 
 				if (controller.login(userName, password) == null){
 						
@@ -72,6 +77,7 @@ public class Login extends HttpServlet {
 					request.setAttribute("result", "");
 					this.doGet(request, response);
 				}
+			
 			}
 		}
 		else {
