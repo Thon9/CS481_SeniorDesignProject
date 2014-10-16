@@ -8,6 +8,8 @@
 </head>
 <body>
 	<h1>Welcome ${userName} </h1>
+	<a href="login.jsp">Back to Login</a>
+	<img src="C:\Users\thon9\Desktop\images\cat-breading-tutorial-004.jsp"/>
 	
 </body>
 </html>
