@@ -6,7 +6,6 @@ public class DatabaseProvider {
 	private static IDatabase theInstance;
 	
 	public static void setInstance(IDatabase db) {
-		System.out.println("Setting database instance");
 		theInstance = db;
 	}
 	
