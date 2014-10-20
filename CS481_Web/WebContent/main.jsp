@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <title>User Page</title>
+	<h1>Welcome ${userName} </h1>
 </head>
 <body>
 	<h1>Welcome ${userName} </h1>
@@ -15,3 +16,42 @@
 	</script>
 </body>
 </html>
+
+
+
+<BODY>
+	<FORM ENCTYPE="multipart/form-data" ACTION="upload.jsp" METHOD=POST>
+		<br>
+		<br>
+		<br>
+		<table border="0" bgcolor=#ccFDDEE>
+			<tr>
+
+<BODY> <FORM ENCTYPE="multipart/form-data" ACTION="upload.jsp" METHOD=POST>
+<br><br><br>
+<table border="0" bgcolor=#ccFDDEE>
+<tr>
+
+
+				<td colspan="2" align="center"><B>UPLOAD THE FILE</B>
+				<center></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center"></td>
+			</tr>
+			<tr>
+				<td><b>Choose the file To Upload:</b></td>
+				<td><INPUT NAME="file" TYPE="file"></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center"></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center"><input type="submit"
+					value="Send File"></td>
+			</tr>
+			<table>
+				</FORM>
+</BODY>
+</html>
+
