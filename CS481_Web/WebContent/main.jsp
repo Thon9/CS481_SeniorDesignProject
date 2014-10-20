@@ -4,13 +4,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
 <title>User Page</title>
 	<h1 align="center" >Welcome ${userName} </h1>
 </head>
+<body>
+	<!-- h1>Welcome ${userName} </h1-->
+	<script type="text/javascript">
+	<input type="file" id="upload" name="upload" style="visibility: hidden; width: 1px; height: 1px" multiple />
+	<a href="" onclick="document.getElementById('upload').click(); return false">Upload</a>
+	</script>
+</body>
+</html>
 
 
 
-<BODY>
+<!-- BODY>
 	<FORM ENCTYPE="multipart/form-data" ACTION="main.jsp" METHOD=POST>
 		<br>
 		<br>
@@ -44,6 +53,6 @@
 				</FORM>
 				
 				${file}
-</BODY>
+</BODY-->
 </html>
 

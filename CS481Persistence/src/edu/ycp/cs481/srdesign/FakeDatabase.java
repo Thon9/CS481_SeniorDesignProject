@@ -1,4 +1,3 @@
-
 package edu.ycp.cs481.srdesign;
 
 import java.sql.Blob;
@@ -70,7 +69,7 @@ public class FakeDatabase implements IDatabase {
 			user.setFirstName(firstname);
 			user.setLastName(lastname);
 			user.setUserEmail(email);
-			users.add(user);
+			createAccountUser(user);
 			userID++;
 			return true;
 		}
@@ -138,4 +137,3 @@ public class FakeDatabase implements IDatabase {
 	}
 
 }
-
