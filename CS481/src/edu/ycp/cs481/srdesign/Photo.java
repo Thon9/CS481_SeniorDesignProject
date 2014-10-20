@@ -1,13 +1,15 @@
 package edu.ycp.cs481.srdesign;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.ArrayList;
+
 //import java.util.Iterator;
 
 public class Photo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+	private Blob blobValue;
 	private int photoID;
 	private int userID;
 	private ArrayList<Integer> HashTagID = new ArrayList<Integer>();;
@@ -27,6 +29,14 @@ public class Photo implements Serializable {
 		return userID;
 	}
 	
+	public Blob getBlobValue(){
+		return blobValue;
+	}
+	
+	// Error in this???
+	public void setBlobValue(Blob value){
+		this.blobValue = value;
+	}
 	
 	// Set/Get User Name
 	public void setphotoID(int pID ) {

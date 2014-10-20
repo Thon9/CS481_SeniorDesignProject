@@ -1,6 +1,7 @@
 
 package edu.ycp.cs481.srdesign;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 
 import edu.ycp.cs481.srdesign.User;
@@ -14,6 +15,8 @@ public class FakeDatabase implements IDatabase {
 	ArrayList<Photo> photos;
 	ArrayList<HashTag>hashtags;
 	private int userID = 1;
+	// Store an image in here
+	private Blob image;
 	
 	public FakeDatabase(){
 		
