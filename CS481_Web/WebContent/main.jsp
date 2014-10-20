@@ -9,7 +9,7 @@
 	<h1>Welcome ${userName} </h1>
 </head>
 <body>
-	<h1>Welcome ${userName} </h1>
+	<!-- h1>Welcome ${userName} </h1-->
 	<script type="text/javascript">
 	<input type="file" id="upload" name="upload" style="visibility: hidden; width: 1px; height: 1px" multiple />
 	<a href="" onclick="document.getElementById('upload').click(); return false">Upload</a>
@@ -19,7 +19,7 @@
 
 
 
-<BODY>
+<!-- BODY>
 	<FORM ENCTYPE="multipart/form-data" ACTION="upload.jsp" METHOD=POST>
 		<br>
 		<br>
@@ -52,6 +52,6 @@
 			</tr>
 			<table>
 				</FORM>
-</BODY>
+</BODY-->
 </html>
 
