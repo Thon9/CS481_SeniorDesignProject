@@ -4,17 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<<<<<<< HEAD
-<title>Insert title here</title>
-</head>
-<body>
-	<h1>Welcome ${"user"} </h1>
-=======
+
 <title>User Page</title>
 </head>
 <body>
 	<h1>Welcome ${userName} </h1>
->>>>>>> branch 'master' of git@github.com:Thon9/CS481_SeniorDesignProject.git
-	
+	<script type="text/javascript">
+	<input type="file" id="upload" name="upload" style="visibility: hidden; width: 1px; height: 1px" multiple />
+	<a href="" onclick="document.getElementById('upload').click(); return false">Upload</a>
+	</script>
 </body>
 </html>
