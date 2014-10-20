@@ -4,6 +4,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import edu.ycp.cs481.srdesign.FakeDatabase;
+import edu.ycp.cs481.srdesign.SQLDatabase;
 import edu.ycp.cs481.srdesign.persist.DatabaseProvider;
 import edu.ycp.cs481.srdesign.persist.IDatabase;
 
@@ -17,9 +18,16 @@ public class DatabaseInitListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent e) {
-		System.out.println("Creating FakeDatabase...");
-		IDatabase db = new FakeDatabase();
-		DatabaseProvider.setInstance(db);
+		System.out.println("Creating SQLDatabase...");
+		
+		DatabaseProvider.setInstance(new SQLDatabase());
+		
+		System.out.println("SQLDatabase initialized...");
+		
+		/*	Fake Database Stuff
+			IDatabase db = new FakeDatabase();
+			DatabaseProvider.setInstance(db);
+		*/
 	}
 
 }
