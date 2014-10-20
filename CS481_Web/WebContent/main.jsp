@@ -9,6 +9,7 @@
 </head>
 
 
+
 <BODY>
 	<FORM ENCTYPE="multipart/form-data" ACTION="upload.jsp" METHOD=POST>
 		<br>
@@ -16,6 +17,12 @@
 		<br>
 		<table border="0" bgcolor=#ccFDDEE>
 			<tr>
+
+<BODY> <FORM ENCTYPE="multipart/form-data" ACTION="upload.jsp" METHOD=POST>
+<br><br><br>
+<table border="0" bgcolor=#ccFDDEE>
+<tr>
+
 
 				<td colspan="2" align="center"><B>UPLOAD THE FILE</B>
 				<center></td>
@@ -38,3 +45,4 @@
 				</FORM>
 </BODY>
 </html>
+
