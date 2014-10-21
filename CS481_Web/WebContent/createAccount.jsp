@@ -5,45 +5,64 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create Account</title>
+<style type="text/css">
+.center_table {
+	position: absolute;
+	left: 50%;
+	top: 30%;
+	margin: -75px 0 0 -135px;
+}
+input {
+	border-radius:15px
+}
+body {
+	background-image: url('film_strip.gif');
+    background-color: #cccccc;
+}
+</style>
 </head>
 <body>
-	<form action="${pageContext.servletContext.contextPath}/CreateAccount"
-		method="post">
-		<table>
 
+	<form class="center_table"
+		action="${pageContext.servletContext.contextPath}/CreateAccount"
+		method="post">
+		<h1>Create Account</h1>
+		<table>
 			<tr>
 				<th>First Name:</th>
-				<th><input type="text" name="firstName" value="" size="12" /></th>
-
+				<th><input type="text" name="firstName" value="" size="20" /></th>
+			</tr>
+			<tr>
 				<th>Last Name:</th>
-				<th><input type="text" name="lastName" value="" size="12" /></th>
+				<th><input type="text" name="lastName" value="" size="20" /></th>
 			</tr>
 			<tr>
 				<th>User Name:</th>
-				<th><input type="text" name="userName" value="" size="12" /></th>
+				<th><input type="text" name="userName" value="" size="20" /></th>
 			</tr>
 			<tr>
 				<th>Enter Password:</th>
-				<th><input type="password" name="password" size="12" /></th>
+				<th><input type="password" name="password" size="20" /></th>
 
 			</tr>
 			<tr>
 				<th>Re-Enter Password:</th>
-				<th><input type="password" name="passwordConfirm" size="12" /></th>
+				<th><input type="password" name="passwordConfirm" size="20" /></th>
 			</tr>
 			<tr>
 				<th>E-mail address:</th>
-				<th><input type="password" name="email" size="12" /></th>
+				<th><input type="password" name="email" size="20" /></th>
 
 			</tr>
 			<tr>
 				<th>Confirm E-mail:</th>
-				<th><input type="password" name="emailConfirm" size="12" /></th>
+				<th><input type="password" name="emailConfirm" size="20" /></th>
 			</tr>
 		</table>
-		<input type="submit" value="Enter"></input>
+		<input type="submit" value="Enter"></input> 
+		<a href="login.jsp">Back to Login link</a> 
+		<br> ${result}
 	</form>
-	<a href="login.jsp">Back to Login link</a>
-	<br> ${result}
+
 </body>
 </html>
