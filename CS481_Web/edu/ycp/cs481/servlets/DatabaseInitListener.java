@@ -18,36 +18,16 @@ public class DatabaseInitListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent e) {
-<<<<<<< HEAD
 		System.out.println("Creating SQLDatabase...");
 		/*
 		DatabaseProvider.setInstance(new SQLDatabase());
 		*/
-=======
-//		Fake Database Stuff
-				IDatabase db = new FakeDatabase();
-				DatabaseProvider.setInstance(db);
+		//Fake Database Stuff
+		IDatabase db = new FakeDatabase();
+		DatabaseProvider.setInstance(db);
 		
-		//System.out.println("Creating SQLDatabase...");
->>>>>>> branch 'master' of git@github.com:Thon9/CS481_SeniorDesignProject.git
-		
-<<<<<<< HEAD
-=======
-		//DatabaseProvider.setInstance(new SQLDatabase());
->>>>>>> branch 'master' of git@github.com:Thon9/CS481_SeniorDesignProject.git
-		
-<<<<<<< HEAD
-			//Fake Database Stuff
-			IDatabase db = new FakeDatabase();
-			DatabaseProvider.setInstance(db);
 		
 		System.out.println("SQLDatabase initialized...");
-=======
-		//System.out.println("SQLDatabase initialized...");
-		
-		
-		
->>>>>>> branch 'master' of git@github.com:Thon9/CS481_SeniorDesignProject.git
 	}
 
 }
