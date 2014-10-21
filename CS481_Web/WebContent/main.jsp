@@ -19,7 +19,7 @@
 
 
 
-<!-- BODY>
+<BODY>
 	<FORM ENCTYPE="multipart/form-data" ACTION="main.jsp" METHOD=POST>
 		<br>
 		<br>
@@ -53,6 +53,6 @@
 				</FORM>
 				
 				${file}
-</BODY-->
+</BODY>
 </html>
 

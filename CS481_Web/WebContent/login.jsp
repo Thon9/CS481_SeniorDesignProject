@@ -13,11 +13,11 @@
 			<h1>Welcome to MyPhotoSpace 2</h1>
 			<table>
 				<tr>
-					<th>UserName</th>
+					<th><font size="5">UserName</font></th>
 					<th><input type="text" name="userName" size="12" /></th>
 				</tr>
 				<tr>
-					<th>Password</th>
+					<th><font size="5">Password</font></th>
 					<th><input type="password" name="password" size="12" /></th>
 				</tr>
 			</table>
