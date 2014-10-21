@@ -55,8 +55,7 @@ public class SQLDatabase implements IDatabase {
 			
 	
 	 public void createTables() {
-		 @Override
-		 public Boolean execute(Connection conn) throws SQLException {
+		 Boolean execute(Connection conn) throws SQLException {
 			PreparedStatement stmt = null;				
 					try {					
 						stmt = conn.prepareStatement(
@@ -157,6 +156,13 @@ public class SQLDatabase implements IDatabase {
 		// Done creating tables
 		System.out.println("Done!");
 		
+	}
+
+
+	@Override
+	public Boolean execute(Connection conn) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
