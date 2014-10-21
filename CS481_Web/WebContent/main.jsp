@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <title>User Page</title>
-	<h1 align="center" >Welcome ${userName} </h1>
+	<h1 align="center"> Welcome ${userName} </h1>
 </head>
 <body>
 	<!-- h1>Welcome ${userName} </h1-->
@@ -19,7 +19,7 @@
 
 
 
-<!-- BODY>
+<BODY>
 	<FORM ENCTYPE="multipart/form-data" ACTION="main.jsp" METHOD=POST>
 		<br>
 		<br>
@@ -51,8 +51,6 @@
 			</tr>
 			<table>
 				</FORM>
-				
-				${file}
-</BODY-->
+</BODY>
 </html>
 

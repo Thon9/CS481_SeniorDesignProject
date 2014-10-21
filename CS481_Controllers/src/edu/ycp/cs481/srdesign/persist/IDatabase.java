@@ -1,5 +1,8 @@
 package edu.ycp.cs481.srdesign.persist;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import edu.ycp.cs481.srdesign.User;
 import edu.ycp.cs481.srdesign.HashTag;
 import edu.ycp.cs481.srdesign.Photo;
@@ -36,6 +39,8 @@ public interface IDatabase {
 		
 		// Add new photo to the fakeDatabase
 		public void addHashtag(HashTag hashtag);
+
+		Boolean execute(Connection conn) throws SQLException;
 
 		
 }

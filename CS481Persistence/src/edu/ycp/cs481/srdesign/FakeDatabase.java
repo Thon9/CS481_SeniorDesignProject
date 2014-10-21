@@ -1,6 +1,8 @@
 package edu.ycp.cs481.srdesign;
 
 import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import edu.ycp.cs481.srdesign.User;
@@ -134,6 +136,12 @@ public class FakeDatabase implements IDatabase {
 	public void addHashtag(HashTag hashtag) {
 		hashtags.add(hashtag);
 		
+	}
+
+	@Override
+	public Boolean execute(Connection conn) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
