@@ -16,9 +16,11 @@ input {
 	border-radius:15px
 }
 body {
-	background-image: url('film_strip.gif');
+	background-image: url('film.jpg');
+	background-size: 100%;
     background-color: #cccccc;
 }
+
 </style>
 </head>
 <body>

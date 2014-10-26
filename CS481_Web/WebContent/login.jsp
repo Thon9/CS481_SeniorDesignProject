@@ -17,8 +17,12 @@ input {
 	border-radius:15px
 }
 body {
-	background-image: url('film_strip.gif');
+	background-image: url('film.jpg');
+	background-size: 100%;
     background-color: #cccccc;
+}
+h1 {
+	color:blue;
 }
 </style>
 </head>
@@ -27,7 +31,7 @@ body {
 	<h1>Welcome to MyPhotoSpace 2</h1>
 		<form class="center_table" action="${pageContext.servletContext.contextPath}/Login"
 			method="post">
-			<h1>Login</h1>
+			<h2>Login</h2>
 			<table>
 				<tr>
 					<th><font size="4">UserName</font></th>
