@@ -43,19 +43,18 @@ public class AddPhoto extends HttpServlet {
 			InputStream filecontent = filePart.getInputStream();
 			
 			//do math
-			//Photo newPhoto = new Photo(filename, filecontent);
+			/*Photo newPhoto = new Photo(filename, filecontent);
 			Photo newPhoto = new Photo();
 			newPhoto.setFileName(filename);
-			newPhoto.setContent(filecontent);
+			newPhoto.setContent(filecontent);*/
 			
-			if (newPhoto != null){
+			if (filename != null || filecontent != null){
 				AddPhotoController controller = new AddPhotoController();
-				controller.addPhoto(newPhoto);
+				controller.addPhoto(filename, filecontent);
 				
-				System.out.println(newPhoto.getFileName());
-				System.out.println(newPhoto.getContent());
+				System.out.println(filename);
 				
-				System.out.println("Photo added to database");
+				System.out.println("Photo sent to database");
 			}else {//if not a valid photo of file
 				System.out.println("Invalid Photo input");
 			}

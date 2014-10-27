@@ -1,5 +1,6 @@
 package edu.ycp.cs481.srdesign.persist;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -24,7 +25,7 @@ public interface IDatabase {
 		public void deleteUser(int userID);
 		
 		// Add new photo to the fakeDatabase
-		public void addPhoto(Photo photo);
+		public void addPhoto(String fileName, InputStream content);
 
 		// Login handling for the User
 		public User login(String username, String password);
