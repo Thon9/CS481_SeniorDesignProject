@@ -1,5 +1,8 @@
 package edu.ycp.cs481.srdesign;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -127,8 +130,46 @@ public class FakeDatabase implements IDatabase {
 	}
 
 	@Override
-	public void addPhoto(Photo photo) {
-		photos.add(photo);
+	public void addPhoto(String fileName, InputStream content) {
+		//photos.add(photo);
+		OutputStream OStream = null;
+		try{
+			OStream = new FileOutputStream("/CS481Persistence/edu/ycp/cs481/srdesign/Images/"+fileName);
+			
+			int read=0;
+			byte[] data = new byte[1024];
+			
+			while((read = content.read(data)) !=-1){
+				OStream.write(data, 0, read);
+			}
+			/**************************************/
+			//add things for adding new id fields
+			//Photo p = new Photo();
+			/**************************************/
+			
+			System.out.println("Data transfer complete!!");
+		}catch(Exception e){
+			e.printStackTrace();
+			
+		}
+		finally{
+			if (content != null) {
+				try {
+					content.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if (OStream != null) {
+				try {
+					// outputStream.flush();
+					OStream.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+	 
+			}
+		}
 		
 	}
 
