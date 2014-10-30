@@ -44,6 +44,7 @@ h1 {
 			</table>
 			<input type="submit" value="Enter" ></input> 
 			<a href="createAccount.jsp">Create Account</a>
+			<a href="main_test.jsp">image test page</a>
 			<br> ${result}
 		</form>
 	</center>
