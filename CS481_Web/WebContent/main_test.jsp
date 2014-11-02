@@ -8,26 +8,55 @@
 
 <title>User Page</title>
 <style type="text/css">
+body {
+	background-size: 100%;
+    background-color: #cccccc;
+}
+
 img {
 	width: 100%;
 	max-width: 300px;
 	max-height: 300px;
 }
+
+input {
+	border-radius: 15px;
+}
+
+
+span#sort_bar {
+	float: left;
+}
+
+span#search_bar {
+	float: right;
+}
 </style>
-<h1 align="center">Welcome ${userName}</h1>
 </head>
 
+<h1 align=center>Welcome ${userName}</h1>
 <body>
-	sort by:
-	<select> 
-		<option value="date">date</option>
-		<option value="view">views</option>
-		<option value="like">likes</option>
-	</select>
-	<br>
-	<img src="test_images/test1.jpg">
-	<img src="test_images/test2.jpg">
-	<img src="test_images/test3.jpg">
+	<span id="sort_bar"> 
+	sort by: 
+		<select>
+				<option value="date">date</option>
+				<option value="views">views</option>
+				<option value="likes">likes</option>
+		</select>
+	</span>
+
+	<span id="search_bar"> search for: <input type="text"
+		name="search_object" size="20" /> 
+		<select>
+			<option value="title">title</option>
+			<option value="tags">tags</option>
+			<option value="users">users</option>
+		</select>
+	</span>
+	<br><br>
+	<a href="test_images/test1.jpg" target="_blank"><img src="test_images/test1.jpg"></a>
+	<a href="test_images/test2.jpg" target="_blank"><img src="test_images/test2.jpg"></a>
+	<a href="photo.jsp" target="_blank"><img src="test_images/test3.jpg"></a>
 	<br>
 	<a href="login.jsp">go back</a>
 </body>
