@@ -37,7 +37,7 @@ span#search_bar {
 </style>
 </head>
 
-<h1 align=center>Welcome ${userName}</h1>
+<h1 align=center>MyPhotoSpace 2 Gallery</h1>
 <body>
 	<span id="sort_bar"> 
 	sort by: 
@@ -46,9 +46,10 @@ span#search_bar {
 				<option value="views">views</option>
 				<option value="likes">likes</option>
 		</select>
+	<a href="main.jsp">upload an image</a>
 	<a href="login.jsp">logout</a>
 	</span>
-
+	
 	<span id="search_bar"> search for: <input type="text"
 		name="search_object" size="20" /> 
 		<select>
