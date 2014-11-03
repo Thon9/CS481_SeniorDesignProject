@@ -3,6 +3,7 @@ package edu.ycp.cs481.servlets;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -15,6 +16,7 @@ import javax.servlet.http.Part;
 import edu.ycp.cs481.srdesign.Photo;
 import edu.ycp.cs481.srdesign.User;
 import edu.ycp.cs481.srdesign.controllers.AddPhotoController;
+import edu.ycp.cs481.srdesign.controllers.GetAllPhotosController;
 
 /**
  * Servlet implementation class
@@ -55,6 +57,10 @@ public class AddPhoto extends HttpServlet {
 				System.out.println(filename);
 				
 				System.out.println("Photo sent to database");
+				
+				GetAllPhotosController getCont = new GetAllPhotosController();
+				ArrayList<File> temp = getCont.getAllPhotos();
+				
 			}else {//if not a valid photo of file
 				System.out.println("Invalid Photo input");
 			}

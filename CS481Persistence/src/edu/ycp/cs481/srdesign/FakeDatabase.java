@@ -1,6 +1,8 @@
 package edu.ycp.cs481.srdesign;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Blob;
@@ -128,13 +130,43 @@ public class FakeDatabase implements IDatabase {
 		}
 		
 	}
+	
+	@Override
+	public ArrayList<File> getPhotos(){
+		File directory = new File("C:\\imagesFolder\\");
+		int x = directory.listFiles().length;
+		
+		ArrayList<File> PICS = new ArrayList<File>();
+		
+		System.out.println(x);
+		
+		for (File file : directory.listFiles()) {
+		    if (file.isFile()) {
+		       if (file.getName().endsWith(".jpg")||file.getName().endsWith(".png")) {
+		           System.out.println(file.getAbsolutePath());
+		           PICS.add(file);
+		       }
+		    } 
+		}
+		return PICS;
+	}
 
 	@Override
 	public void addPhoto(String fileName, InputStream content) {
 		//photos.add(photo);
+		System.out.println("addPhtot:	" + fileName);
 		OutputStream OStream = null;
 		try{
-			OStream = new FileOutputStream("/CS481Persistence/edu/ycp/cs481/srdesign/Images/"+fileName);
+			//OStream = new FileOutputStream("test_images/"+fileName, false);
+			File newImage = new File("C:\\imagesFolder\\"+fileName);
+			if(!(new File("C:\\imagesFolder\\")).isDirectory()){
+				(new File("C:\\imagesFolder\\")).mkdirs();
+			}
+			if(!newImage.exists()) {
+				newImage.createNewFile();
+			} 
+			OStream = new FileOutputStream(newImage, false); 
+			
 			
 			int read=0;
 			byte[] data = new byte[1024];
@@ -142,6 +174,8 @@ public class FakeDatabase implements IDatabase {
 			while((read = content.read(data)) !=-1){
 				OStream.write(data, 0, read);
 			}
+			
+			System.out.println(newImage.getAbsolutePath());
 			/**************************************/
 			//add things for adding new id fields
 			//Photo p = new Photo();
@@ -183,6 +217,12 @@ public class FakeDatabase implements IDatabase {
 	public Boolean execute(Connection conn) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void getUserPhotos() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
