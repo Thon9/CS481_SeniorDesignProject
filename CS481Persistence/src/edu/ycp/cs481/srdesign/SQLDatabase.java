@@ -1,218 +1,267 @@
 
 package edu.ycp.cs481.srdesign;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import edu.ycp.cs481.srdesign.persist.IDatabase;
 
 public class SQLDatabase implements IDatabase {
-	 private String DATABASE_PATH = null;
-	 private int MAX_ATTEMPTS = 10;
-		
-		// Create connection and statement
-		Connection conn = null;
-		Statement stmt = null;
-		try {
-		      Class.forName("org.gjt.mm.mysql.Driver").newInstance();
-		      String url = "jdbc:mysql://localhost/mysql";
-		      conn = DriverManager.getConnection(url, "root", "password");
-
-		      stmt = conn.createStatement();
-		      String userSQL = "CREATE DATABASE USERS";
-		      String photoSQL = "CREATE DATABASE PHOTOS";
-		      String hashtagSQL = "CREATE DATABASE HASHTAGS";
-		      stmt.executeUpdate(photoSQL);
-		      stmt.executeUpdate(userSQL);
-		      stmt.executeUpdate(hashtagSQL);
-		    } catch (Exception e) {
-		      e.printStackTrace();
-		} finally {
-			try {
-				if(stmt!=null){
-					stmt.close();
-				} 
-			}
-			catch(SQLException sql){
-				// Do NOTHING
-			}
-			try {
-				if(conn!=null){
-					conn.close();
-				}
-			}
-			catch(SQLException sqlc){
-				sqlc.printStackTrace();
-			}
-				
-		}
-		@Override
-		public User getUserID(int id) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-		@Override
-		public User getUserString(String username) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-		@Override
-		public boolean createAccount(String username, String password,
-				int userID, String firstname, String lastname, String email) {
-			// TODO Auto-generated method stub
-			return false;
-		}
-		@Override
-		public void deleteUser(int userID) {
-			// TODO Auto-generated method stub
-			
-		}
-		@Override
-		public void addPhoto(Photo photo) {
-			// TODO Auto-generated method stub
-			
-		}
-		@Override
-		public User login(String username, String password) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-		@Override
-		public boolean verifyAccount(String userName, String password) {
-			// TODO Auto-generated method stub
-			return false;
-		}
-		@Override
-		public boolean checkExistence(String username) {
-			// TODO Auto-generated method stub
-			return false;
-		}
-		@Override
-		public void createAccountUser(User user) {
-			// TODO Auto-generated method stub
-			
-		}
-		@Override
-		public void addHashtag(HashTag hashtag) {
-			// TODO Auto-generated method stub
-			
-		}
-		@Override
-		public Boolean execute(Connection conn) throws SQLException {
-			// TODO Auto-generated method stub
-			return null;
-		}
-		
-		
-		
-	}
+	User user = new User();
 	
-	interface Transaction<ResultType> {
+	// Database path
+	private String DATABASE_PATH = "C:/Users/ChrisDavisSrDesign/git/CS481";
+	
+	// Create connection and statement
+	Connection conn = null;
+	Statement statement = null;
+	PreparedStatement preparedStatement = null;
+	ResultSet resultSet = null;
+
+
+	private interface Transaction<ResultType> {
 		public ResultType execute(Connection conn) throws SQLException;
-	
-	
-	 
-	 public <ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
-			try {
-				return doExecuteTransaction(txn);
-			} catch (SQLException e) {
-				throw new SQLException("Transaction failed", e);
-			}
-		}
+	}
 
-		public <ResultType> ResultType doExecuteTransaction(Transaction<ResultType> txn) throws SQLException {
-			Connection conn = connect();
+	private static final int MAX_ATTEMPTS = 10;
+
+	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) throws SQLException {
+		try {
+			return doExecuteTransaction(txn);
+		} catch (SQLException e) {
+			throw e;
+		}
+	}
+
+	public<ResultType> ResultType doExecuteTransaction(Transaction<ResultType> txn) throws SQLException {
+		Connection conn = connect();
+		
+		try {
+			int numAttempts = 0;
+			boolean success = false;
+			ResultType result = null;
 			
-			try {
-				int numAttempts = 0;
-				boolean success = false;
-				ResultType result = null;
-				
-				while (!success && numAttempts < MAX_ATTEMPTS) {
-					try {
-						result = txn.execute(conn);
-						conn.commit();
-						success = true;
-					} catch (SQLException e) {
-						if (e.getSQLState() != null && e.getSQLState().equals("41000")) {
-							numAttempts++;
-						} else {
-							// Some other kind of SQLException
-							throw e;
-						}
+			while (!success && numAttempts < MAX_ATTEMPTS) {
+				try {
+					result = txn.execute(conn);
+					conn.commit();
+					success = true;
+				} catch (SQLException e) {
+					if (e.getSQLState() != null && e.getSQLState().equals("41000")) {
+						// Deadlock: retry (unless max retry count has been reached)
+						numAttempts++;
+					} else {
+						// Some other kind of SQLException
+						throw e;
 					}
 				}
-				
-				if (!success) {
-					throw new SQLException("Transaction failed (too many retries)");
-				}
-				
-				// Success!
-				return result;
-			} finally {
-				DBUtil.closeQuietly(conn);
 			}
-		}	
-	 Connection connect() throws SQLException {
-		 	System.out.println("Connecting to database " + url );
-			Connection conn = DriverManager.getConnection("jdbc:mysql" + url + ";create=true"); 
 			
-			conn.setAutoCommit(false);
+			if (!success) {
+				throw new SQLException("Transaction failed (too many retries)");
+			}
 			
-			return conn;
+			// Success!
+			return result;
+		} finally {
+			DBUtil.closeQuietly(conn);
 		}
+	}
 
-	public void createTables() {
-		executeTransaction(new Transaction<Boolean>() {
+	private Connection connect() throws SQLException {
+		System.out.println("Connecting to database " + DATABASE_PATH);
+		Connection conn = DriverManager.getConnection("jdbc:mysql:" + DATABASE_PATH + ";create=true"); 
+		conn.setAutoCommit(false);
+		
+		return conn;
+	}
+	
+	@Override
+	public Boolean execute(Connection conn) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public User getUserID(int userid) throws SQLException  {
+			return executeTransaction(new Transaction<User>() {
+				@Override
+				public User execute(Connection conn) throws SQLException {
+					try{
+						// Prepare statement
+						preparedStatement = conn.prepareStatement("SELECT * FROM USERS WHERE id = userid");
+						// Execute Query
+						resultSet = preparedStatement.executeQuery();
+						
+						while(resultSet.next()){
+							
+							getUser(user, resultSet, 1);
+			
+						}
+						
+					} catch (SQLException e){
+						e.printStackTrace();
+					} finally {
+						DBUtil.closeQuietly(resultSet);
+						DBUtil.closeQuietly(preparedStatement);
+					}
+					return user;
+				}
+
+			});
+		
+	}
+
+	@Override
+	public User getUserString(String username) throws SQLException {
+		return executeTransaction(new Transaction<User>() {
+			@Override
+			public User execute(Connection conn) throws SQLException {
+				try{
+					// Prepare statement
+					preparedStatement = conn.prepareStatement("SELECT * FROM USERS WHERE USERNAME = username");
+					// Execute Query
+					resultSet = preparedStatement.executeQuery();
+					
+					while(resultSet.next()){
+						
+						getUser(user, resultSet, 1);
+		
+					}
+					
+				} catch (SQLException e){
+					e.printStackTrace();
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(preparedStatement);
+				}
+				return user;
+			}
+
+		});	
+}
+
+	@Override
+	public boolean createAccount(String username, String password, int userID,
+			String firstname, String lastname, String email) throws SQLException {
+		return executeTransaction(new Transaction<Boolean>() {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
-				PreparedStatement stmt = null;
 				
-				try {
-					stmt = conn.prepareStatement(
-							"create table users (" +
-							"  id integer " +
-							"  userName varchar(20) " +
-							"  password varchar(20)" +
-							"  firstName varchar(20) " +
-							"  lastName varchar(20) " +
-							"  emailAddress varchar(40)" +
-							")"
-					);
-					stmt.executeUpdate();
-					
-					stmt = conn.prepareStatement(
-							"create table hashtags (" +
-							"  hashtagName varchar(30)" +
-							"  id integer " +
-							"  description varchar(100)" +
-							")"	
-					);
-					stmt.executeUpdate();
-					
-					stmt = conn.prepareStatement(
-							"create table photos(" +
-							"  photoID integer " +
-							"  userID integer ," +
-							"  likeCount integer " +
-							" imagePath varchar(60)" +
-							")"
-					);
-					stmt.executeUpdate();
-					
-					return true;
-				} finally {
-					DBUtil.closeQuietly(stmt);
+				try{
+					preparedStatement = conn.prepareStatement(
+							"INSERT INTO USERS values (username,password, firstname, lastname, email");
+					preparedStatement.executeUpdate();
 				}
-				
+				catch(Exception e)
+				{
+					e.printStackTrace();
+					
+				}
+				finally
+				{
+					DBUtil.closeQuietly(preparedStatement);
+				}
+			return true;
 			}
 		});
 	}
-	}
+
+
+	@Override
+	public void deleteUser(int userID) {
+		// TODO Auto-generated method stub
 		
-	 
+	}
+
+
+	@Override
+	public void addPhoto(String fileName, InputStream content) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public User login(String username, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public boolean verifyAccount(String userName, String password) throws SQLException {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {	
+				try{
+					preparedStatement = conn.prepareStatement("select * from USERS where USERNAME=userName AND PASSWORD=password");
+				
+					resultSet = preparedStatement.executeQuery();
+					
+					if(!resultSet.next()){
+						// invalid User parameters, User could not be found
+						return null;
+					}
+					
+				
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(preparedStatement);
+				}
+				return true;
+			}
+
+		});
+	}
+
+
+	@Override
+	public boolean checkExistence(String username) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public void createAccountUser(User user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void addHashtag(HashTag hashtag) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	// DATABASE UTILITY METHODS
+	private void getUser(User user, ResultSet resultSet, int index) throws SQLException {
+		user.setuserID(resultSet.getInt(index));	
+		user.setUserName(resultSet.getString(index));
+		user.setPassword(resultSet.getString(index));
+		user.setFirstName(resultSet.getString(index));
+		user.setLastName(resultSet.getString(index));
+		user.setUserEmail(resultSet.getString(index));
+	}
+
+
+	
+}
+
+    
+    
+
+		
+
+
 
 

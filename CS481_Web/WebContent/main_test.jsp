@@ -15,14 +15,17 @@ body {
 
 img {
 	width: 100%;
-	max-width: 300px;
-	max-height: 300px;
+	max-width: 250px;
+	max-height: 250px;
 }
 
 input {
 	border-radius: 15px;
 }
 
+select {
+	border-radius: 15px;
+}
 
 span#sort_bar {
 	float: left;
@@ -43,6 +46,7 @@ span#search_bar {
 				<option value="views">views</option>
 				<option value="likes">likes</option>
 		</select>
+	<a href="login.jsp">logout</a>
 	</span>
 
 	<span id="search_bar"> search for: <input type="text"
@@ -54,11 +58,14 @@ span#search_bar {
 		</select>
 	</span>
 	<br><br>
-	<a href="test_images/test1.jpg" target="_blank"><img src="test_images/test1.jpg"></a>
-	<a href="test_images/test2.jpg" target="_blank"><img src="test_images/test2.jpg"></a>
-	<a href="photo.jsp" target="_blank"><img src="test_images/test3.jpg"></a>
+	<center>
+		<a href="test_images/test1.jpg" target="_blank"><img src="test_images/test1.jpg"></a>
+		<a href="test_images/test2.jpg" target="_blank"><img src="test_images/test2.jpg"></a>
+		<a href="photo.jsp" target="_blank"><img src="test_images/test3.jpg"></a>
+		<a href="test_images/test1.jpg" target="_blank"><img src="test_images/test1.jpg"></a>
+		<a href="test_images/test2.jpg" target="_blank"><img src="test_images/test2.jpg"></a>
+	</center>
 	<br>
-	<a href="login.jsp">go back</a>
 </body>
 </html>
 

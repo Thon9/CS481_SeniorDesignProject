@@ -22,7 +22,8 @@ body {
     background-color: #cccccc;
 }
 h1 {
-	color:blue;
+	color:White;
+	background-color: Black;
 }
 </style>
 </head>
