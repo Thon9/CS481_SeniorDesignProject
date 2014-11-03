@@ -12,14 +12,14 @@ public interface IDatabase {
 
 	
 		// Returns the user based on an ID
-		public User getUserID(int id);
+		public User getUserID(int id) throws SQLException;
 		
 		// Returns the user based on the userName
-		public User getUserString(String username);
+		public User getUserString(String username) throws SQLException;
 		
 		// Creating account with user's credentials
 		public boolean createAccount(String username, String password, int userID ,
-				String firstname, String lastname, String email);
+				String firstname, String lastname, String email) throws SQLException;
 
 		//Removes user from database
 		public void deleteUser(int userID);
@@ -31,7 +31,7 @@ public interface IDatabase {
 		public User login(String username, String password);
 
 		// Verifys the user based on input userName and password
-		public boolean verifyAccount(String userName, String password);
+		public boolean verifyAccount(String userName, String password) throws SQLException;
 		
 		// Simply checks to see if UserName already exists
 		public boolean checkExistence(String username);
