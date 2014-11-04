@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -13,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import edu.ycp.cs481.srdesign.Photo;
-import edu.ycp.cs481.srdesign.User;
 import edu.ycp.cs481.srdesign.controllers.AddPhotoController;
 import edu.ycp.cs481.srdesign.controllers.GetAllPhotosController;
 
@@ -36,7 +35,6 @@ public class AddPhoto extends HttpServlet {
 		
 		//TODO retrieve photo data 
 		/********************************************/
-		
 		Part filePart = request.getPart("uploadFile"); // Retrieves <input type="file" name="file">
 		
 		if(filePart != null){
@@ -44,50 +42,38 @@ public class AddPhoto extends HttpServlet {
 			String filename = getFilename(filePart);
 			InputStream filecontent = filePart.getInputStream();
 			
-			//do math
-			/*Photo newPhoto = new Photo(filename, filecontent);
-			Photo newPhoto = new Photo();
-			newPhoto.setFileName(filename);
-			newPhoto.setContent(filecontent);*/
-			
 			if (filename != null || filecontent != null){
 				AddPhotoController controller = new AddPhotoController();
 				controller.addPhoto(filename, filecontent);
 				
 				System.out.println(filename);
 				
-				System.out.println("Photo sent to database");
-				
 				GetAllPhotosController getCont = new GetAllPhotosController();
-				ArrayList<File> temp = getCont.getAllPhotos();
+				List<File> temp = getCont.getAllPhotos();
 				
+				List<String> paths = new ArrayList<String>();
+				
+				for(int i=0; i<temp.size(); i++){
+					paths.add("image/"+i);
+				}
+				
+				request.setAttribute("result", "show");
+				request.setAttribute("photoList", paths);
+				request.setAttribute("pht", temp.get(0).toPath());
+				request.getRequestDispatcher("/main.jsp").forward(request, response); 
 			}else {//if not a valid photo of file
 				System.out.println("Invalid Photo input");
+				request.setAttribute("result", "false");
+				
 			}
 		}
-		/********************************************/
-		/*String f = request.getParameter("uploadFile").getBytes().toString();
-		newPhoto.setImageFile(new File(f));
-		//newPhoto.setImageFile(request.getParameter("file"));
-		
-		//add photo to database if valid photo
-		if (newPhoto != null){
-			AddPhotoController controller = new AddPhotoController();
-			controller.addPhoto(newPhoto);
-			System.out.println("add photo to database");
-		}else {//if not a valid photo of file
-			request.setAttribute("result", "invalid photo");
-			this.doGet(request, response);
-		}
-		*/
 	}
 
-	
 	private static String getFilename(Part part) {
 	    for (String cd : part.getHeader("content-disposition").split(";")) {
 	        if (cd.trim().startsWith("filename")) {
 	            String filename = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
-	            return filename.substring(filename.lastIndexOf('/') + 1).substring(filename.lastIndexOf('\\') + 1); // MSIE fix.
+	            return filename.substring(filename.lastIndexOf('/') + 1).substring(filename.lastIndexOf('\\') + 1);
 	        }
 	    }
 	    return null;
