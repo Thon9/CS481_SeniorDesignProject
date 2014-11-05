@@ -4,7 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
+<script>
+function selectedValue(){
+	var value =<%=request.getParameter("selectedValue")%>;
+		if (value != null) {
+			document.f1.sort_type.selectedIndex = value;
+		}
+	}
+</script>
 
 <title>User Page</title>
 <style type="text/css">
@@ -42,12 +49,15 @@ span#search_bar {
 
 	<form action="${pageContext.servletContext.contextPath}/Sort_Gallery"
 		method="post">
-		<span id="sort_bar"> sort by: 
-		<select name = "sort_type">
+		<span id="sort_bar"> 
+		<select name = "sort_type" >
+				<option value="default">sort by </option>
 				<option value="date">date</option>
 				<option value="views">views</option>
 				<option value="likes">likes</option>
-		</select> <a href="main.jsp">upload an image</a> <a href="login.jsp">logout</a>
+		</select> 
+		<input type="submit" name="sort" onclick="selectedValue()"></input>
+		<a href="main.jsp">upload an image</a> <a href="login.jsp">logout</a>
 		</span>
 	</form>
 
@@ -60,6 +70,7 @@ span#search_bar {
 				<option value="tags">tags</option>
 				<option value="users">users</option>
 		</select>
+		<input type="submit" value="Enter" ></input>
 		</span>
 	</form>
 	

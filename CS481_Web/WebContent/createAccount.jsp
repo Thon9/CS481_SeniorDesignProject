@@ -51,12 +51,12 @@ body {
 			</tr>
 			<tr>
 				<th>E-mail address:</th>
-				<th><input type="password" name="email" size="20" /></th>
+				<th><input type="text" name="email" size="20" /></th>
 
 			</tr>
 			<tr>
 				<th>Confirm E-mail:</th>
-				<th><input type="password" name="emailConfirm" size="20" /></th>
+				<th><input type="text" name="emailConfirm" size="20" /></th>
 			</tr>
 		</table>
 		<input type="submit" value="Enter"></input> 

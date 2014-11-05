@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import edu.ycp.cs481.srdesign.controllers.GetAllPhotosController;
 
@@ -34,6 +35,7 @@ public class Sort_Gallery extends HttpServlet {
 		
 		System.out.println("Sorting the Gallery base on "+sort_type+" ...");
 		
+		
 		//get all the photos
 		GetAllPhotosController controller = new GetAllPhotosController();
 		ArrayList<File> gallery  = controller.getAllPhotos();
@@ -41,9 +43,12 @@ public class Sort_Gallery extends HttpServlet {
 		
 		//set the default search tag to title
 		if (sort_type == null){
-			sort_type = "date";
+			sort_type = "default";
 		}
 		
+		HttpSession session = request.getSession();
+		session.setAttribute("sort_type",sort_type);
+
 		response.sendRedirect(request.getContextPath()+"/gallery.jsp");
 	}
 
