@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -24,6 +25,7 @@ img {
 	width: 100%;
 	max-width: 250px;
 	max-height: 250px;
+	border-radius: 10px;
 }
 
 input {
@@ -55,8 +57,9 @@ span#search_bar {
 				<option value="date">date</option>
 				<option value="views">views</option>
 				<option value="likes">likes</option>
+				<option value="random">random</option>
 		</select> 
-		<input type="submit" name="sort" onclick="selectedValue()"></input>
+		<input type="submit" name="sort"></input>
 		<a href="main.jsp">upload an image</a> <a href="login.jsp">logout</a>
 		</span>
 	</form>
@@ -77,6 +80,7 @@ span#search_bar {
 	<br>
 	<br>
 	<center>
+	<!--
 		<a href="test_images/test1.jpg" target="_blank"><img
 			src="test_images/test1.jpg"></a> <a href="test_images/test2.jpg"
 			target="_blank"><img src="test_images/test2.jpg"></a> <a
@@ -84,6 +88,15 @@ span#search_bar {
 		<a href="test_images/test1.jpg" target="_blank"><img
 			src="test_images/test1.jpg"></a> <a href="test_images/test2.jpg"
 			target="_blank"><img src="test_images/test2.jpg"></a>
+	/-->	
+			
+	<form enctype="multipart/form-data" action="${pageContext.servletContext.contextPath}/ShowGallery">
+		<c:forEach var="photo" items="${photoList}">
+					<a href="${photo}" target="_blank"><img src="${photo}"></a>
+					<!-- img src=photo height="200px" width="200px" /-->
+		</c:forEach>
+		
+	</form>
 	</center>
 	<br>
 </body>
