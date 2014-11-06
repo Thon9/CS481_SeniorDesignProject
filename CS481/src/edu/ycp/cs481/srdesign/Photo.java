@@ -17,8 +17,6 @@ public class Photo implements Serializable {
 
 	private ArrayList<Integer> HashTagID = new ArrayList<Integer>();;
 	
-	
-	
 	public Photo(){	}
 
 	public void setuserID(int id){

@@ -152,7 +152,7 @@ public class FakeDatabase implements IDatabase {
 	}
 
 	@Override
-	public void addPhoto(String fileName, InputStream content) {
+	public void addPhoto(String fileName, InputStream content, User uID) {
 		//photos.add(photo);
 		System.out.println("addPhtot:	" + fileName);
 		OutputStream OStream = null;
