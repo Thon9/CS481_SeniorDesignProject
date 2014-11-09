@@ -3,6 +3,7 @@ package edu.ycp.cs481.servlets;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -50,7 +51,12 @@ public class AddPhoto extends HttpServlet {
 			
 			if (filename != null || filecontent != null){
 				AddPhotoController controller = new AddPhotoController();
-				controller.addPhoto(filename, filecontent);
+				try {
+					controller.addPhoto(filename, filecontent);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 				System.out.println(filename);
 				

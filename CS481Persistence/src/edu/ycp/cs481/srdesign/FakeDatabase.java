@@ -74,23 +74,10 @@ public class FakeDatabase implements IDatabase {
 			user.setFirstName(firstname);
 			user.setLastName(lastname);
 			user.setUserEmail(email);
-			createAccountUser(user);
+			users.add(user);
 			userID++;
 			return true;
 		}
-	}
-
-	@Override
-	public boolean verifyAccount(String username, String password) {
-		User user = null;
-		user = getUserString(username);
-		if (user == null) {
-			return false;
-		} else if (!user.getPassword().equals(password)) {
-			System.out.println("Incorrect password for " + username);
-			return false;
-		}
-		return true;
 	}
 
 	@Override
@@ -114,23 +101,19 @@ public class FakeDatabase implements IDatabase {
 		return false;
 	}
 
-	@Override
-	public void createAccountUser(User user) {
-		users.add(user);
-	}
 
 	@Override
-	public void deleteUser(int userID) {
+	public boolean deleteUser(int userID) {
 		for (User user : users){
 			if(user.getuserID() == userID){
 				users.remove(userID);
 			}
 		}
-		
+		return true;
 	}
 
 	@Override
-	public void addPhoto(String fileName, InputStream content) {
+	public boolean addPhoto(String fileName, InputStream content) {
 		//photos.add(photo);
 		OutputStream OStream = null;
 		try{
@@ -170,12 +153,7 @@ public class FakeDatabase implements IDatabase {
 	 
 			}
 		}
-		
-	}
-
-	@Override
-	public void addHashtag(HashTag hashtag) {
-		hashtags.add(hashtag);
+		return true;
 		
 	}
 
@@ -183,6 +161,32 @@ public class FakeDatabase implements IDatabase {
 	public Boolean execute(Connection conn) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean addHashtag(String hashtagname, int userID, String username)
+			throws SQLException {
+		return false;
+	}
+
+	@Override
+	public boolean createAccountUser(User user) {
+		users.add(user);
+		return true;
+	}
+
+	@Override
+	public void addHashtag(HashTag hashtag) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean createAccount(String username, String password,
+			String firstname, String lastname, String email)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
