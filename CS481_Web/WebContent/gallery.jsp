@@ -4,13 +4,20 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
+<script>
+function selectedValue(){
+	var value =<%=request.getParameter("selectedValue")%>;
+		if (value != null) {
+			document.f1.sort_type.selectedIndex = value;
+		}
+	}
+</script>
 
 <title>User Page</title>
 <style type="text/css">
 body {
 	background-size: 100%;
-    background-color: #cccccc;
+	background-color: #cccccc;
 }
 
 img {
@@ -39,32 +46,44 @@ span#search_bar {
 
 <h1 align=center>MyPhotoSpace 2 Gallery</h1>
 <body>
-	<span id="sort_bar"> 
-	sort by: 
-		<select>
+
+	<form action="${pageContext.servletContext.contextPath}/Sort_Gallery"
+		method="post">
+		<span id="sort_bar"> 
+		<select name = "sort_type" >
+				<option value="default">sort by </option>
 				<option value="date">date</option>
 				<option value="views">views</option>
 				<option value="likes">likes</option>
+		</select> 
+		<input type="submit" name="sort" onclick="selectedValue()"></input>
+		<a href="main.jsp">upload an image</a> <a href="login.jsp">logout</a>
+		</span>
+	</form>
+
+	<form action="${pageContext.servletContext.contextPath}/Search_Gallery"
+		method="post">
+		<span id="search_bar"> search for: <input type="text"
+			name="search_object" size="20" /> 
+		<select name = "search_type">
+				<option value="title">title</option>
+				<option value="tags">tags</option>
+				<option value="users">users</option>
 		</select>
-	<a href="main.jsp">upload an image</a>
-	<a href="login.jsp">logout</a>
-	</span>
+		<input type="submit" value="Enter" ></input>
+		</span>
+	</form>
 	
-	<span id="search_bar"> search for: <input type="text"
-		name="search_object" size="20" /> 
-		<select>
-			<option value="title">title</option>
-			<option value="tags">tags</option>
-			<option value="users">users</option>
-		</select>
-	</span>
-	<br><br>
+	<br>
+	<br>
 	<center>
-		<a href="test_images/test1.jpg" target="_blank"><img src="test_images/test1.jpg"></a>
-		<a href="test_images/test2.jpg" target="_blank"><img src="test_images/test2.jpg"></a>
-		<a href="photo.jsp" target="_blank"><img src="test_images/test3.jpg"></a>
-		<a href="test_images/test1.jpg" target="_blank"><img src="test_images/test1.jpg"></a>
-		<a href="test_images/test2.jpg" target="_blank"><img src="test_images/test2.jpg"></a>
+		<a href="test_images/test1.jpg" target="_blank"><img
+			src="test_images/test1.jpg"></a> <a href="test_images/test2.jpg"
+			target="_blank"><img src="test_images/test2.jpg"></a> <a
+			href="photo.jsp" target="_blank"><img src="test_images/test3.jpg"></a>
+		<a href="test_images/test1.jpg" target="_blank"><img
+			src="test_images/test1.jpg"></a> <a href="test_images/test2.jpg"
+			target="_blank"><img src="test_images/test2.jpg"></a>
 	</center>
 	<br>
 </body>

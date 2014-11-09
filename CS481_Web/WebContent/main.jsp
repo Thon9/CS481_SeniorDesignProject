@@ -20,7 +20,7 @@
 	    <!--input type="text" name="description" /-->
 	    <input type="file" name="uploadFile" />
 	    <input type="submit" />
-		<a href="${pht}" target="_blank"><img src="${pht}" height="200px" width="200px"></a>
+		<!-- a href="${pht}" target="_blank"><img src="${pht}" height="200px" width="200px"></a-->
 
 		<table>
 			<c:forEach var="photo" items="${photoList}">

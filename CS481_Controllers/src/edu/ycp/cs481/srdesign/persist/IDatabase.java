@@ -26,8 +26,7 @@ public interface IDatabase {
 		//Removes user from database
 		public void deleteUser(int userID);
 		
-		// Add new photo to the fakeDatabase
-		public void addPhoto(String fileName, InputStream content);
+		
 
 		// Login handling for the User
 		public User login(String username, String password);
@@ -44,10 +43,16 @@ public interface IDatabase {
 		public void addHashtag(HashTag hashtag);
 
 		Boolean execute(Connection conn) throws SQLException;
+		
+		
+		// 	Add new photo to the fakeDatabase
+		public void addPhoto(Photo newPhoto);
+		
+		public ArrayList<Photo> getPhotos();
 
-		public ArrayList<File> getPhotos();
-
-		public void getUserPhotos();
+		public ArrayList<Photo> getUserPhotos(int uID);
+		
+		public Photo getPhotoByID(int pID);
 
 		
 }

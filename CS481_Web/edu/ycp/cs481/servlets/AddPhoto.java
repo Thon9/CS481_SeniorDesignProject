@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import edu.ycp.cs481.srdesign.Photo;
 import edu.ycp.cs481.srdesign.controllers.AddPhotoController;
 import edu.ycp.cs481.srdesign.controllers.GetAllPhotosController;
 
@@ -33,33 +34,38 @@ public class AddPhoto extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//TODO retrieve photo data 
-		/********************************************/
 		Part filePart = request.getPart("uploadFile"); // Retrieves <input type="file" name="file">
 		
 		if(filePart != null){
- 
-			String filename = getFilename(filePart);
-			InputStream filecontent = filePart.getInputStream();
+			String filename = null; 
+			filename = getFilename(filePart);
 			
-			if (filename != null || filecontent != null){
+			InputStream filecontent = null;
+			filecontent =  filePart.getInputStream();
+			
+			if (filename != null || filecontent != null || filename != ""){
 				AddPhotoController controller = new AddPhotoController();
-				controller.addPhoto(filename, filecontent);
+				Photo nPhoto = new Photo();
 				
-				System.out.println(filename);
+				nPhoto.setInStream(filecontent);
 				
+				/********************************************/
+				nPhoto.setuserID(0);//NEEDZ TO BE CHANGED!!!!!!!!!!!!!!!!!!!!!!
+				/********************************************/
+				controller.addPhoto(nPhoto);
+				/*
 				GetAllPhotosController getCont = new GetAllPhotosController();
-				List<File> temp = getCont.getAllPhotos();
+				List<Photo> temp = getCont.getAllPhotos();
 				
 				List<String> paths = new ArrayList<String>();
 				
 				for(int i=0; i<temp.size(); i++){
+					System.out.println(temp.get(i).getFile().toPath());
 					paths.add("image/"+i);
 				}
-				
-				request.setAttribute("result", "show");
-				request.setAttribute("photoList", paths);
-				request.setAttribute("pht", temp.get(0).toPath());
+				*/
+				request.setAttribute("result", "true");
+				//request.setAttribute("photoList", paths);
 				request.getRequestDispatcher("/main.jsp").forward(request, response); 
 			}else {//if not a valid photo of file
 				System.out.println("Invalid Photo input");
