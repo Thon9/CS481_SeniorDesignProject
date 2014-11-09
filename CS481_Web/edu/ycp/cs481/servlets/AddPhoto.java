@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.websocket.Session;
 
 import edu.ycp.cs481.srdesign.Photo;
 import edu.ycp.cs481.srdesign.controllers.AddPhotoController;
@@ -50,7 +51,8 @@ public class AddPhoto extends HttpServlet {
 				nPhoto.setInStream(filecontent);
 				
 				/********************************************/
-				nPhoto.setuserID(0);//NEEDZ TO BE CHANGED!!!!!!!!!!!!!!!!!!!!!!
+				int userId = 0;//session.getAttribute("userid"); 
+				nPhoto.setuserID(userId);//NEEDZ TO BE CHANGED!!!!!!!!!!!!!!!!!!!!!!
 				/********************************************/
 				controller.addPhoto(nPhoto);
 				/*

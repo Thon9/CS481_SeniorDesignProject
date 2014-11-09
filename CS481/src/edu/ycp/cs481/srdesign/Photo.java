@@ -3,6 +3,7 @@ package edu.ycp.cs481.srdesign;
 import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.ArrayList;
 
 
@@ -13,6 +14,7 @@ public class Photo implements Serializable {
 	private int userID;
 	private InputStream inStream;
 	private File file;
+	private Blob blob;
 
 	//private ArrayList<Integer> HashTagID;
 	
@@ -53,5 +55,13 @@ public class Photo implements Serializable {
 	public File getFile() {	return file;	}
 
 	public void setFile(File file) {	this.file = file;	}
+
+	public Blob getBlob() {
+		return blob;
+	}
+
+	public void setBlob(Blob blob) {
+		this.blob = blob;
+	}
 
 }
