@@ -1,8 +1,10 @@
 package edu.ycp.cs481.srdesign.persist;
 
+import java.io.File;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import edu.ycp.cs481.srdesign.User;
 import edu.ycp.cs481.srdesign.HashTag;
@@ -24,6 +26,7 @@ public interface IDatabase {
 		//Removes user from database
 		public boolean deleteUser(int userID) throws SQLException;
 		
+
 		// Add new photo to the fakeDatabase
 		public boolean addPhoto(String fileName, InputStream content) throws SQLException;
 
@@ -35,6 +38,16 @@ public interface IDatabase {
 		public boolean checkExistence(String username) throws SQLException;
 
 		Boolean execute(Connection conn) throws SQLException;
+		
+		
+		// 	Add new photo to the fakeDatabase
+		public void addPhoto(Photo newPhoto);
+		
+		public ArrayList<Photo> getPhotos();
+
+		public ArrayList<Photo> getUserPhotos(int uID);
+		
+		public Photo getPhotoByID(int pID);
 
 		boolean addHashtag(String hashtagname, int userID, String username) throws SQLException;
 

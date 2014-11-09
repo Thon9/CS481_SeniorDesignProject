@@ -14,4 +14,17 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
+  <servlet>
+  	<servlet-name>ShowGallery</servlet-name>
+  	<servlet-class>edu.ycp.cs481.servlets.ShowGallery</servlet-class>
+  </servlet>
+  
+  <!-- Servlet mappings (mapping of paths to servlets). -->
+  
+  <servlet-mapping>
+  	<servlet-name>ShowGallery</servlet-name>
+  	<url-pattern>/Gallery/*</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

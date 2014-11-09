@@ -3,7 +3,12 @@ package edu.ycp.cs481.servlets;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+<<<<<<< HEAD
 import java.sql.SQLException;
+=======
+import java.util.ArrayList;
+import java.util.List;
+>>>>>>> branch 'master' of git@github.com:Thon9/CS481_SeniorDesignProject.git
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -14,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import edu.ycp.cs481.srdesign.Photo;
-import edu.ycp.cs481.srdesign.User;
 import edu.ycp.cs481.srdesign.controllers.AddPhotoController;
+import edu.ycp.cs481.srdesign.controllers.GetAllPhotosController;
 
 /**
  * Servlet implementation class
@@ -33,61 +38,55 @@ public class AddPhoto extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//TODO retrieve photo data 
-		/********************************************/
-		
 		Part filePart = request.getPart("uploadFile"); // Retrieves <input type="file" name="file">
 		
 		if(filePart != null){
- 
-			String filename = getFilename(filePart);
-			InputStream filecontent = filePart.getInputStream();
+			String filename = null; 
+			filename = getFilename(filePart);
 			
-			//do math
-			/*Photo newPhoto = new Photo(filename, filecontent);
-			Photo newPhoto = new Photo();
-			newPhoto.setFileName(filename);
-			newPhoto.setContent(filecontent);*/
+			InputStream filecontent = null;
+			filecontent =  filePart.getInputStream();
 			
-			if (filename != null || filecontent != null){
+			if (filename != null || filecontent != null || filename != ""){
 				AddPhotoController controller = new AddPhotoController();
-				try {
-					controller.addPhoto(filename, filecontent);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+
+
+				Photo nPhoto = new Photo();
+
+				
+				nPhoto.setInStream(filecontent);
+				
+				/********************************************/
+				nPhoto.setuserID(0);//NEEDZ TO BE CHANGED!!!!!!!!!!!!!!!!!!!!!!
+				/********************************************/
+				controller.addPhoto(nPhoto);
+				/*
+				GetAllPhotosController getCont = new GetAllPhotosController();
+				List<Photo> temp = getCont.getAllPhotos();
+				
+				List<String> paths = new ArrayList<String>();
+				
+				for(int i=0; i<temp.size(); i++){
+					System.out.println(temp.get(i).getFile().toPath());
+					paths.add("image/"+i);
 				}
-				
-				System.out.println(filename);
-				
-				System.out.println("Photo sent to database");
+				*/
+				request.setAttribute("result", "true");
+				//request.setAttribute("photoList", paths);
+				request.getRequestDispatcher("/main.jsp").forward(request, response); 
 			}else {//if not a valid photo of file
 				System.out.println("Invalid Photo input");
+				request.setAttribute("result", "false");
+				
 			}
 		}
-		/********************************************/
-		/*String f = request.getParameter("uploadFile").getBytes().toString();
-		newPhoto.setImageFile(new File(f));
-		//newPhoto.setImageFile(request.getParameter("file"));
-		
-		//add photo to database if valid photo
-		if (newPhoto != null){
-			AddPhotoController controller = new AddPhotoController();
-			controller.addPhoto(newPhoto);
-			System.out.println("add photo to database");
-		}else {//if not a valid photo of file
-			request.setAttribute("result", "invalid photo");
-			this.doGet(request, response);
-		}
-		*/
 	}
 
-	
 	private static String getFilename(Part part) {
 	    for (String cd : part.getHeader("content-disposition").split(";")) {
 	        if (cd.trim().startsWith("filename")) {
 	            String filename = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
-	            return filename.substring(filename.lastIndexOf('/') + 1).substring(filename.lastIndexOf('\\') + 1); // MSIE fix.
+	            return filename.substring(filename.lastIndexOf('/') + 1).substring(filename.lastIndexOf('\\') + 1);
 	        }
 	    }
 	    return null;

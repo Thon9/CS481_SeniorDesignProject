@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import edu.ycp.cs481.srdesign.persist.IDatabase;
 
@@ -398,6 +399,30 @@ public boolean addHashtag(String hashtagname, int userID, String username)
 		throws SQLException {
 	// TODO Auto-generated method stub
 	return false;
+}
+
+@Override
+public void addPhoto(Photo newPhoto) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public ArrayList<Photo> getPhotos() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public ArrayList<Photo> getUserPhotos(int uID) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public Photo getPhotoByID(int pID) {
+	// TODO Auto-generated method stub
+	return null;
 }
 
 }

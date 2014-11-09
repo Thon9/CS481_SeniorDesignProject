@@ -1,6 +1,8 @@
 package edu.ycp.cs481.srdesign;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Blob;
@@ -15,29 +17,54 @@ import edu.ycp.cs481.srdesign.persist.IDatabase;
 
 
 public class FakeDatabase implements IDatabase {
-	ArrayList<User>users;
-	ArrayList<Photo> photos;
-	ArrayList<HashTag>hashtags;
+	private ArrayList<User>users;
+	private ArrayList<Photo> photos;
+	private ArrayList<HashTag>hashtags;
 	private int userID = 1;
 	// Store an image in here
 	private Blob image;
 	
+	//private int numPhotos;
+	//private int numUsers;
+	
 	public FakeDatabase(){
 		
-	users = new ArrayList<User>();
-	photos = new ArrayList<Photo>();
-	hashtags = new ArrayList<HashTag>();
-	
+		users = new ArrayList<User>();
+		photos = new ArrayList<Photo>();
+		hashtags = new ArrayList<HashTag>();
+		
+		//numPhotos = 0;
+		//numUsers = 0;
 		
 		User test = new User();
-			test.setFirstName("Test");
-			test.setLastName("Testy");
-			test.setPassword("password");
-			test.setUserName("TestUser");
-			test.setUserEmail("Test@Test.com");
-			test.setuserID(userID);
-			users.add(test);
+		test.setFirstName("Test");
+		test.setLastName("Testy");
+		test.setPassword("password");
+		test.setUserName("TestUser");
+		test.setUserEmail("Test@Test.com");
+		test.setuserID(userID);
+		users.add(test);
+
+		initPhotos();
 	}
+	
+	private void initPhotos(){
+		if(!(new File("C:\\imagesFolder\\")).isDirectory()){
+			(new File("C:\\imagesFolder\\")).mkdirs();
+		}else{
+			for(int i=0;i<users.size(); i++){
+				File directory = new File("C:\\imagesFolder\\");
+				for (File file : directory.listFiles()) {
+				    if (file.isFile()) {
+				       if (file.getName().endsWith(".jpg")||file.getName().endsWith(".png")) {
+				           photos.add(new Photo(file));
+				       }
+				    } 
+				}
+			}
+		}
+	}
+	
 
 	@Override
 	public User getUserID(int id) {
@@ -111,24 +138,51 @@ public class FakeDatabase implements IDatabase {
 		}
 		return true;
 	}
+	
+	@Override
+	public ArrayList<Photo> getPhotos(){
+		ArrayList<Photo> PICS = new ArrayList<Photo>();
+		
+		for(int i=0;i<users.size(); i++){
+			File directory = new File("C:\\imagesFolder\\");
+		
+			for (File file : directory.listFiles()) {
+			    if (file.isFile()) {
+			       if (file.getName().endsWith(".jpg")||file.getName().endsWith(".png")) {
+			           //System.out.println(file.getAbsolutePath());
+			           PICS.add(new Photo(file));
+			       }
+			    } 
+			}
+		}
+		return PICS;
+	}
 
 	@Override
+
 	public boolean addPhoto(String fileName, InputStream content) {
+		return false;
 		//photos.add(photo);
+	}	
+	public void addPhoto(Photo newPhoto) {
+
 		OutputStream OStream = null;
 		try{
-			OStream = new FileOutputStream("/CS481Persistence/edu/ycp/cs481/srdesign/Images/"+fileName);
+			File newImage = new File("C:\\imagesFolder\\"+photos.size()+".jpg");
+			
+			if(!newImage.exists()) {
+				newImage.createNewFile();
+			} 
+			OStream = new FileOutputStream(newImage, false); 
+			
 			
 			int read=0;
 			byte[] data = new byte[1024];
 			
-			while((read = content.read(data)) !=-1){
+			while((read = newPhoto.getInStream().read(data)) !=-1){
 				OStream.write(data, 0, read);
 			}
-			/**************************************/
-			//add things for adding new id fields
-			//Photo p = new Photo();
-			/**************************************/
+			this.photos.add(newPhoto);
 			
 			System.out.println("Data transfer complete!!");
 		}catch(Exception e){
@@ -136,16 +190,15 @@ public class FakeDatabase implements IDatabase {
 			
 		}
 		finally{
-			if (content != null) {
+			if (newPhoto.getInStream() != null) {
 				try {
-					content.close();
+					newPhoto.getInStream().close();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 			if (OStream != null) {
 				try {
-					// outputStream.flush();
 					OStream.close();
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -153,8 +206,16 @@ public class FakeDatabase implements IDatabase {
 	 
 			}
 		}
-		return true;
+
+		return;
 		
+
+		
+	}
+
+	@Override
+	public void addHashtag(HashTag hashtag) {
+		hashtags.add(hashtag);
 	}
 
 	@Override
@@ -175,8 +236,7 @@ public class FakeDatabase implements IDatabase {
 		return true;
 	}
 
-	@Override
-	public void addHashtag(HashTag hashtag) {
+	public void addHashtag1(HashTag hashtag) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -189,4 +249,32 @@ public class FakeDatabase implements IDatabase {
 		return false;
 	}
 
+	public ArrayList<Photo> getUserPhotos(int uID) {
+		ArrayList<Photo> userPhotos = new ArrayList<Photo>();
+		for(int i=0; i<photos.size();i++){
+			if(photos.get(i).getuserID()==uID){
+				userPhotos.add(photos.get(i));
+			}
+		}
+		return userPhotos;
+	}
+	
+	@Override
+	public Photo getPhotoByID(int pID) {
+		return photos.get(pID);
+	}
+/*	public int getNumPhoto() {
+		return numPhotos;
+	}
+
+	public void setNumPhoto(int numPhoto) {
+		this.numPhoto = numPhoto;
+	}
+*/
+
+	@Override
+	public boolean addHashtagtoDatabase(String hashtagname) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

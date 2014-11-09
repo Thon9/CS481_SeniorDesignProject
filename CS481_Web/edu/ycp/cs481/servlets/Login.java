@@ -86,6 +86,11 @@ public class Login extends HttpServlet {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				//to main
+				//request.setAttribute("UserName", "");
+				response.sendRedirect(request.getContextPath()+"/Gallery");
+				//response.sendRedirect(request.getContextPath()+"/gallery.jsp");
+				//this.doGet(request, response);
 			}
 		}
 		else {
