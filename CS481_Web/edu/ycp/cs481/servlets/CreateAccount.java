@@ -1,6 +1,7 @@
 package edu.ycp.cs481.servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -56,7 +57,7 @@ public class CreateAccount extends HttpServlet {
 		//then go to main page with user info
 		else {
 
-		
+			/*
 			//add user
 			User newUser = new User();
 			newUser.setUserName(userName);
@@ -66,22 +67,27 @@ public class CreateAccount extends HttpServlet {
 			newUser.setUserEmail(email);
 			
 			newUser.setUserEmail(email);			
-		
+			 */
 			AddNewUserController controller = new AddNewUserController();
 
 		
 			//controller should add user to DB
-			controller.addNewUser(newUser);
+			try {
+				controller.addNewUser(userName, password, firstName, lastName, email);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 	
 			request.setAttribute("result", "success");
 			//this.doGet(request, response);
 			response.sendRedirect(request.getContextPath()+"/login.jsp");
 			
-			response.sendRedirect(request.getContextPath()+"/main.jsp");
+			//response.sendRedirect(request.getContextPath()+"/main.jsp");
 			
-			request.setAttribute("result", "");
-			this.doGet(request, response);
+			//request.setAttribute("result", "");
+			//this.doGet(request, response);
 		}
 	}
 

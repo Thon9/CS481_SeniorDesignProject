@@ -101,23 +101,10 @@ public class FakeDatabase implements IDatabase {
 			user.setFirstName(firstname);
 			user.setLastName(lastname);
 			user.setUserEmail(email);
-			createAccountUser(user);
+			users.add(user);
 			userID++;
 			return true;
 		}
-	}
-
-	@Override
-	public boolean verifyAccount(String username, String password) {
-		User user = null;
-		user = getUserString(username);
-		if (user == null) {
-			return false;
-		} else if (!user.getPassword().equals(password)) {
-			System.out.println("Incorrect password for " + username);
-			return false;
-		}
-		return true;
 	}
 
 	@Override
@@ -141,19 +128,15 @@ public class FakeDatabase implements IDatabase {
 		return false;
 	}
 
-	@Override
-	public void createAccountUser(User user) {
-		users.add(user);
-	}
 
 	@Override
-	public void deleteUser(int userID) {
+	public boolean deleteUser(int userID) {
 		for (User user : users){
 			if(user.getuserID() == userID){
 				users.remove(userID);
 			}
 		}
-		
+		return true;
 	}
 	
 	@Override
@@ -176,7 +159,13 @@ public class FakeDatabase implements IDatabase {
 	}
 
 	@Override
+
+	public boolean addPhoto(String fileName, InputStream content) {
+		return false;
+		//photos.add(photo);
+	}	
 	public void addPhoto(Photo newPhoto) {
+
 		OutputStream OStream = null;
 		try{
 			File newImage = new File("C:\\imagesFolder\\"+photos.size()+".jpg");
@@ -217,6 +206,10 @@ public class FakeDatabase implements IDatabase {
 	 
 			}
 		}
+
+		return;
+		
+
 		
 	}
 
@@ -232,6 +225,30 @@ public class FakeDatabase implements IDatabase {
 	}
 
 	@Override
+	public boolean addHashtag(String hashtagname, int userID, String username)
+			throws SQLException {
+		return false;
+	}
+
+	@Override
+	public boolean createAccountUser(User user) {
+		users.add(user);
+		return true;
+	}
+
+	public void addHashtag1(HashTag hashtag) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean createAccount(String username, String password,
+			String firstname, String lastname, String email)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	public ArrayList<Photo> getUserPhotos(int uID) {
 		ArrayList<Photo> userPhotos = new ArrayList<Photo>();
 		for(int i=0; i<photos.size();i++){
@@ -254,4 +271,10 @@ public class FakeDatabase implements IDatabase {
 		this.numPhoto = numPhoto;
 	}
 */
+
+	@Override
+	public boolean addHashtagtoDatabase(String hashtagname) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
