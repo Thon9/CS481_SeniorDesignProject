@@ -1,0 +1,23 @@
+<GlobalNamingResources>
+
+<Resource name="jdbc/cs481"
+
+auth="Container"
+
+type="javax.sql.DataSource"
+
+username="root"
+
+password="password"
+
+driverClassName="com.mysql.jdbc.Driver"
+
+description="Global Address Database"
+
+url="jdbc:mysql://localhost:3306/cs481"
+
+maxActive="15"
+
+maxIdle="3"/>
+
+</GlobalNamingResources>

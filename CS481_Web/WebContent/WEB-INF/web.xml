@@ -2,6 +2,14 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>CS481_Web</display-name>
   
+  <!-- DATABASE CONNECTION SETUP -->
+  <resource-ref>
+  <description>DATABASE</description>
+  <res-ref-name>jdbc/cs481</res-ref-name>
+  <res-type>javax.sql.DataSource</res-type>
+  <res-auth>Container</res-auth>
+  </resource-ref>
+  
   <listener>
   	<listener-class>edu.ycp.cs481.servlets.DatabaseInitListener</listener-class>
   </listener>
