@@ -78,7 +78,7 @@ private Connection connect() throws SQLException{
 	} catch (ClassNotFoundException e) {
 		e.printStackTrace();
 	}
-	System.out.println("Connecting to database " + DATABASE_PATH);
+	// System.out.println("Connecting to database " + DATABASE_PATH);
 	Connection conn = DriverManager.getConnection(DATABASE_PATH, "root", "password"); 
 	
 	return conn;
