@@ -3,12 +3,9 @@ package edu.ycp.cs481.servlets;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-<<<<<<< HEAD
 import java.sql.SQLException;
-=======
 import java.util.ArrayList;
 import java.util.List;
->>>>>>> branch 'master' of git@github.com:Thon9/CS481_SeniorDesignProject.git
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
