@@ -20,27 +20,22 @@ public interface IDatabase {
 		public User getUserString(String username) throws SQLException;
 		
 		// Creating account with user's credentials
-		public boolean createAccount(String username, String password, int userID ,
+		public boolean createAccount(String username, String password, 
 				String firstname, String lastname, String email) throws SQLException;
 
 		//Removes user from database
-		public void deleteUser(int userID);
+		public boolean deleteUser(int userID) throws SQLException;
 		
-		
+
+		// Add new photo to the fakeDatabase
+		public boolean addPhoto(String fileName, InputStream content) throws SQLException;
 
 		// Login handling for the User
-		public User login(String username, String password);
+		public User login(String username, String password) throws SQLException;
 
-		// Verifys the user based on input userName and password
-		public boolean verifyAccount(String userName, String password) throws SQLException;
 		
 		// Simply checks to see if UserName already exists
-		public boolean checkExistence(String username);
-
-		public void createAccountUser(User user);
-		
-		// Add new photo to the fakeDatabase
-		public void addHashtag(HashTag hashtag);
+		public boolean checkExistence(String username) throws SQLException;
 
 		Boolean execute(Connection conn) throws SQLException;
 		
@@ -53,6 +48,14 @@ public interface IDatabase {
 		public ArrayList<Photo> getUserPhotos(int uID);
 		
 		public Photo getPhotoByID(int pID);
+
+		boolean addHashtag(String hashtagname, int userID, String username) throws SQLException;
+
+		public boolean createAccountUser(User user) throws SQLException;
+
+		public void addHashtag(HashTag hashtag);
+
+		boolean addHashtagtoDatabase(String hashtagname) throws SQLException;
 
 		
 }

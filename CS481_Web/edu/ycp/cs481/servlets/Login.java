@@ -1,6 +1,7 @@
 package edu.ycp.cs481.servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 // import org.apache.catalina.connector.Request;
+
 
 import edu.ycp.cs481.srdesign.User;
 
@@ -49,23 +51,41 @@ public class Login extends HttpServlet {
 
 			LoginController controller = new LoginController();
 
-			user = controller.login(userName, password);
+			try {
+				user = controller.login(userName, password);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 			//if user is null 
-			if (controller.login(userName, password) == null){	
-				System.out.println("Incorrect username/password");
-				request.setAttribute("result", "incorrect user/password");
-				this.doGet(request, response);
-			}
-			else {
-				System.out.println("Success");
+			try {
+				if (controller.login(userName, password) == null){	
+					System.out.println("Incorrect username/password");
+					request.setAttribute("result", "incorrect user/password");
+					this.doGet(request, response);
+				}
+				else {
+					System.out.println("Success");
 
-				System.out.println(controller.login(userName, password).getUserName());
+					System.out.println(controller.login(userName, password).getUserName());
 
-				//user exist
-				HttpSession session = request.getSession();
-				session.setAttribute("userName", controller.login(userName, password).getUserName());
+					//user exist
+					HttpSession session = request.getSession();
+					session.setAttribute("userName", controller.login(userName, password).getUserName());
+					session.setAttribute("userID", controller.login(userName, password).getuserID());
+					session.setAttribute("email", controller.login(userName, password).getUserEmail());
+					session.setAttribute("firstname", controller.login(userName, password).getFirstName());
+					session.setAttribute("lastname", controller.login(userName, password).getLastName());
+					//to main
+					//request.setAttribute("UserName", "");
+					response.sendRedirect(request.getContextPath()+"/main.jsp");
 
+					//this.doGet(request, response);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 				//to main
 				//request.setAttribute("UserName", "");
 				//response.sendRedirect(request.getContextPath()+"/Gallery");

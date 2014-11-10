@@ -3,6 +3,7 @@ package edu.ycp.cs481.servlets;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.websocket.Session;
 
 import edu.ycp.cs481.srdesign.Photo;
 import edu.ycp.cs481.srdesign.controllers.AddPhotoController;
@@ -43,14 +45,18 @@ public class AddPhoto extends HttpServlet {
 			InputStream filecontent = null;
 			filecontent =  filePart.getInputStream();
 			
-			if (filename != null || filecontent != null || filename != ""){
+			if (filename != null && filecontent != null && filename != ""){
 				AddPhotoController controller = new AddPhotoController();
+
+
 				Photo nPhoto = new Photo();
+
 				
 				nPhoto.setInStream(filecontent);
 				
 				/********************************************/
-				nPhoto.setuserID(0);//NEEDZ TO BE CHANGED!!!!!!!!!!!!!!!!!!!!!!
+				int userId = 0;//session.getAttribute("userid"); 
+				nPhoto.setuserID(userId);//NEEDZ TO BE CHANGED!!!!!!!!!!!!!!!!!!!!!!
 				/********************************************/
 				controller.addPhoto(nPhoto);
 				/*
