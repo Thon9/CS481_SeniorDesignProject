@@ -20,13 +20,9 @@ public class DatabaseInitListener implements ServletContextListener {
 		System.out.println("Creating SQLDatabase...");
 		
 	
+
 		DatabaseProvider.setInstance(new SQLDatabase());
-		
-		//Fake Database Stuff
-		//IDatabase db = new SQLDatabase();
-		//DatabaseProvider.setInstance(db);
-		
-		
+
 		System.out.println("SQLDatabase initialized...");
 	}
 

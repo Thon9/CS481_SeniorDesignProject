@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import edu.ycp.cs481.srdesign.Photo;
 import edu.ycp.cs481.srdesign.controllers.AddPhotoController;
 import edu.ycp.cs481.srdesign.controllers.GetAllPhotosController;
 
@@ -27,13 +28,15 @@ public class ShowGallery extends HttpServlet {
        
     @Override
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-
-		GetAllPhotosController getCont = new GetAllPhotosController();
-		List<File> temp = getCont.getAllPhotos();
+    	System.out.println("Creating get all photos controller");
+    	GetAllPhotosController getCont = new GetAllPhotosController();
 		
+    	List<Photo> temp = getCont.getAllPhotos();
+    	System.out.println(temp.size());
 		List<String> paths = new ArrayList<String>();
 		
 		for(int i=0; i<temp.size(); i++){
+			System.out.println(temp.get(i).getFile().toPath());
 			paths.add("image/"+i);
 		}
 		request.setAttribute("photoList", paths);

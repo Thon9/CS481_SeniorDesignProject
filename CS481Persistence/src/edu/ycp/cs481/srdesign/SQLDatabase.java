@@ -17,6 +17,20 @@ import edu.ycp.cs481.srdesign.persist.IDatabase;
 public class SQLDatabase implements IDatabase {
 User user = new User();
 
+private ArrayList<User>users;
+private ArrayList<Photo> photos;
+private ArrayList<HashTag>hashtags;
+private int userID = 1;
+
+
+public SQLDatabase(){
+	System.out.println("SQL CONSTRUCTOR");
+	users = new ArrayList<User>();
+	photos = new ArrayList<Photo>();
+	hashtags = new ArrayList<HashTag>();
+	initPhotos();
+	
+}
 private String DATABASE_PATH = "jdbc:mysql://localhost/cs481";
 
 	// Create connection and statement
@@ -341,6 +355,7 @@ public boolean createAccountUser(final User user) throws SQLException {
 
 
 @Override
+
 public boolean addPhoto(final String fileName, final FileInputStream fis, final long filelength) throws SQLException {
 	return executeTransaction(new Transaction<Boolean>() {
 		@Override
@@ -371,7 +386,69 @@ public boolean addPhoto(final String fileName, final FileInputStream fis, final 
 		}
 	});
 }
+/**
+ * 
+ * METHODS FROM FAKEDATABASE TO HAVE A WORKING SYSTEM
+ * 
+ * 
+ * 
+ */
 
+
+
+private void initPhotos(){
+	if(!(new File("C:\\imagesFolder\\")).isDirectory()){
+		(new File("C:\\imagesFolder\\")).mkdirs();
+	}else{
+		
+			File directory = new File("C:\\imagesFolder\\");
+			for (File file : directory.listFiles()) {
+			    if (file.isFile()) {
+			       if (file.getName().endsWith(".jpg")||file.getName().endsWith(".png")) {
+			    	   System.out.println("Adding a photo");
+			    	   photos.add(new Photo(file));
+			       }
+			    } 
+			}
+		}
+
+}
+
+
+@Override
+public ArrayList<Photo> getPhotos(){
+	ArrayList<Photo> PICS = new ArrayList<Photo>();
+	
+	//for(int i=0;i<users.size(); i++){
+		File directory = new File("C:\\imagesFolder\\");
+
+		for (File file : directory.listFiles()) {
+		    if (file.isFile()) {
+		       if (file.getName().endsWith(".jpg")||file.getName().endsWith(".png")) {
+		           System.out.println(file.getAbsolutePath());
+		           PICS.add(new Photo(file));
+		       }
+		    } 
+		}
+	//}
+	return PICS;
+}
+
+
+public ArrayList<Photo> getUserPhotos(int uID) {
+	ArrayList<Photo> userPhotos = new ArrayList<Photo>();
+	for(int i=0; i<photos.size();i++){
+		if(photos.get(i).getuserID()==uID){
+			userPhotos.add(photos.get(i));
+		}
+	}
+	return userPhotos;
+}
+
+@Override
+public Photo getPhotoByID(int pID) {
+	return photos.get(pID);
+}
 /*
 public long getBlob(int photoID) throws SQLException {
 	return executeTransaction(new Transaction<Long>() {
@@ -442,158 +519,8 @@ public void addPhoto(Photo newPhoto) {
 	
 }
 
-@Override
-public ArrayList<Photo> getPhotos() {
-	// TODO Auto-generated method stub
-	return null;
 }
 
-@Override
-public ArrayList<Photo> getUserPhotos(int uID) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-@Override
-public Photo getPhotoByID(int pID) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-}
-
-
-/*
- * // Global Variables
-	private static Connection conn = null;
-	private static Statement stmt = null;
-	private static ResultSet rs = null;
-	
-	public static void main(String[] args) {
-		System.out.println("ENTERED MAIN");
-		
-		System.out.println("TEST 1");
-		try {
-			System.out.println("ENTERED TRY");
-			Class.forName("con.mysql.jdbc.Driver");
-			String connectionURL = "jdbc:mysql://localhost/cs481";
-			String connectionUser = "root";
-			String connectionPassword = "password";
-			conn = DriverManager.getConnection(connectionURL, connectionUser, connectionPassword);
-		} catch (Exception e){
-			e.printStackTrace();
-		} finally {
-			try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
-			try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
-			try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
-
-		}	
-	}
-
-	
-	public SQLDatabase() {
-		System.out.println("CONSTRUCTOR");
-		System.out.println("TEST 1");
-		try {
-			System.out.println("ENTERED TRY");
-			
-			stmt = conn.createStatement();
-			System.out.println("Trying to find all users");
-			rs = stmt.executeQuery("SELECT * FROM users");
-			while (rs.next()) {
-				int id = rs.getInt("id");
-				String username = rs.getString("USERNAME");
-				String password = rs.getString("PASSWORD");
-				System.out.println("The userID number is " + id + " and the username is " 
-						+  username + " and their password is " + password);
-			}
-			System.out.println("ALL USERS FOUND");
-		
-		} catch (Exception e){
-			e.printStackTrace();
-		} finally {
-			try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
-			try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
-			try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
-
-		}	
-	}
-
-	@Override
-	public User getUserID(int id) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public User getUserString(String username) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean createAccount(String username, String password, int userID,
-			String firstname, String lastname, String email)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean deleteUser(int userID) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean addPhoto(String fileName, InputStream content)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public User login(String username, String password) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean checkExistence(String username) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Boolean execute(Connection conn) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean addHashtag(String hashtagname, int userID, String username)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean createAccountUser(User user) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void addHashtag(HashTag hashtag) {
-		// TODO Auto-generated method stub
-		
-	}
-}
-
-/*
- */
-
-	
 
 
     

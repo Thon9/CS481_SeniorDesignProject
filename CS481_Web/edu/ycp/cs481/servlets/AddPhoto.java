@@ -4,8 +4,13 @@ package edu.ycp.cs481.servlets;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import java.io.InputStream;
 
 import java.sql.SQLException;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -14,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.websocket.Session;
 
 import edu.ycp.cs481.srdesign.Photo;
 import edu.ycp.cs481.srdesign.controllers.AddPhotoController;
@@ -49,11 +55,10 @@ public class AddPhoto extends HttpServlet {
 
 
 				//Photo nPhoto = new Photo();
-
-				
 				//nPhoto.setInStream(filecontent);
 			
 				
+
 				try {
 					controller.addPhoto(filename, filecontent,filePart.getSize());
 				} catch (SQLException e) {
@@ -61,6 +66,13 @@ public class AddPhoto extends HttpServlet {
 					e.printStackTrace();
 					System.out.println("DID NOT WORK");
 				}
+
+				/*
+				int userId = 0;//session.getAttribute("userid"); 
+				nPhoto.setuserID(userId);//NEEDZ TO BE CHANGED!!!!!!!!!!!!!!!!!!!!!!
+			
+				controller.addPhoto(nPhoto);
+				 */			
 				/*
 				GetAllPhotosController getCont = new GetAllPhotosController();
 				List<Photo> temp = getCont.getAllPhotos();
