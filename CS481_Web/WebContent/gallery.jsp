@@ -69,12 +69,14 @@ span#search_bar {
 		<span id="search_bar"> search for: <input type="text"
 			name="search_object" size="20" /> 
 		<select name = "search_type">
+				<option value="id">id</option>
 				<option value="title">title</option>
 				<option value="tags">tags</option>
 				<option value="users">users</option>
 		</select>
 		<input type="submit" value="Enter" ></input>
 		</span>
+		<center>${result}</center>
 	</form>
 	
 	<br>

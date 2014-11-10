@@ -68,8 +68,8 @@ public class Login extends HttpServlet {
 
 				//to main
 				//request.setAttribute("UserName", "");
-				response.sendRedirect(request.getContextPath()+"/Gallery");
-				//response.sendRedirect(request.getContextPath()+"/gallery.jsp");
+				//response.sendRedirect(request.getContextPath()+"/Gallery");
+				response.sendRedirect(request.getContextPath()+"/main.jsp");
 				//this.doGet(request, response);
 			}
 		}

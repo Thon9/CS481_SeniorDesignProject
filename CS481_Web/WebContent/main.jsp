@@ -7,8 +7,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
+
 <title>User Page</title>
-<h1 align="center">Welcome ${userName}</h1>
+
+<style type="text/css">
+body {
+	background-size: 100%;
+	background-color: #cccccc;
+}
+</style>
+
+<h1 align="center">${userName}</h1>
 </head>
 <body>
 	<script type="text/javascript">
@@ -18,8 +27,14 @@
 	
 		
 	    <!--input type="text" name="description" /-->
-	    <input type="file" name="uploadFile" />
-	    <input type="submit" />
+	    <center>
+	        <a href="Gallery">gallery page</a>
+		    <a href="login.jsp">logout</a>
+		</center>
+			<br><br>
+			<input type="file" name="uploadFile" />
+		    <input type="submit" />
+	    
 		<!-- a href="${pht}" target="_blank"><img src="${pht}" height="200px" width="200px"></a-->
 
 		<table>

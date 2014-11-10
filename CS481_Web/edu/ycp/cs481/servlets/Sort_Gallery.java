@@ -45,11 +45,8 @@ public class Sort_Gallery extends HttpServlet {
 		//get all the photos
 		GetAllPhotosController controller = new GetAllPhotosController();
 		
-		ArrayList<File> gallery  = controller.getAllPhotos();
-		//ArrayList<Photo> gallery  = new ArrayList<Photo>();
+		ArrayList<Photo> gallery  = controller.getAllPhotos();
 		
-		ArrayList<File> sorted_gallery = new ArrayList<File>();
-		//ArrayList<Photo> sorted_gallery = new ArrayList<Photo>();
 		//go to gallery
 		if (sort_type == null || sort_type.contentEquals("sort by")){
 			response.sendRedirect(request.getContextPath()+"/Gallery");
@@ -57,25 +54,22 @@ public class Sort_Gallery extends HttpServlet {
 		
 		//sorting the photos
 		else {
-			
-			//random
-			if (sort_type.contains("random")){
-				System.out.println("Sorting the Gallery base on "+sort_type+" ...");
-				Collections.reverse(gallery);
-			}
-			
-			List<File> temp = gallery;
+			//get the photos
+			List<Photo> temp = gallery;
 			List<String> paths = new ArrayList<String>();
+			//sort by date which is base on id
 			for(int i=0; i<temp.size(); i++){
 				paths.add("image/"+i);
 			}
+			//sort by random
+			if (sort_type.contains("random")){
+				System.out.println("Sorting the Gallery base on "+sort_type+" ...");
+				Collections.shuffle(paths);
+			}
+			
 			request.setAttribute("photoList", paths);
 			request.getRequestDispatcher("/gallery.jsp").forward(request, response); 
-			response.sendRedirect(request.getContextPath()+"/Gallery");
 		}
-		
-		
-		
 		
 	}
 	
