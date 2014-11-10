@@ -48,7 +48,7 @@ public class AddPhoto extends HttpServlet {
 			InputStream filecontent = null;
 			filecontent =  filePart.getInputStream();
 			
-			if (filename != null || filecontent != null || filename != ""){
+			if (filename != null && filecontent != null && filename != ""){
 				AddPhotoController controller = new AddPhotoController();
 
 
