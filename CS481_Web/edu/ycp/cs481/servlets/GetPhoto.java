@@ -27,6 +27,13 @@ public class GetPhoto extends HttpServlet{
 		
 		//image to get
 		String image = request.getRequestURI().substring((request.getRequestURI().lastIndexOf('/') + 1));
+		
+		System.out.println(image);
+		
+		if(image.endsWith(".jpg")){
+			image = image.substring(0, image.lastIndexOf("."));
+		}
+		System.out.println(image);
 		int imageId = Integer.parseInt(image);
 		GetPhotoByIdController p = new GetPhotoByIdController();
 		Photo tmp = p.getPhotobyID(imageId);

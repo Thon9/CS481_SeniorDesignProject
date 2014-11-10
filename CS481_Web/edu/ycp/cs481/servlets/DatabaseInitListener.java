@@ -24,7 +24,8 @@ public class DatabaseInitListener implements ServletContextListener {
 		//DatabaseProvider.setInstance(new SQLDatabase());
 		
 		//Fake Database Stuff
-		IDatabase db = new SQLDatabase();
+		//IDatabase db = new SQLDatabase();
+		IDatabase db = new FakeDatabase();
 		DatabaseProvider.setInstance(db);
 		
 		
