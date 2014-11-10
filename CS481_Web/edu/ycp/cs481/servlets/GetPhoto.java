@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs481.srdesign.Photo;
-import edu.ycp.cs481.srdesign.controllers.GetPhotoByIdController;
+//import edu.ycp.cs481.srdesign.controllers.GetPhotoByIdController;
 
 @WebServlet("/image/*")
 public class GetPhoto extends HttpServlet{

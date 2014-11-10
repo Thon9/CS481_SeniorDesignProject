@@ -1,20 +1,16 @@
 package edu.ycp.cs481.srdesign.controllers;
 
 
-import java.io.InputStream;
+import java.io.FileInputStream;
 import java.sql.SQLException;
 
-
-import edu.ycp.cs481.srdesign.Photo;
 import edu.ycp.cs481.srdesign.persist.DatabaseProvider;
 import edu.ycp.cs481.srdesign.persist.IDatabase;
 
 public class AddPhotoController {
 
-
-
-	public void addPhoto(Photo newPhoto) {
+	public void addPhoto(String fileName, FileInputStream fis, long filelength) throws SQLException {
 		IDatabase db = DatabaseProvider.getInstance();
-		db.addPhoto(newPhoto);
+		db.addPhoto(fileName, fis, filelength);
 	};
 }

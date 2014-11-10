@@ -1,14 +1,11 @@
 package edu.ycp.cs481.servlets;
 
-import java.io.File;
+
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-<<<<<<< HEAD
+
+
 import java.sql.SQLException;
-=======
-import java.util.ArrayList;
-import java.util.List;
->>>>>>> branch 'master' of git@github.com:Thon9/CS481_SeniorDesignProject.git
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -44,22 +41,26 @@ public class AddPhoto extends HttpServlet {
 			String filename = null; 
 			filename = getFilename(filePart);
 			
-			InputStream filecontent = null;
-			filecontent =  filePart.getInputStream();
+			FileInputStream filecontent = null;
+			filecontent =  (FileInputStream) filePart.getInputStream();
 			
-			if (filename != null || filecontent != null || filename != ""){
+			if (filename != null && filecontent != null && filename != ""){
 				AddPhotoController controller = new AddPhotoController();
 
 
-				Photo nPhoto = new Photo();
+				//Photo nPhoto = new Photo();
 
 				
-				nPhoto.setInStream(filecontent);
+				//nPhoto.setInStream(filecontent);
+			
 				
-				/********************************************/
-				nPhoto.setuserID(0);//NEEDZ TO BE CHANGED!!!!!!!!!!!!!!!!!!!!!!
-				/********************************************/
-				controller.addPhoto(nPhoto);
+				try {
+					controller.addPhoto(filename, filecontent,filePart.getSize());
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.out.println("DID NOT WORK");
+				}
 				/*
 				GetAllPhotosController getCont = new GetAllPhotosController();
 				List<Photo> temp = getCont.getAllPhotos();

@@ -19,7 +19,7 @@ import edu.ycp.cs481.srdesign.controllers.GetAllPhotosController;
 
 /**
  * Servlet implementation class
- */
+*/
 @WebServlet("/ShowGallery")
 @MultipartConfig
 public class ShowGallery extends HttpServlet {
@@ -45,3 +45,4 @@ public class ShowGallery extends HttpServlet {
 	}
 	
 }
+

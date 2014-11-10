@@ -17,8 +17,9 @@ import edu.ycp.cs481.srdesign.controllers.GetAllPhotosController;
 /**
  * Servlet implementation class
  */
-@WebServlet("/Search_Gallery")
-@MultipartConfig
+//@WebServlet("/Search_Gallery")
+//@MultipartConfig
+/*
 public class Search_Gallery extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -76,3 +77,4 @@ public class Search_Gallery extends HttpServlet {
 	}
 
 }
+*/

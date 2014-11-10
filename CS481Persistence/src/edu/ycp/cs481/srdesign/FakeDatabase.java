@@ -1,6 +1,7 @@
 package edu.ycp.cs481.srdesign;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.InputStream;
@@ -160,10 +161,7 @@ public class FakeDatabase implements IDatabase {
 
 	@Override
 
-	public boolean addPhoto(String fileName, InputStream content) {
-		return false;
-		//photos.add(photo);
-	}	
+	
 	public void addPhoto(Photo newPhoto) {
 
 		OutputStream OStream = null;
@@ -274,6 +272,14 @@ public class FakeDatabase implements IDatabase {
 
 	@Override
 	public boolean addHashtagtoDatabase(String hashtagname) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean addPhoto(String fileName, FileInputStream fis,
+			long filelength) throws SQLException {
 		// TODO Auto-generated method stub
 		return false;
 	}

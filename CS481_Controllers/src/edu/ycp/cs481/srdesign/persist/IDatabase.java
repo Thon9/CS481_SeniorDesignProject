@@ -1,7 +1,6 @@
 package edu.ycp.cs481.srdesign.persist;
 
-import java.io.File;
-import java.io.InputStream;
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public interface IDatabase {
 		
 
 		// Add new photo to the fakeDatabase
-		public boolean addPhoto(String fileName, InputStream content) throws SQLException;
+		public boolean addPhoto(String fileName, FileInputStream fis, long filelength) throws SQLException;
 
 		// Login handling for the User
 		public User login(String username, String password) throws SQLException;

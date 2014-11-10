@@ -1,6 +1,8 @@
 
 package edu.ycp.cs481.srdesign;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -339,34 +341,67 @@ public boolean createAccountUser(final User user) throws SQLException {
 
 
 @Override
-public boolean addPhoto(String fileName, InputStream content) throws SQLException {
+public boolean addPhoto(final String fileName, final FileInputStream fis, final long filelength) throws SQLException {
 	return executeTransaction(new Transaction<Boolean>() {
 		@Override
 		public Boolean execute(Connection conn) throws SQLException {
+			
 			PreparedStatement preparedStatement = null;
 			try{
-				preparedStatement = conn.prepareStatement(
-						"INSERT INTO PHOTOS values (userID, likeCount, imagePath)");
-				preparedStatement.executeUpdate();
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
+				// CREATE FILE INPUT STREAM FROM FILE
 				
+				
+				preparedStatement = conn.prepareStatement(
+						"INSERT INTO PHOTOS (USERID, PHOTO) VALUES (?, ?)");
+					// Set Values to be inserted into DB
+					System.out.println("Setting values FOR USERID");
+					preparedStatement.setInt(1, 1);
+					System.out.println("Setting values FOR PHOTO");
+					preparedStatement.setBinaryStream(2, fis, filelength);
+					// Update DATABASE
+					preparedStatement.executeUpdate();
+					System.out.println("Check database to see if updated");
 			}
 			finally
 			{
 				DBUtil.closeQuietly(preparedStatement);
+				DBUtil.closeQuietly(conn);
 			}
 		return true;
 		}
 	});
-	
 }
 
+/*
+public long getBlob(int photoID) throws SQLException {
+	return executeTransaction(new Transaction<Long>() {
+		@Override
+		public Long execute(Connection conn) throws SQLException {
+			PreparedStatement preparedStatement = null;
+			try{
+				// CREATE FILE INPUT STREAM FROM FILE
 
-
-
+				preparedStatement = conn.prepareStatement(
+						"INSERT INTO PHOTOS (USERID, PHOTO) VALUES (?, ?)");
+					// Set Values to be inserted into DB
+					System.out.println("Setting values FOR USERID");
+					preparedStatement.setInt(1, 1);
+					System.out.println("Setting values FOR PHOTO");
+					preparedStatement.setBinaryStream(2, fis, filelength);
+					// Update DATABASE
+					preparedStatement.executeUpdate();
+					System.out.println("Check database to see if updated");
+			}
+			finally
+			{
+				DBUtil.closeQuietly(preparedStatement);
+				DBUtil.closeQuietly(conn);
+			}
+		return true;
+		}
+	});
+}
+*/
 
 
 
