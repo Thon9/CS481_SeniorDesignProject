@@ -1,6 +1,7 @@
 package edu.ycp.cs481.srdesign;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.Blob;
@@ -12,50 +13,56 @@ public class Photo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int photoID;
 	private int userID;
-	private InputStream inStream;
-	private File file;
-	private Blob blob;
+	private long fileLength;
+	private FileInputStream fis;
 
 	//private ArrayList<Integer> HashTagID;
 	
 	public Photo(){}
 	
-	public Photo(File file){	this.file = file;	}
 	
-	public Photo(int photoID, int userID, InputStream inStream){	
+	
+	public Photo(int photoID, int userID, FileInputStream fis, long filelength){	
 		this.photoID = photoID;
 		this.userID = userID;
-		this.inStream = inStream;
-		//this.HashTagID = new ArrayList<Integer>();
+		this.fis = fis;
+		this.fileLength = filelength;
 	}
 
-	public void setuserID(int id){	this.userID = id;	}
+	public void setuserID(int id){	
+		this.userID = id;	
+	}
 	
-	public int getuserID(){	return userID;	}
+	public int getuserID(){	
+		return userID;	
+	}
 	
 	// Set/Get User Name
-	public void setphotoID(int pID ) {	this.photoID = pID;	}
-	
-	public int getphotoID() {	return photoID;	}
-	
-	/*
-	 * public ArrayList<Integer> getHashTagIDs(){
-		return HashTagID;
+	public void setphotoID(int pID ) {	
+		this.photoID = pID;	
 	}
-	public void addHashtagIDs(ArrayList<Integer> hIDs){
-		for(int i=0; i<hIDs.size();i++){	this.HashTagID.add(hIDs.get(i));	}
-		
-	}
-	*/
 	
-	public InputStream getInStream() {	return inStream;	}
+	public int getphotoID() {	
+		return photoID;	
+	}
+	
+	
+	public InputStream getFIS() {	
+		return fis; 
+	}
 
-	public void setInStream(InputStream inStream) {	this.inStream = inStream;	}
+	public void setFIS(FileInputStream fis) {	
+		this.fis = fis;	}
 
-	public File getFile() {	return file;	}
+	public long getFileLength() {	
+		return fileLength;	
+	}
 
-	public void setFile(File file) {	this.file = file;	}
+	public void setFileLength(long fileLength) {	
+		this.fileLength = fileLength;	
+	}
 
+	/**
 	public Blob getBlob() {
 		return blob;
 	}
@@ -63,5 +70,8 @@ public class Photo implements Serializable {
 	public void setBlob(Blob blob) {
 		this.blob = blob;
 	}
-
+	
+	public Photo(File file){	this.file = file;	}
+	
+	 **/
 }
