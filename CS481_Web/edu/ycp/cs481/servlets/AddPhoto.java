@@ -44,9 +44,9 @@ public class AddPhoto extends HttpServlet {
 		Part filePart = request.getPart("uploadFile"); // Retrieves <input type="file" name="file">
 		
 		if(filePart != null){
+			
 			String filename = null; 
 			filename = getFilename(filePart);
-			
 			FileInputStream filecontent = null;
 			filecontent =  (FileInputStream) filePart.getInputStream();
 			

@@ -324,13 +324,13 @@ public boolean createAccountUser(final User user) throws SQLException {
 	return executeTransaction(new Transaction<Boolean>() {
 		@Override
 		public Boolean execute(Connection conn) throws SQLException {
-			/*
+			
 			String username = user.getUserName();
 			String password = user.getPassword();
 			String firstname = user.getFirstName();
 			String lastname = user.getLastName();
 			String email = user.getUserEmail();
-			*/
+			
 			PreparedStatement preparedStatement = null;
 			try{
 				preparedStatement = conn.prepareStatement(

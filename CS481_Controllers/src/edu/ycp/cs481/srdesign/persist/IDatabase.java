@@ -21,21 +21,23 @@ public interface IDatabase {
 		// Creating account with user's credentials
 		public boolean createAccount(String username, String password, 
 				String firstname, String lastname, String email) throws SQLException;
-
+		
+		// Creating account with a user
+		public boolean createAccountUser(User user) throws SQLException;
+		
 		//Removes user from database
 		public boolean deleteUser(int userID) throws SQLException;
 		
-
-		// Add new photo to the fakeDatabase
+		// Add new photo to the SQLDatabase - mediumblob
 		public boolean addPhoto(String fileName, FileInputStream fis, long filelength) throws SQLException;
 
 		// Login handling for the User
 		public User login(String username, String password) throws SQLException;
-
 		
 		// Simply checks to see if UserName already exists
 		public boolean checkExistence(String username) throws SQLException;
 
+		// execute transaction
 		Boolean execute(Connection conn) throws SQLException;
 		
 		
@@ -50,7 +52,7 @@ public interface IDatabase {
 
 		boolean addHashtag(String hashtagname, int userID, String username) throws SQLException;
 
-		public boolean createAccountUser(User user) throws SQLException;
+		
 
 		public void addHashtag(HashTag hashtag);
 
