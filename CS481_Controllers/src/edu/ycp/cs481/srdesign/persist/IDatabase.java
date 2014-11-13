@@ -40,19 +40,18 @@ public interface IDatabase {
 		// execute transaction
 		Boolean execute(Connection conn) throws SQLException;
 		
-		
-		// 	Add new photo to the fakeDatabase
+		// 	Add new photo
 		public void addPhoto(Photo newPhoto);
 		
 		public ArrayList<Photo> getPhotos();
 
-		public ArrayList<Photo> getUserPhotos(int uID);
+		public ArrayList<Photo> getUserUploadedPhotos(int uID);
+		
+		public ArrayList<Photo> getUserFollowingPhotos(int uID, int hashtagID);
 		
 		public Photo getPhotoByID(int pID);
 
 		boolean addHashtag(String hashtagname, int userID, String username) throws SQLException;
-
-		
 
 		public void addHashtag(HashTag hashtag);
 
