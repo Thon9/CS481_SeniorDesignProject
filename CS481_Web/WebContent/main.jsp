@@ -24,17 +24,28 @@ body {
 	<script type="text/javascript">
 	</script>
 
-
-	<!--input type="text" name="description" /-->
 	<center>
+		
+	</center>
+	<br>
+
+	<center>	
+		<input type="text" name="hashTag" size="30"/>
+		<input type="submit" value="Search for HashTag"/>
+		
 		<a href="Gallery">gallery page</a>
+		
 		<form action="${pageContext.servletContext.contextPath}/Logout"
 			method="post">
 			<input type="submit" value="Logout"/>
 		</form>
 	</center>
 	<br>
-	<br>
+	
+	<span>
+	
+	</span>
+	<!--input type="text" name="description" /-->
 	<form enctype="multipart/form-data"
 		action="${pageContext.servletContext.contextPath}/main" method=post>
 
