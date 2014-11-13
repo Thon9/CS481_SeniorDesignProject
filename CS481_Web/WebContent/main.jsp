@@ -31,9 +31,15 @@ body {
 	        <a href="Gallery">gallery page</a>
 		    <a href="login.jsp">logout</a>
 		</center>
-			<br><br>
+		
+		<br><br>
 			<input type="file" name="uploadFile" />
-		    <input type="submit" />
+		<br><br>
+			<p>Enter Hashtag(s): <input type="text" name="hashTags" /><i>(Separate Hashtags by # {e.g. #cats #fluffy...})</i></p>
+		<br><br>
+	    	<input type="submit" />
+	    
+	    
 	    
 		<!-- a href="${pht}" target="_blank"><img src="${pht}" height="200px" width="200px"></a-->
 
