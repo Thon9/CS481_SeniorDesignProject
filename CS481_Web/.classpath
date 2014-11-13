@@ -8,5 +8,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/CS481"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/CS481_Controllers"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/CS481Persistence"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mysql-connector-java-5.1.33-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
