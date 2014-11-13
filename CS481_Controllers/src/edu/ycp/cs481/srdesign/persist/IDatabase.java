@@ -41,24 +41,35 @@ public interface IDatabase {
 		Boolean execute(Connection conn) throws SQLException;
 		
 		// 	Add new photo
-		public void addPhoto(Photo newPhoto);
+		public boolean addPhoto(Photo newPhoto) throws SQLException;
 		
-		public ArrayList<Photo> getPhotos();
-
-		public ArrayList<Photo> getUserUploadedPhotos(int uID);
+		// Get Photos Uploaded by User
+		public ArrayList<Photo> getUserUploadedPhotos(int uID) throws SQLException;
 		
+		// Get Photos User is Following
 		public ArrayList<Photo> getUserFollowingPhotos(int uID, int hashtagID);
 		
+		
+		/* TESTING PURPOSES ONLY
+		public ArrayList<Photo> getPhotos();
+		*/
+		
+		// FAKE DATABASE
 		public Photo getPhotoByID(int pID);
-
-		boolean addHashtag(String hashtagname, int userID, String username) throws SQLException;
-
-		public void addHashtag(HashTag hashtag);
-
-		boolean addHashtagtoDatabase(String hashtagname) throws SQLException;
+		
+		// Add Hashtag to HashTagTable
+		public boolean addHashtag(HashTag hashtag) throws SQLException;
+		
+		// Return name of hashtag based on it
+		public String getHashtagByID(int id) throws SQLException;
+		
+		// Return the id of hashtag based on string
+		public int getHashtagByName(String hashtagName) throws SQLException;
 		
 		//Adds relation of hashtag to photo in database
 		public void addRelaHTP(int hashtagID, int photoID);
+
+		public ArrayList<Photo> getPhotos();
 
 		
 }

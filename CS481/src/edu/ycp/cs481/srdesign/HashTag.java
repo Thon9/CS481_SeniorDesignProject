@@ -13,18 +13,18 @@ public class HashTag implements Serializable {
 	   	 
 	}
 	
-	public void setuserID(int id){
+	public void sethashtagID(int id){
 		this.hashtagID = id;
 	}
 	
-	public int getuserID(){
+	public int gethashtagID(){
 		return hashtagID;
 	}
 	
-	public void setUserName(String hashtagName) {
+	public void sethashtagName(String hashtagName) {
 		this.hashtagName = hashtagName;
 	}
-	public String getUserName() {
+	public String gethashtagName() {
 		return hashtagName;
 	}
 	
