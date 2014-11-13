@@ -31,7 +31,6 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setStatus(HttpServletResponse.SC_OK);
 		request.getRequestDispatcher("/login.jsp").forward(request, response);
-		System.out.println("test 1get");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,15 +39,13 @@ public class Login extends HttpServlet {
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
 
-
-
 		//if username and password is NOT null or empty
 		if (userName != null && password != null && !userName.isEmpty() && !password.isEmpty()){
 
 			//check if user exist
-			System.out.println(userName + " "+ password);
+			System.out.println("Checking for user: "+ userName + " and password: "+ password);
+			
 			//controller should check for the user in the database
-
 			LoginController controller = new LoginController();
 
 			try {
@@ -66,10 +63,10 @@ public class Login extends HttpServlet {
 					this.doGet(request, response);
 				}
 				else {
+					
 					System.out.println("Success");
-
 					System.out.println(controller.login(userName, password).getUserName());
-
+					
 					//user exist
 					HttpSession session = request.getSession();
 					session.setAttribute("userName", controller.login(userName, password).getUserName());
@@ -77,20 +74,16 @@ public class Login extends HttpServlet {
 					session.setAttribute("email", controller.login(userName, password).getUserEmail());
 					session.setAttribute("firstname", controller.login(userName, password).getFirstName());
 					session.setAttribute("lastname", controller.login(userName, password).getLastName());
+					
 					//to main
-					//request.setAttribute("UserName", "");
 					response.sendRedirect(request.getContextPath()+"/main.jsp");
 
-					//this.doGet(request, response);
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				//to main
-				//request.setAttribute("UserName", "");
-				//response.sendRedirect(request.getContextPath()+"/Gallery");
 				response.sendRedirect(request.getContextPath()+"/main.jsp");
-				//this.doGet(request, response);
 			}
 		}
 		else {
