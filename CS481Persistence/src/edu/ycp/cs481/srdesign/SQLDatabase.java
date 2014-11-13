@@ -16,6 +16,8 @@ import edu.ycp.cs481.srdesign.persist.IDatabase;
 
 public class SQLDatabase implements IDatabase {
 User user = new User();
+Photo photo = new Photo();
+HashTag hashtag = new HashTag();
 
 private ArrayList<User>users;
 private ArrayList<Photo> photos;
@@ -120,7 +122,7 @@ public User login(final String username, final String password) throws SQLExcept
 				resultSet = preparedStatement.executeQuery();
 				if(resultSet.next()){
 					System.out.println("Username is " +  resultSet.getString("USERNAME"));
-					getUser(user, resultSet, 1);
+					getUser(user, resultSet);
 				} else {
 					System.out.println("NO USERS AVAIBLE");
 				}
@@ -135,7 +137,7 @@ public User login(final String username, final String password) throws SQLExcept
 	});
 }
 
-// WORKING
+// WORKING - NEED TO GET RID OF EVENTUALLY, SHOULD ONLY ADD USER BY USER, NOT ACCOUNT DETAILS
 @Override
 public boolean createAccount(final String username,final String password,final String 
 		firstname,final  String lastname,final String email) throws SQLException {
@@ -172,7 +174,7 @@ public boolean createAccount(final String username,final String password,final S
 // Adds hashtag to database if does not exist!
 // Implemented - Need Controller to TEST
 @Override
-public boolean addHashtagtoDatabase(final String hashtagname) throws SQLException {
+public boolean addHashtag(final HashTag hashtag) throws SQLException {
 	return executeTransaction(new Transaction<Boolean>() {
 		@Override
 		public Boolean execute(Connection conn) throws SQLException {
@@ -180,7 +182,7 @@ public boolean addHashtagtoDatabase(final String hashtagname) throws SQLExceptio
 			try{
 				preparedStatement = conn.prepareStatement(
 						"INSERT INTO HASHTAGS (HASHTAGNAME) VALUES (?)");
-						preparedStatement.setString(1, hashtagname);
+						preparedStatement.setString(1, hashtag.gethashtagName());
 				preparedStatement.executeUpdate();
 			}
 			finally
@@ -251,10 +253,139 @@ public boolean checkExistence(final String username) throws SQLException {
 	});	
 }
 
+// Implemented - NEEDS TO BE TESTED
+@Override
+public boolean addPhoto(final Photo newPhoto) throws SQLException {
+	return executeTransaction(new Transaction<Boolean>() {
+		@Override
+		public Boolean execute(Connection conn) throws SQLException {
+			
+			PreparedStatement preparedStatement = null;
+			try{
+				// CREATE FILE INPUT STREAM FROM FILE
+				preparedStatement = conn.prepareStatement(
+						"INSERT INTO PHOTOS (USERID, PHOTO) VALUES (?, ?)");
+					// Set Values to be inserted into DB
+					System.out.println("Setting values FOR USERID");
+					preparedStatement.setInt(1, newPhoto.getuserID());
+					System.out.println("Setting values FOR PHOTO");
+					preparedStatement.setBinaryStream(2, newPhoto.getFIS(), newPhoto.getFileLength());
+					// Update DATABASE
+					preparedStatement.executeUpdate();
+					int userID = 1;
+					System.out.println("Check database to see if updated");
+			}
+			finally
+			{
+				DBUtil.closeQuietly(preparedStatement);
+				DBUtil.closeQuietly(conn);
+			}
+		return true;
+		}
+	});
+}
 
+	
+// Implemented - NEED TO FINISH UTILITY METHOD
+@Override
+public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException {
+	return executeTransaction(new Transaction<ArrayList<Photo>>() {
+		ArrayList<Photo> photos = new ArrayList<Photo>();
+		@Override
+		public ArrayList<Photo> execute(Connection conn) throws SQLException {	
+			PreparedStatement preparedStatement = null;
+			try{
+				preparedStatement = connect().prepareStatement("SELECT * FROM PHOTOS where id=?");
+					preparedStatement.setInt(1, uID);
+				resultSet = preparedStatement.executeQuery();
+				if(resultSet.next()){
+					getPhotos(photo, resultSet);
+					photos.add(photo);
+				} else {
+					System.out.println("NO PHOTOS FROM USER");
+				}
+								
+			} finally {
+				DBUtil.closeQuietly(resultSet);
+				DBUtil.closeQuietly(preparedStatement);
+			}
+			return photos;
+		}
 
+	});
+}
 
-// NOT CURRENTLY USING
+@Override
+public ArrayList<Photo> getUserFollowingPhotos(int uID, int hashtagID) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public void addRelaHTP(int hashtagID, int photoID) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public String getHashtagByID(int id) throws SQLException {
+	return executeTransaction(new Transaction<String>() {
+		@Override
+		public String execute(Connection conn) throws SQLException {
+			PreparedStatement preparedStatement = null;
+			try{
+				// Prepare statement
+				preparedStatement = conn.prepareStatement("SELECT * FROM HASHTAGS WHERE id = id");
+				// Execute Query
+				resultSet = preparedStatement.executeQuery();
+				
+				if(resultSet != null){
+					getHashtags(hashtag, resultSet);
+				}
+				
+			} catch (SQLException e){
+				e.printStackTrace();
+			} finally {
+				DBUtil.closeQuietly(resultSet);
+				DBUtil.closeQuietly(preparedStatement);
+			}
+			return hashtag.gethashtagName();
+		}
+
+	});
+
+}
+
+@Override
+public int getHashtagByName(String hashtagName) throws SQLException {
+	return executeTransaction(new Transaction<Integer>() {
+		@Override
+		public Integer execute(Connection conn) throws SQLException {
+			PreparedStatement preparedStatement = null;
+			try{
+				// Prepare statement
+				preparedStatement = conn.prepareStatement("SELECT * FROM HASHTAGS WHERE HASHTAGNAME = hashtagName");
+				// Execute Query
+				resultSet = preparedStatement.executeQuery();
+				
+				if(resultSet != null){
+					getHashtags(hashtag, resultSet);
+				}
+				
+			} catch (SQLException e){
+				e.printStackTrace();
+			} finally {
+				DBUtil.closeQuietly(resultSet);
+				DBUtil.closeQuietly(preparedStatement);
+			}
+			return hashtag.gethashtagID();
+		}
+
+	});
+
+}
+
+// Implemented, NEED TO TEST
 @Override
 public User getUserID(int userid) throws SQLException  {
 		return executeTransaction(new Transaction<User>() {
@@ -267,10 +398,8 @@ public User getUserID(int userid) throws SQLException  {
 					// Execute Query
 					resultSet = preparedStatement.executeQuery();
 					
-					while(resultSet.next()){
-	
-						getUser(user, resultSet, 1);
-		
+					if(resultSet != null){
+						getUser(user, resultSet);
 					}
 					
 				} catch (SQLException e){
@@ -302,7 +431,7 @@ public User getUserString(String username) throws SQLException {
 				
 				while(resultSet.next()){
 					
-					getUser(user, resultSet, 1);
+					getUser(user, resultSet);
 	
 				}
 				
@@ -318,25 +447,23 @@ public User getUserString(String username) throws SQLException {
 	});	
 }
 
-// MAY NOT USE AT ALL
+// Implemented, Need to Test
 @Override
 public boolean createAccountUser(final User user) throws SQLException {
 	return executeTransaction(new Transaction<Boolean>() {
 		@Override
 		public Boolean execute(Connection conn) throws SQLException {
-			
-			String username = user.getUserName();
-			String password = user.getPassword();
-			String firstname = user.getFirstName();
-			String lastname = user.getLastName();
-			String email = user.getUserEmail();
-			
 			PreparedStatement preparedStatement = null;
 			try{
-				preparedStatement = conn.prepareStatement(
-						"INSERT INTO USERS values (username,password, firstname, lastname, email");
-				preparedStatement.executeUpdate();
-				System.out.println("The username is ");
+				preparedStatement = conn.prepareStatement("INSERT INTO USERS (USERNAME, PASSWORD, "
+					+ "FIRSTNAME, LASTNAME, EMAIL) VALUES (?, ?, ?, ?, ?)");
+					// Set Values to be inserted into DB
+					System.out.println("Setting values to be inserted");
+					preparedStatement.setString(1, user.getUserName());
+					preparedStatement.setString(2, user.getPassword());
+					preparedStatement.setString(3, user.getFirstName());
+					preparedStatement.setString(4, user.getLastName());
+					preparedStatement.setString(5, user.getUserEmail());
 			}
 			catch(Exception e)
 			{
@@ -352,10 +479,8 @@ public boolean createAccountUser(final User user) throws SQLException {
 	});
 }
 
-
-
+// Implemented and Working
 @Override
-
 public boolean addPhoto(final String fileName, final FileInputStream fis, final long filelength) throws SQLException {
 	return executeTransaction(new Transaction<Boolean>() {
 		@Override
@@ -364,8 +489,6 @@ public boolean addPhoto(final String fileName, final FileInputStream fis, final 
 			PreparedStatement preparedStatement = null;
 			try{
 				// CREATE FILE INPUT STREAM FROM FILE
-				
-				
 				preparedStatement = conn.prepareStatement(
 						"INSERT INTO PHOTOS (USERID, PHOTO) VALUES (?, ?)");
 					// Set Values to be inserted into DB
@@ -373,6 +496,7 @@ public boolean addPhoto(final String fileName, final FileInputStream fis, final 
 					preparedStatement.setInt(1, 1);
 					System.out.println("Setting values FOR PHOTO");
 					preparedStatement.setBinaryStream(2, fis, filelength);
+					
 					// Update DATABASE
 					preparedStatement.executeUpdate();
 					System.out.println("Check database to see if updated");
@@ -406,15 +530,13 @@ private void initPhotos(){
 			    if (file.isFile()) {
 			       if (file.getName().endsWith(".jpg")||file.getName().endsWith(".png")) {
 			    	   System.out.println("Adding a photo");
-			    	   photos.add(new Photo(file));
+			    	   photos.add(new Photo());
 			       }
 			    } 
 			}
 		}
 
 }
-
-
 @Override
 public ArrayList<Photo> getPhotos(){
 	ArrayList<Photo> PICS = new ArrayList<Photo>();
@@ -426,15 +548,13 @@ public ArrayList<Photo> getPhotos(){
 		    if (file.isFile()) {
 		       if (file.getName().endsWith(".jpg")||file.getName().endsWith(".png")) {
 		           System.out.println(file.getAbsolutePath());
-		           PICS.add(new Photo(file));
+		           PICS.add(new Photo());
 		       }
 		    } 
 		}
 	//}
 	return PICS;
 }
-
-
 public ArrayList<Photo> getUserPhotos(int uID) {
 	ArrayList<Photo> userPhotos = new ArrayList<Photo>();
 	for(int i=0; i<photos.size();i++){
@@ -444,60 +564,14 @@ public ArrayList<Photo> getUserPhotos(int uID) {
 	}
 	return userPhotos;
 }
-
 @Override
 public Photo getPhotoByID(int pID) {
 	return photos.get(pID);
 }
-/*
-public long getBlob(int photoID) throws SQLException {
-	return executeTransaction(new Transaction<Long>() {
-		@Override
-		public Long execute(Connection conn) throws SQLException {
-			PreparedStatement preparedStatement = null;
-			try{
-				// CREATE FILE INPUT STREAM FROM FILE
-
-				preparedStatement = conn.prepareStatement(
-						"INSERT INTO PHOTOS (USERID, PHOTO) VALUES (?, ?)");
-					// Set Values to be inserted into DB
-					System.out.println("Setting values FOR USERID");
-					preparedStatement.setInt(1, 1);
-					System.out.println("Setting values FOR PHOTO");
-					preparedStatement.setBinaryStream(2, fis, filelength);
-					// Update DATABASE
-					preparedStatement.executeUpdate();
-					System.out.println("Check database to see if updated");
-			}
-			finally
-			{
-				DBUtil.closeQuietly(preparedStatement);
-				DBUtil.closeQuietly(conn);
-			}
-		return true;
-		}
-	});
-}
-*/
 
 
-
-
-
-
-
-
-
-@Override
-public void addHashtag(HashTag hashtag) {
-	// TODO Auto-generated method stub
-	
-}
-
-
-
-////////////  UTILITY METHOD  ///////////////
-private void getUser(User user, ResultSet resultSet, int index) throws SQLException {
+////////////  UTILITY METHODS  ///////////////
+private void getUser(User user, ResultSet resultSet) throws SQLException {
 	user.setuserID(resultSet.getInt("id"));	
 	user.setUserName(resultSet.getString("USERNAME"));
 	user.setPassword(resultSet.getString("PASSWORD"));
@@ -506,18 +580,19 @@ private void getUser(User user, ResultSet resultSet, int index) throws SQLExcept
 	user.setUserEmail(resultSet.getString("EMAIL"));
 }
 
-@Override
-public boolean addHashtag(String hashtagname, int userID, String username)
-		throws SQLException {
-	// TODO Auto-generated method stub
-	return false;
+private void getPhotos(Photo photo, ResultSet resultSet) throws SQLException {
+	photo.setFileLength(resultSet.getLong(""));
+	photo.setFIS((FileInputStream) resultSet.getBinaryStream(""));
+	photo.setphotoID(resultSet.getInt("id"));
+	photo.setuserID(resultSet.getInt("USERID"));
 }
 
-@Override
-public void addPhoto(Photo newPhoto) {
-	// TODO Auto-generated method stub
-	
+private void getHashtags(HashTag hashtag, ResultSet resultSet) throws SQLException {
+	hashtag.sethashtagName(resultSet.getString("HASHTAGNAME"));
+	hashtag.sethashtagID(resultSet.getInt("id"));
 }
+
+
 
 }
 

@@ -1,8 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -24,36 +25,32 @@ body {
 	</script>
 	
 	<form enctype="multipart/form-data" action="${pageContext.servletContext.contextPath}/main" method=post>
-	
-		
-	    <!--input type="text" name="description" /-->
-	    <center>
-	        <a href="Gallery">gallery page</a>
-		    <a href="login.jsp">logout</a>
-		</center>
-		
-		<br><br>
-			<input type="file" name="uploadFile" />
-		<br><br>
-			<p>Enter Hashtag(s): <input type="text" name="hashTags" /><i>(Separate Hashtags by # {e.g. #cats #fluffy...})</i></p>
-		<br><br>
-	    	<input type="submit" />
-	    
-	    
-	    
+	<!--input type="text" name="description" /-->
+	<center>
+		<a href="Gallery">gallery page</a>
+		<form action="${pageContext.servletContext.contextPath}/Logout"method="post">
+			<input type="submit" value="Logout"/>
+		</form>
+	</center>
+	<br>
+	<br>
+	<form enctype="multipart/form-data"
+		action="${pageContext.servletContext.contextPath}/main" method=post>
+
+		<input type="file" name="uploadFile" /> <input type="submit" />
+
 		<!-- a href="${pht}" target="_blank"><img src="${pht}" height="200px" width="200px"></a-->
 
 		<table>
 			<c:forEach var="photo" items="${photoList}">
 				<tr>
-					<td>
-						<a href="${photo}" target="_blank"><img src="${photo}" height="200px" width="200px"></a>
-						<!-- img src=photo height="200px" width="200px" /-->
+					<td><a href="${photo}" target="_blank"><img src="${photo}"
+							height="200px" width="200px"></a> <!-- img src=photo height="200px" width="200px" /-->
 					</td>
 				</tr>
 			</c:forEach>
 		</table>
-	
+
 		<!-- table border="0" bgcolor=#ccFDDEE>
 			<tr>
 			<td colspan="2" align="center"><B>UPLOAD THE FILE</B><center></td>
