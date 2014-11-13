@@ -26,7 +26,7 @@ import edu.ycp.cs481.srdesign.controllers.GetAllPhotosController;
 /**
  * Servlet implementation class
  */
-@WebServlet("/main")
+@WebServlet("/AddPhoto")
 @MultipartConfig
 public class AddPhoto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
