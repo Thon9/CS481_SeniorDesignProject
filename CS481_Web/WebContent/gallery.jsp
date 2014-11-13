@@ -60,8 +60,11 @@ span#search_bar {
 				<option value="random">random</option>
 		</select> 
 		<input type="submit" name="sort"></input>
-		<a href="main.jsp">upload an image</a> <a href="login.jsp">logout</a>
 		</span>
+	</form>
+	<form action="${pageContext.servletContext.contextPath}/Logout"
+		method="post">
+		<input type="submit" value="Logout"/>
 	</form>
 
 	<form action="${pageContext.servletContext.contextPath}/Search_Gallery"
