@@ -56,6 +56,9 @@ public interface IDatabase {
 		public void addHashtag(HashTag hashtag);
 
 		boolean addHashtagtoDatabase(String hashtagname) throws SQLException;
+		
+		//Adds relation of hashtag to photo in database
+		public void addRelaHTP(int hashtagID, int photoID);
 
 		
 }
