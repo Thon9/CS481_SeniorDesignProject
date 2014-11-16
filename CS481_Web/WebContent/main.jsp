@@ -18,9 +18,11 @@ body {
 }
 </style>
 
-<h1 align="center">${userName}</h1>
+
 </head>
 <body>
+	<h1 align="center">Welcome ${userName}</h1>
+	
 	<script type="text/javascript">
 	</script>
 
@@ -29,60 +31,24 @@ body {
 	<br>
 
 	<center>
-		<input type="text" name="hashTag" size="30" /> <input type="submit"
-			value="Search for HashTag" /> <br> 
+		<form action="${pageContext.servletContext.contextPath}/Search_Gallery" method="post">
+			<input type="text" name="search_object" size="30" /> <input type="submit"
+				value="Search for HashTag" /> 
+		</form>
+			<br> 
 			<a href="Gallery">gallery page</a>
-
+			<br>
+			<a href="photo.jsp">Add Photo</a>
+			
 		<form action="${pageContext.servletContext.contextPath}/Logout"
 			method="post">
 			<input type="submit" value="Logout" />
 		</form>
 	</center>
 	<br>
+<h2>List of Followed HashTags</h2>
+<a href="Search_Gallery?hashTag=#undefine">#undefine</a>
 
-	<span> </span>
-	<!--input type="text" name="description" /-->
-	<form enctype="multipart/form-data"
-		action="${pageContext.servletContext.contextPath}/main" method=post>
-
-		<input type="file" name="uploadFile" /> <input type="submit" />
-
-		<!-- a href="${pht}" target="_blank"><img src="${pht}" height="200px" width="200px"></a-->
-
-		<table>
-			<c:forEach var="photo" items="${photoList}">
-				<tr>
-					<td><a href="${photo}" target="_blank"><img src="${photo}"
-							height="200px" width="200px"></a> <!-- img src=photo height="200px" width="200px" /-->
-					</td>
-				</tr>
-			</c:forEach>
-		</table>
-
-		<!-- table border="0" bgcolor=#ccFDDEE>
-			<tr>
-			<td colspan="2" align="center"><B>UPLOAD THE FILE</B><center></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center"></td>
-			</tr>
-			<tr>
-				<td><b>Choose the image To Upload:</b></td>
-				<td><input name="uploadFile" type="file" /></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center"></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-				<input type="submit" value="Upload Image" /></td>
-			</tr>
-<<<<<<< HEAD
-		</table>
-	
-		<!-- input type="file" id="upload" name="uploadFile" style="visibility: hidden; width: 1px; height: 1px" multiple /> <a href="" onclick = "document.getElementById('upload').click(); return false" > Upload</a>
-		<input type="submit" value="Upload Image"></td-->
-	</form>
 </body>
 </html>
 
