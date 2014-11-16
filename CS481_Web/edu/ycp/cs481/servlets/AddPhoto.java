@@ -34,7 +34,7 @@ public class AddPhoto extends HttpServlet {
     @Override
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
     	response.setStatus(HttpServletResponse.SC_OK);
-		request.getRequestDispatcher("/main.jsp").forward(request, response);
+		request.getRequestDispatcher("/photo.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,7 +42,12 @@ public class AddPhoto extends HttpServlet {
 		Part filePart = request.getPart("uploadFile"); // Retrieves <input type="file" name="file">
 		String tagsUnparsed = request.getParameter("hashTags");
 		
-		ArrayList<String> tagsParsed = parseHashtags(tagsUnparsed); 
+		ArrayList<String> tagsParsed = parseHashtags(tagsUnparsed);
+		
+				/**Todo
+				 * -send parsed hashtags to database
+				 * -relate added hashtags to uploaded photo
+				 */
 		
 		if(filePart != null){
 			
