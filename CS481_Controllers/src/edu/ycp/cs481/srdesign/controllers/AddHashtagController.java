@@ -9,6 +9,11 @@ import edu.ycp.cs481.srdesign.persist.IDatabase;
 public class AddHashtagController {
 	public void addHashtag(HashTag hashtag) throws SQLException {
 		IDatabase db = DatabaseProvider.getInstance();
-		db.addHashtag(hashtag);
+		try {
+			db.addHashtag(hashtag);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

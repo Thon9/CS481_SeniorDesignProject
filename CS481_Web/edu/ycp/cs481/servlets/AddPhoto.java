@@ -3,13 +3,11 @@ package edu.ycp.cs481.servlets;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-
 import java.io.InputStream;
-
 import java.sql.SQLException;
-
 import java.util.ArrayList;
 import java.util.List;
+
 
 
 import javax.servlet.ServletException;
@@ -28,7 +26,7 @@ import edu.ycp.cs481.srdesign.controllers.GetAllPhotosController;
 /**
  * Servlet implementation class
  */
-@WebServlet("/main")
+@WebServlet("/AddPhoto")
 @MultipartConfig
 public class AddPhoto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -36,12 +34,20 @@ public class AddPhoto extends HttpServlet {
     @Override
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
     	response.setStatus(HttpServletResponse.SC_OK);
-		request.getRequestDispatcher("/main.jsp").forward(request, response);
+		request.getRequestDispatcher("/photo.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Part filePart = request.getPart("uploadFile"); // Retrieves <input type="file" name="file">
+		String tagsUnparsed = request.getParameter("hashTags");
+		
+		ArrayList<String> tagsParsed = parseHashtags(tagsUnparsed);
+		
+				/**Todo
+				 * -send parsed hashtags to database
+				 * -relate added hashtags to uploaded photo
+				 */
 		
 		if(filePart != null){
 			
@@ -60,7 +66,11 @@ public class AddPhoto extends HttpServlet {
 				
 
 				try {
-					controller.addPhoto(filename, filecontent,filePart.getSize());
+					/*int photoId = */controller.addPhoto(filename, filecontent,filePart.getSize());
+					/*for(int i=0; i<tagsParsed.size(); i++){
+						GetHashtagID
+					}*/
+					
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -103,5 +113,23 @@ public class AddPhoto extends HttpServlet {
 	        }
 	    }
 	    return null;
+	}
+	
+	private static ArrayList<String> parseHashtags(String tagString){
+		String tmp;
+		ArrayList<String> hashtags = new ArrayList<String>();
+		while(tagString.length()>0){
+			tmp = tagString.substring(tagString.lastIndexOf("#"));
+			tagString = tagString.substring(0, tagString.lastIndexOf("#"));
+			
+			if(tmp.charAt(tmp.length()-1) == ' '){
+				tmp = tmp.substring(0, tmp.length()-1);
+			}
+			
+			hashtags.add(tmp);
+			tmp = "";
+		}
+		
+		return hashtags;
 	}
 }

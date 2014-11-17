@@ -363,10 +363,47 @@ public ArrayList<Photo> getUserFollowingPhotos(final int uID, int hashtagID) thr
 	});
 }
 
+<<<<<<< HEAD
 // 
+=======
+
+/**
+	 * Might need to be fixed
+	 *******************************************************************************************************************************************************************************************************************************************/
+	
+>>>>>>> branch 'master' of git@github.com:Thon9/CS481_SeniorDesignProject.git
 @Override
-public void addRelaHTP(int hashtagID, int photoID) {
-	// TODO Auto-generated method stub
+public boolean addRelaHTP(final int hashtagID, final int photoID) {
+	try {
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement preparedStatement = null;
+				try{
+					// Prepare statement
+					preparedStatement = conn.prepareStatement("INSERT INTO PHOTOHASHTAG (PHOTOID, HASHTAGID) VALUES (?, ?)");
+					
+					preparedStatement.setLong(1, photoID);
+					preparedStatement.setLong(2, hashtagID);
+					
+					// Execute Update
+					preparedStatement.executeUpdate();
+					
+				} finally {
+					DBUtil.closeQuietly(preparedStatement);
+					DBUtil.closeQuietly(conn);
+				}
+				return true;
+			}
+
+		});
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		return false;
+	}
+	
+	
 	
 }
 

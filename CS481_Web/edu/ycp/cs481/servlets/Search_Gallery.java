@@ -21,15 +21,43 @@ import edu.ycp.cs481.srdesign.controllers.LoginController;
 /**
  * Servlet implementation class
  */
-//@WebServlet("/Search_Gallery")
-//@MultipartConfig
-/*
+@WebServlet("/Search_Gallery")
+@MultipartConfig
+
 public class Search_Gallery extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+	
     @Override
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-    	response.setStatus(HttpServletResponse.SC_OK);
+    	
+    	//get the hashtag
+    	String subject = request.getParameter("hashTag");
+
+    	//if undefine hashtag show all photos
+    	if (subject.contains("#undefine")){
+    		subject = "";
+    	}
+    	//get all the photos
+    	GetAllPhotosController controller = new GetAllPhotosController();
+		ArrayList<Photo> gallery  = controller.getAllPhotos();
+		List<String> paths = new ArrayList<String>();
+		
+		//find photos with the hashtag
+    	for (Photo photo : gallery){
+			if (photo.getFile().getName().toString().contains(subject)){
+				//remove the extension
+				String path = photo.getFile().getName().toString();
+				
+				if (path.indexOf(".") > 0)
+					path = path.substring(0, path.lastIndexOf("."));
+				
+				paths.add("image/"+path);
+				System.out.println("doGet found "+path);
+			}
+		}
+    	request.setAttribute("result","HashTag : "+subject);
+		request.setAttribute("photoList", paths);
 		request.getRequestDispatcher("/gallery.jsp").forward(request, response);
 	}
 
@@ -37,7 +65,8 @@ public class Search_Gallery extends HttpServlet {
 		
 		//get the subject and the type the user is searching for
 		String subject = request.getParameter("search_object");
-		String subject_type = request.getParameter("search_type");
+		
+		//String subject_type = request.getParameter("search_type");
 		
 		//get all the photos
 		GetAllPhotosController controller = new GetAllPhotosController();
@@ -46,14 +75,14 @@ public class Search_Gallery extends HttpServlet {
 		List<String> paths = new ArrayList<String>();
 		
 		//set the default search tag to title
-		if (subject_type == null){
-			subject_type = "id";
-		}
-		System.out.println("Searching for "+subject_type+": "+subject+" ...");	
+//		if (subject_type == null){
+//			subject_type = "id";
+//		}
+//		System.out.println("Searching for "+subject_type+": "+subject+" ...");	
 		
 		
 		//search base on id
-		if (subject_type.contains("id")){
+		//if (subject_type.contains("id")){
 			//scan and get only the photos related to the subject
 			for (Photo photo : gallery){
 				if (photo.getFile().getName().toString().contains(subject)){
@@ -64,24 +93,24 @@ public class Search_Gallery extends HttpServlet {
 						path = path.substring(0, path.lastIndexOf("."));
 					
 					paths.add("image/"+path);
-					System.out.println("found "+path);
+					System.out.println("doPost found "+path);
 				}
 			}
-		}
+		//}
 		//search base on user
-		else if (subject_type.contains("user")){	
+//		else if (subject_type.contains("user")){	
 //			for (Photo photo : gallery){
 //				if (photo.getuserID() == ){
 //					
 //				}
 //			}
-		}
+//		}
 		
 		//show new gallery if search success
-		request.setAttribute("result", subject_type+" : "+subject);
+	//	request.setAttribute("result", subject_type+" : "+subject);
 		request.setAttribute("photoList", paths);
 		request.getRequestDispatcher("/gallery.jsp").forward(request, response);
 	}
 
 }
-*/
+

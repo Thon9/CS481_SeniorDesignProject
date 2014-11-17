@@ -48,7 +48,9 @@ span#search_bar {
 
 <h1 align=center>MyPhotoSpace 2 Gallery</h1>
 <body>
-
+	<center>
+	<a href="main.jsp">User Page</a>
+	</center>
 	<form action="${pageContext.servletContext.contextPath}/Sort_Gallery"
 		method="post">
 		<span id="sort_bar"> 

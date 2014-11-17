@@ -28,11 +28,20 @@
   	<servlet-class>edu.ycp.cs481.servlets.ShowGallery</servlet-class>
   </servlet>
   
+  <servlet>
+  	<servlet-name>Search_Gallery</servlet-name>
+  	<servlet-class>edu.ycp.cs481.servlets.Search_Gallery</servlet-class>
+  </servlet>
   <!-- Servlet mappings (mapping of paths to servlets). -->
   
   <servlet-mapping>
   	<servlet-name>ShowGallery</servlet-name>
   	<url-pattern>/Gallery/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>Search_Gallery</servlet-name>
+  	<url-pattern>/Search_Gallery/*</url-pattern>
   </servlet-mapping>
   
 </web-app>
