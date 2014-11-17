@@ -283,4 +283,53 @@ public class FakeDatabase implements IDatabase {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public boolean addPhoto(Photo newPhoto) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ArrayList<Photo> getUserUploadedPhotos(int uID) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Photo> getUserFollowingPhotos(int uID, int hashtagID)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean addHashtag(HashTag hashtag) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String getHashtagByID(int id) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getHashtagByName(String hashtagName) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void addRelaHTP(int hashtagID, int photoID) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getUserPhotos(int uID) {
+		// TODO Auto-generated method stub
+		
+	}
 }
