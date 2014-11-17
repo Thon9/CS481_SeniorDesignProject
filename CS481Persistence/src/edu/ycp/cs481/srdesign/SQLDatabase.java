@@ -4,6 +4,9 @@ package edu.ycp.cs481.srdesign;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import edu.ycp.cs481.srdesign.controllers.GetPhotoByIdController;
 import edu.ycp.cs481.srdesign.persist.IDatabase;
 
 public class SQLDatabase implements IDatabase {
@@ -316,16 +320,58 @@ public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException
 }
 
 @Override
-public ArrayList<Photo> getUserFollowingPhotos(int uID, int hashtagID) {
-	// TODO Auto-generated method stub
-	return null;
+public ArrayList<Photo> getUserFollowingPhotos(final int uID, int hashtagID) throws SQLException {
+	return executeTransaction(new Transaction<ArrayList<Photo>>() {
+		ArrayList<Photo> photos = new ArrayList<Photo>();
+		@Override
+		public ArrayList<Photo> execute(Connection conn) throws SQLException {	
+			PreparedStatement preparedStatement = null;
+			ArrayList<Integer> hashtag = new ArrayList<Integer>();
+			ArrayList<Integer> photoids = new ArrayList<Integer>();
+			try{
+				// Return a resultset That contains the hashtags the user is following			
+				preparedStatement = connect().prepareStatement("SELECT * FROM USERHASHTAG where USERID=?");
+					preparedStatement.setInt(1, uID);
+					resultSet = preparedStatement.executeQuery();
+				if(resultSet.next()){
+					hashtag.add(resultSet.getInt("HASHTAGID"));
+				} else {
+					System.out.println("NO PHOTOS FROM USER");
+				}
+				// Gets all photos user is following
+				for(int i = 1; i < hashtag.size()+1; i++){
+					preparedStatement = connect().prepareStatement("SELECT * FROM PHOTOHASHTAG where HASHTAGID=?");
+					preparedStatement.setInt(1, i);
+					resultSet = preparedStatement.executeQuery();
+					photoids.add(resultSet.getInt("PHOTOID"));
+				}
+				for(int j = 1; j < photoids.size(); j++){
+					preparedStatement = connect().prepareStatement("SELECT * FROM PHOTOS where id=?");
+					preparedStatement.setInt(1, j);
+					resultSet = preparedStatement.executeQuery();
+					photos.add(getPhotos(photo, resultSet));
+				}
+			} finally {
+				DBUtil.closeQuietly(resultSet);
+				DBUtil.closeQuietly(preparedStatement);
+			}
+			// Prints out number of photos
+			System.out.println("The number of photos is " + photos.size());
+			return photos;
+		}
+
+	});
 }
 
+<<<<<<< HEAD
+// 
+=======
 
 /**
 	 * Might need to be fixed
 	 *******************************************************************************************************************************************************************************************************************************************/
 	
+>>>>>>> branch 'master' of git@github.com:Thon9/CS481_SeniorDesignProject.git
 @Override
 public boolean addRelaHTP(final int hashtagID, final int photoID) {
 	try {
@@ -544,15 +590,18 @@ public boolean addPhoto(final String fileName, final FileInputStream fis, final 
 		}
 	});
 }
+
+
+
+
 /**
  * 
- * METHODS FROM FAKEDATABASE TO HAVE A WORKING SYSTEM
+ * 
+ *METHODS FROM FAKEDATABASE TO HAVE A WORKING SYSTEM
  * 
  * 
  * 
  */
-
-
 
 private void initPhotos(){
 	if(!(new File("C:\\imagesFolder\\")).isDirectory()){
@@ -604,6 +653,7 @@ public Photo getPhotoByID(int pID) {
 }
 
 
+
 ////////////  UTILITY METHODS  ///////////////
 private void getUser(User user, ResultSet resultSet) throws SQLException {
 	user.setuserID(resultSet.getInt("id"));	
@@ -614,17 +664,21 @@ private void getUser(User user, ResultSet resultSet) throws SQLException {
 	user.setUserEmail(resultSet.getString("EMAIL"));
 }
 
-private void getPhotos(Photo photo, ResultSet resultSet) throws SQLException {
-	photo.setFileLength(resultSet.getLong(""));
-	photo.setFIS((FileInputStream) resultSet.getBinaryStream(""));
-	photo.setphotoID(resultSet.getInt("id"));
-	photo.setuserID(resultSet.getInt("USERID"));
-}
-
 private void getHashtags(HashTag hashtag, ResultSet resultSet) throws SQLException {
 	hashtag.sethashtagName(resultSet.getString("HASHTAGNAME"));
 	hashtag.sethashtagID(resultSet.getInt("id"));
 }
+
+// NEED TO FIGURE OUT FILELENGTH AND FIS
+private Photo getPhotos(Photo photo, ResultSet resultSet) throws SQLException {
+	photo.setFileLength(resultSet.getLong("PHOTO"));
+	photo.setFIS((FileInputStream) resultSet.getBinaryStream("PHOTO"));
+	photo.setphotoID(resultSet.getInt("id"));
+	photo.setuserID(resultSet.getInt("USERID"));
+	
+	return photo;
+}
+
 
 
 

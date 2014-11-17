@@ -7,7 +7,7 @@ import edu.ycp.cs481.srdesign.persist.DatabaseProvider;
 import edu.ycp.cs481.srdesign.persist.IDatabase;
 
 public class AddHashtagController {
-	public void addHashtag(HashTag hashtag) {
+	public void addHashtag(HashTag hashtag) throws SQLException {
 		IDatabase db = DatabaseProvider.getInstance();
 		try {
 			db.addHashtag(hashtag);
