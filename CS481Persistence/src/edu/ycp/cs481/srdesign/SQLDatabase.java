@@ -120,7 +120,7 @@ public User login(final String username, final String password) throws SQLExcept
 			PreparedStatement preparedStatement = null;
 			try{
 				System.out.println("Creating PreparedStatement");
-				preparedStatement = connect().prepareStatement("SELECT * FROM USERS where USERNAME=? AND PASSWORD=?");
+				preparedStatement = conn.prepareStatement("SELECT * FROM USERS where USERNAME=? AND PASSWORD=?");
 					preparedStatement.setString(1, username);
 					preparedStatement.setString(2, password);
 				resultSet = preparedStatement.executeQuery();
@@ -213,10 +213,10 @@ public boolean deleteUser(final int userID) throws SQLException {
 			PreparedStatement preparedStatement = null;
 			try{
 				// Prepare statement
-				preparedStatement = conn.prepareStatement("DELETE FROM USERS WHERE id=?");
+				preparedStatement = conn.prepareStatement("DELETE FROM USERS WHERE id = ?");
 					preparedStatement.setInt(1, userID);
 				// Execute Query
-				resultSet = preparedStatement.executeQuery();
+				preparedStatement.executeUpdate();
 				System.out.println("User with ID of " + userID + " deleted");
 			} finally {
 				DBUtil.closeQuietly(resultSet);
