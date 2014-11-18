@@ -69,8 +69,7 @@ span#search_bar {
 		<input type="submit" value="Logout"/>
 	</form>
 
-	<form action="${pageContext.servletContext.contextPath}/Search_Gallery"
-		method="post">
+	<form action="${pageContext.servletContext.contextPath}/Gallery?hashTag=${request.getParameter(search_object)}">
 		<span id="search_bar"> search for: <input type="text"
 			name="search_object" size="20" /> 
 		<select name = "search_type">

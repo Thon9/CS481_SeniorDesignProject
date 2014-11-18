@@ -4,14 +4,61 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title align="center">Account Settings</title>
-<h1 align="center">Welcome ${userName}</h1>
+<title>Account Settings</title>
+<style type="text/css">
+body {
+	background-size: 100%;
+	background-color: #cccccc;
+}
+</style>
+
 </head>
 <body>
-<script type="text/javascript">
+	<h1 align="center">Account Setting of ${userName}</h1>
+
+	<!--the top bar include home and logout /-->
+	<div style = "float:left">
+		<button type="button" onClick="JavaScript:window.location='main.jsp';">Home</button>
+	</div>
+	<div style = "float:right">
+	<form action="${pageContext.servletContext.contextPath}/Logout"
+			method="post">
+		<input type="submit" value="Logout" />
+	</form>
+	</div>
+	<br><br>
+	<!--user infomation /-->
+	<script type="text/javascript">
 	</script>
+	<table align = "center">
+		<tr>
+			<th>First Name:</th>
+			<th><input type="text" name="firstName" value="${firstName}" size="20" /></th>
+		</tr>
+		<tr>
+			<th>Last Name:</th>
+			<th><input type="text" name="lastName" value="${lastName}" size="20" /></th>
+		</tr>
+		<tr>
+			<th>User Name:</th>
+			<th><input type="text" name="userName" value="${userName}" size="20" /></th>
+		</tr>
+		<tr>
+			<th>Enter Password:</th>
+			<th><input type="text" name="password" value="${password}" size="20" /></th>
+
+		</tr>
+		<tr>
+			<th>E-mail address:</th>
+			<th><input type="text" name="email" value="${email}" size="20" /></th>
+		</tr>
+	</table>
+	
+	<!--delete user button /-->
 	<center>
-		<button type="button" >DELETE ACCOUNT</button>
+	<form action="${pageContext.servletContext.contextPath}/AccountInformation" method="post">
+		<button type="submit" >DELETE ACCOUNT</button>
+	</form>
 	</center>
 </body>
 </html>

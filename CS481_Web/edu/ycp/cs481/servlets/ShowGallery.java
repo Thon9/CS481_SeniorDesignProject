@@ -30,15 +30,39 @@ public class ShowGallery extends HttpServlet {
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
     	System.out.println("Creating get all photos controller");
     	GetAllPhotosController getCont = new GetAllPhotosController();
-		
+    	
+    	String subject = request.getParameter("hashTag");
+    	
     	List<Photo> temp = getCont.getAllPhotos();
     	System.out.println(temp.size());
 		List<String> paths = new ArrayList<String>();
 		
-		for(int i=0; i<temp.size(); i++){
-			System.out.println(temp.get(i).getFile().toPath());
-			paths.add("image/"+i);
+		//show gallery normally
+		if (subject == null || subject.isEmpty()){
+			System.out.println("no search subject detect showing gallery normally...");
+			for(int i=0; i<temp.size(); i++){
+				System.out.println(temp.get(i).getFile().toPath());
+				paths.add("image/"+i);
+			}
 		}
+		
+		//searching gallery 
+		else {
+			System.out.println("searching for "+subject+"...");
+			ArrayList<Photo> gallery  = getCont.getAllPhotos();
+			for (Photo photo : gallery){
+				if (photo.getFile().getName().toString().contains(subject)){
+					//remove the extension
+					String path = photo.getFile().getName().toString();
+					if (path.indexOf(".") > 0){
+						path = path.substring(0, path.lastIndexOf("."));
+					}
+					paths.add("image/"+path);
+					System.out.println("doGet found "+path);
+				}
+			}
+		}
+		
 		request.setAttribute("photoList", paths);
 		request.getRequestDispatcher("/gallery.jsp").forward(request, response); 
 	}

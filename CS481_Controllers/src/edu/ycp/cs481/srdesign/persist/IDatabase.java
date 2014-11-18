@@ -67,7 +67,7 @@ public interface IDatabase {
 
 		public ArrayList<Photo> getPhotos();
 
-		public void getUserPhotos(int uID);
+		public ArrayList<Photo> getUserPhotos(int uID);
 
 		
 }
