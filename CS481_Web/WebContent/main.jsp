@@ -40,7 +40,8 @@ body {
 			<a href="Gallery">gallery page</a>
 			<br>
 			<a href="photo.jsp">Add Photo</a>
-			
+			<br>
+			<button type="button" onClick="JavaScript:window.location='accountinformation.jsp';">Account Infomation</button>
 		<form action="${pageContext.servletContext.contextPath}/Logout"
 			method="post">
 			<input type="submit" value="Logout" />
