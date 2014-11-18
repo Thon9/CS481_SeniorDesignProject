@@ -41,7 +41,7 @@ body {
 			<br>
 			<a href="photo.jsp">Add Photo</a>
 			<br>
-			<button type="button" onClick="JavaScript:window.location='accountinformation.jsp';">Account Infomation</button>
+			<button type="button" onClick="JavaScript:window.location='accountinformation.jsp';">Account Information</button>
 		<form action="${pageContext.servletContext.contextPath}/Logout"
 			method="post">
 			<input type="submit" value="Logout" />

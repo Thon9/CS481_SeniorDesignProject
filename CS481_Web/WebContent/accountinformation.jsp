@@ -33,11 +33,11 @@ body {
 	<table align = "center">
 		<tr>
 			<th>First Name:</th>
-			<th><input type="text" name="firstName" value="${firstName}" size="20" /></th>
+			<th><input type="text" name="firstname" value="${firstName}" size="20" /></th>
 		</tr>
 		<tr>
 			<th>Last Name:</th>
-			<th><input type="text" name="lastName" value="${lastName}" size="20" /></th>
+			<th><input type="text" name="lastname" value="${lastName}" size="20" /></th>
 		</tr>
 		<tr>
 			<th>User Name:</th>
