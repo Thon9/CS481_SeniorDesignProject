@@ -1,4 +1,3 @@
-
 package edu.ycp.cs481.srdesign;
 
 import java.io.File;
@@ -17,6 +16,7 @@ import java.util.ArrayList;
 
 import edu.ycp.cs481.srdesign.controllers.GetPhotoByIdController;
 import edu.ycp.cs481.srdesign.persist.IDatabase;
+
 
 public class SQLDatabase implements IDatabase {
 User user = new User();
@@ -306,7 +306,7 @@ public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException
 					preparedStatement.setInt(1, uID);
 				resultSet = preparedStatement.executeQuery();
 				if(resultSet.next()){
-					getPhotos(photo, resultSet);
+					getPhoto(photo, resultSet);
 					photos.add(photo);
 				} else {
 					System.out.println("NO PHOTOS FROM USER");
@@ -336,7 +336,7 @@ public ArrayList<Photo> getUserFollowingPhotos(final int uID, int hashtagID) thr
 				// Execute Search
 				resultSet = preparedStatement.executeQuery();
 				while(resultSet.next()){
-					getPhotos(photo, resultSet);
+					photos.add(getPhoto(photo, resultSet));
 				}
 				
 		
@@ -353,7 +353,10 @@ public ArrayList<Photo> getUserFollowingPhotos(final int uID, int hashtagID) thr
 	});
 }
 
-// Implemented - NEED TO TEST
+/**
+	 * Might need to be fixed
+	 *******************************************************************************************************************************************************************************************************************************************/
+	
 @Override
 public boolean addRelaHTP(final int hashtagID, final int photoID) {
 	try {
@@ -586,6 +589,7 @@ public ArrayList<Photo> getPhotos(){
 		    if (file.isFile()) {
 		       if (file.getName().endsWith(".jpg")||file.getName().endsWith(".png")) {
 		           System.out.println(file.getAbsolutePath());
+		   
 		           PICS.add(new Photo());
 		       }
 		    } 
@@ -625,7 +629,7 @@ private void getHashtags(HashTag hashtag, ResultSet resultSet) throws SQLExcepti
 }
 
 // NEED TO FIGURE OUT FILELENGTH AND FIS
-private Photo getPhotos(Photo photo, ResultSet resultSet) throws SQLException {
+private Photo getPhoto(Photo photo, ResultSet resultSet) throws SQLException {
 	photo.setFileLength(resultSet.getLong("PHOTO"));
 	photo.setFIS((FileInputStream) resultSet.getBinaryStream("PHOTO"));
 	photo.setphotoID(resultSet.getInt("id"));
