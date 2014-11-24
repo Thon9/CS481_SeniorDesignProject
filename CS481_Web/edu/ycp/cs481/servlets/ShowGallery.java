@@ -40,10 +40,10 @@ public class ShowGallery extends HttpServlet {
 		//show gallery normally
 		if (subject == null || subject.isEmpty()){
 			System.out.println("no search subject detect showing gallery normally...");
-			for(int i=0; i<temp.size(); i++){
-				System.out.println(temp.get(i).getFile().toPath());
-				paths.add("image/"+i);
-			}
+//			for(int i=0; i<temp.size(); i++){
+//				System.out.println(temp.get(i).getFile().toPath());
+//				paths.add("image/"+i);
+//			}
 		}
 		
 		//searching gallery 
