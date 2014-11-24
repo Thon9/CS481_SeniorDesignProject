@@ -353,7 +353,10 @@ public ArrayList<Photo> getUserFollowingPhotos(final int uID, int hashtagID) thr
 	});
 }
 
-// Implemented - NEED TO TEST
+/**
+	 * Might need to be fixed
+	 *******************************************************************************************************************************************************************************************************************************************/
+	
 @Override
 public boolean addRelaHTP(final int hashtagID, final int photoID) {
 	try {
