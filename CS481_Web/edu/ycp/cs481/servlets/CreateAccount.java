@@ -57,23 +57,21 @@ public class CreateAccount extends HttpServlet {
 		//then go to main page with user info
 		else {
 
-			/*
-			//add user
+			
+			// Create user
 			User newUser = new User();
 			newUser.setUserName(userName);
 			newUser.setPassword(password);
 			newUser.setFirstName(firstName);
 			newUser.setLastName(lastName);
 			newUser.setUserEmail(email);
-			
-			newUser.setUserEmail(email);			
-			 */
+					
 			AddNewUserController controller = new AddNewUserController();
 
 		
 			//controller should add user to DB
 			try {
-				controller.addNewUser(userName, password, firstName, lastName, email);
+				controller.addNewUser(newUser);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

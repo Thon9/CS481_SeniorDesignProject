@@ -22,12 +22,7 @@ public class FakeDatabase implements IDatabase {
 	private ArrayList<Photo> photos;
 	private ArrayList<HashTag>hashtags;
 	private int userID = 1;
-	// Store an image in here
-	private Blob image;
-	
-	//private int numPhotos;
-	//private int numUsers;
-	
+
 	public FakeDatabase(){
 		
 		users = new ArrayList<User>();
@@ -297,7 +292,6 @@ public class FakeDatabase implements IDatabase {
 	}
 
 	@Override
-<<<<<<< HEAD
 	public ArrayList<Photo> getUserFollowingPhotos(int uID, int hashtagID)
 			throws SQLException {
 		// TODO Auto-generated method stub
@@ -330,33 +324,6 @@ public class FakeDatabase implements IDatabase {
 
 	@Override
 	public void getUserPhotos(int uID) {
-=======
-	public ArrayList<Photo> getUserFollowingPhotos(int uID, int hashtagID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean addHashtag(HashTag hashtag) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public String getHashtagByID(int id) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getHashtagByName(String hashtagName) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void addRelaHTP(int hashtagID, int photoID) {
->>>>>>> branch 'master' of git@github.com:Thon9/CS481_SeniorDesignProject.git
 		// TODO Auto-generated method stub
 		
 	}

@@ -42,7 +42,6 @@ private String DATABASE_PATH = "jdbc:mysql://localhost/cs481";
 	// Create connection and statement
 	Connection conn;
 	Statement statement;
-	
 	ResultSet resultSet;
 
 
@@ -111,6 +110,7 @@ public Boolean execute(Connection conn) throws SQLException {
 	conn.commit();
 	return true;
 }
+
 // WORKING
 @Override
 public User login(final String username, final String password) throws SQLException {
@@ -120,7 +120,7 @@ public User login(final String username, final String password) throws SQLExcept
 			PreparedStatement preparedStatement = null;
 			try{
 				System.out.println("Creating PreparedStatement");
-				preparedStatement = connect().prepareStatement("SELECT * FROM USERS where USERNAME=? AND PASSWORD=?");
+				preparedStatement = conn.prepareStatement("SELECT * FROM USERS where USERNAME=? AND PASSWORD=?");
 					preparedStatement.setString(1, username);
 					preparedStatement.setString(2, password);
 				resultSet = preparedStatement.executeQuery();
@@ -141,34 +141,38 @@ public User login(final String username, final String password) throws SQLExcept
 	});
 }
 
-// WORKING - NEED TO GET RID OF EVENTUALLY, SHOULD ONLY ADD USER BY USER, NOT ACCOUNT DETAILS
+// WORKING
 @Override
-public boolean createAccount(final String username,final String password,final String 
-		firstname,final  String lastname,final String email) throws SQLException {
+public boolean createAccountUser(final User user) throws SQLException {
 	return executeTransaction(new Transaction<Boolean>() {
 		@Override
 		public Boolean execute(Connection conn) throws SQLException {
-			
 			PreparedStatement preparedStatement = null;
 			try{
 				preparedStatement = conn.prepareStatement(
 						"INSERT INTO USERS (USERNAME, PASSWORD, "
 						+ "FIRSTNAME, LASTNAME, EMAIL) VALUES (?, ?, ?, ?, ?)");
 					// Set Values to be inserted into DB
-					System.out.println("Setting values to be inserted");
-						preparedStatement.setString(1, username);
-						preparedStatement.setString(2, password);
-						preparedStatement.setString(3, firstname);
-						preparedStatement.setString(4, lastname);
-						preparedStatement.setString(5, email);
-					// Update DATABASE
+					
+					preparedStatement.setString(1, user.getUserName());
+					preparedStatement.setString(2, user.getPassword());
+					preparedStatement.setString(3, user.getFirstName());
+					preparedStatement.setString(4, user.getLastName());
+					preparedStatement.setString(5, user.getUserEmail());
+					// INSERT INTO DATABASE
 					preparedStatement.executeUpdate();
-					System.out.println("Check database to see if updated");
+					// Console print statement
+					System.out.println("Account for " + user.getUserName() + " created!");
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				
 			}
 			finally
 			{
+				DBUtil.closeQuietly(resultSet);
 				DBUtil.closeQuietly(preparedStatement);
-				DBUtil.closeQuietly(conn);
 			}
 		return true;
 		}
@@ -209,10 +213,10 @@ public boolean deleteUser(final int userID) throws SQLException {
 			PreparedStatement preparedStatement = null;
 			try{
 				// Prepare statement
-				preparedStatement = conn.prepareStatement("DELETE FROM USERS WHERE id=?");
+				preparedStatement = conn.prepareStatement("DELETE FROM USERS WHERE id = ?");
 					preparedStatement.setInt(1, userID);
 				// Execute Query
-				resultSet = preparedStatement.executeQuery();
+				preparedStatement.executeUpdate();
 				System.out.println("User with ID of " + userID + " deleted");
 			} finally {
 				DBUtil.closeQuietly(resultSet);
@@ -276,7 +280,6 @@ public boolean addPhoto(final Photo newPhoto) throws SQLException {
 					preparedStatement.setBinaryStream(2, newPhoto.getFIS(), newPhoto.getFileLength());
 					// Update DATABASE
 					preparedStatement.executeUpdate();
-					int userID = 1;
 					System.out.println("Check database to see if updated");
 			}
 			finally
@@ -290,7 +293,7 @@ public boolean addPhoto(final Photo newPhoto) throws SQLException {
 }
 
 	
-// Implemented - NEED TO FINISH UTILITY METHOD
+// Implemented - NEED to TEST
 @Override
 public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException {
 	return executeTransaction(new Transaction<ArrayList<Photo>>() {
@@ -299,7 +302,7 @@ public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException
 		public ArrayList<Photo> execute(Connection conn) throws SQLException {	
 			PreparedStatement preparedStatement = null;
 			try{
-				preparedStatement = connect().prepareStatement("SELECT * FROM PHOTOS where id=?");
+				preparedStatement = conn.prepareStatement("SELECT * FROM PHOTOS where USERID=?");
 					preparedStatement.setInt(1, uID);
 				resultSet = preparedStatement.executeQuery();
 				if(resultSet.next()){
@@ -326,32 +329,19 @@ public ArrayList<Photo> getUserFollowingPhotos(final int uID, int hashtagID) thr
 		@Override
 		public ArrayList<Photo> execute(Connection conn) throws SQLException {	
 			PreparedStatement preparedStatement = null;
-			ArrayList<Integer> hashtag = new ArrayList<Integer>();
-			ArrayList<Integer> photoids = new ArrayList<Integer>();
 			try{
-				// Return a resultset That contains the hashtags the user is following			
-				preparedStatement = connect().prepareStatement("SELECT * FROM USERHASHTAG where USERID=?");
-					preparedStatement.setInt(1, uID);
-					resultSet = preparedStatement.executeQuery();
-				if(resultSet.next()){
-					hashtag.add(resultSet.getInt("HASHTAGID"));
-				} else {
-					System.out.println("NO PHOTOS FROM USER");
+				// Return a resultset That contains the photos from the hashtags the user is following.	
+				preparedStatement = conn.prepareStatement("(SELECT PHOTOID FROM USERHASHTAG u JOIN PHOTOHASHTAG p on u.USERID=uID "
+						+ "and u.HASHTAGID=p.HASHTAGID JOIN PHOTOS ph ON p.PHOTOID=p.id)");
+				// Execute Search
+				resultSet = preparedStatement.executeQuery();
+				while(resultSet.next()){
+					getPhotos(photo, resultSet);
 				}
-				// Gets all photos user is following
-				for(int i = 1; i < hashtag.size()+1; i++){
-					preparedStatement = connect().prepareStatement("SELECT * FROM PHOTOHASHTAG where HASHTAGID=?");
-					preparedStatement.setInt(1, i);
-					resultSet = preparedStatement.executeQuery();
-					photoids.add(resultSet.getInt("PHOTOID"));
-				}
-				for(int j = 1; j < photoids.size(); j++){
-					preparedStatement = connect().prepareStatement("SELECT * FROM PHOTOS where id=?");
-					preparedStatement.setInt(1, j);
-					resultSet = preparedStatement.executeQuery();
-					photos.add(getPhotos(photo, resultSet));
-				}
-			} finally {
+				
+		
+			}
+			finally {
 				DBUtil.closeQuietly(resultSet);
 				DBUtil.closeQuietly(preparedStatement);
 			}
@@ -378,8 +368,9 @@ public boolean addRelaHTP(final int hashtagID, final int photoID) {
 					// Prepare statement
 					preparedStatement = conn.prepareStatement("INSERT INTO PHOTOHASHTAG (PHOTOID, HASHTAGID) VALUES (?, ?)");
 					
-					preparedStatement.setLong(1, photoID);
-					preparedStatement.setLong(2, hashtagID);
+					// Set values to be inserted
+					preparedStatement.setInt(1, photoID);
+					preparedStatement.setInt(2, hashtagID);
 					
 					// Execute Update
 					preparedStatement.executeUpdate();
@@ -402,6 +393,7 @@ public boolean addRelaHTP(final int hashtagID, final int photoID) {
 	
 }
 
+// Implemented - NEED TO TEST
 @Override
 public String getHashtagByID(int id) throws SQLException {
 	return executeTransaction(new Transaction<String>() {
@@ -431,6 +423,7 @@ public String getHashtagByID(int id) throws SQLException {
 
 }
 
+// Implemented - NEED TO TEST
 @Override
 public int getHashtagByName(String hashtagName) throws SQLException {
 	return executeTransaction(new Transaction<Integer>() {
@@ -522,37 +515,7 @@ public User getUserString(String username) throws SQLException {
 	});	
 }
 
-// Implemented, Need to Test
-@Override
-public boolean createAccountUser(final User user) throws SQLException {
-	return executeTransaction(new Transaction<Boolean>() {
-		@Override
-		public Boolean execute(Connection conn) throws SQLException {
-			PreparedStatement preparedStatement = null;
-			try{
-				preparedStatement = conn.prepareStatement("INSERT INTO USERS (USERNAME, PASSWORD, "
-					+ "FIRSTNAME, LASTNAME, EMAIL) VALUES (?, ?, ?, ?, ?)");
-					// Set Values to be inserted into DB
-					System.out.println("Setting values to be inserted");
-					preparedStatement.setString(1, user.getUserName());
-					preparedStatement.setString(2, user.getPassword());
-					preparedStatement.setString(3, user.getFirstName());
-					preparedStatement.setString(4, user.getLastName());
-					preparedStatement.setString(5, user.getUserEmail());
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-				
-			}
-			finally
-			{
-				DBUtil.closeQuietly(preparedStatement);
-			}
-		return true;
-		}
-	});
-}
+
 
 // Implemented and Working
 @Override

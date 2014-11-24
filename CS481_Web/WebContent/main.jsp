@@ -31,15 +31,17 @@ body {
 	<br>
 
 	<center>
-		<form action="${pageContext.servletContext.contextPath}/Search_Gallery" method="post">
-			<input type="text" name="search_object" size="30" /> <input type="submit"
-				value="Search for HashTag" /> 
+		
+		<form action="${pageContext.servletContext.contextPath}/Gallery?hashTag=${request.getParameter(search_object)}" method="post">
+			 <input type="text" name="search_object" size="30" />
+			 <input type="submit" value="Search for HashTag" /> 
 		</form>
 			<br> 
 			<a href="Gallery">gallery page</a>
 			<br>
 			<a href="photo.jsp">Add Photo</a>
-			
+			<br>
+			<button type="button" onClick="JavaScript:window.location='accountinformation.jsp';">Account Information</button>
 		<form action="${pageContext.servletContext.contextPath}/Logout"
 			method="post">
 			<input type="submit" value="Logout" />
@@ -47,7 +49,7 @@ body {
 	</center>
 	<br>
 <h2>List of Followed HashTags</h2>
-<a href="Search_Gallery?hashTag=#undefine">#undefine</a>
+<a href="Gallery?hashTag=#undefine">#undefine</a>
 
 </body>
 </html>

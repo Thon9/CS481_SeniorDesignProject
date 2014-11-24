@@ -18,10 +18,6 @@ public interface IDatabase {
 		// Returns the user based on the userName
 		public User getUserString(String username) throws SQLException;
 		
-		// Creating account with user's credentials
-		public boolean createAccount(String username, String password, 
-				String firstname, String lastname, String email) throws SQLException;
-		
 		// Creating account with a user
 		public boolean createAccountUser(User user) throws SQLException;
 		

@@ -1,6 +1,7 @@
 package edu.ycp.cs481.servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 // import org.apache.catalina.connector.Request;
+
 
 
 
@@ -37,7 +39,12 @@ public class AddHashTag extends HttpServlet {
 		if (newHashTag != null){
 			AddHashtagController controller = new AddHashtagController();
 			//add hashtag to database
-			controller.addHashtag(newHashTag);
+			try {
+				controller.addHashtag(newHashTag);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		//if invalid hashtag e.g. empty hashTag
 		else {

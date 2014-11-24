@@ -37,9 +37,10 @@ public class DeleteAccount extends HttpServlet {
 		DeleteUserController delete = new DeleteUserController();
 		HttpSession session = request.getSession();
 		
-		int userID = (int) session.getAttribute("userID");
-		
+		int userID = (int)session.getAttribute("userID");
+		System.out.println(userID);
 			try {
+				System.out.println("Trying to delete user account with an id of " + userID);
 				delete.deleteUser(userID);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
