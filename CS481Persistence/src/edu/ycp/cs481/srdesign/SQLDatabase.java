@@ -363,15 +363,10 @@ public ArrayList<Photo> getUserFollowingPhotos(final int uID, int hashtagID) thr
 	});
 }
 
-<<<<<<< HEAD
-// 
-=======
-
 /**
 	 * Might need to be fixed
 	 *******************************************************************************************************************************************************************************************************************************************/
 	
->>>>>>> branch 'master' of git@github.com:Thon9/CS481_SeniorDesignProject.git
 @Override
 public boolean addRelaHTP(final int hashtagID, final int photoID) {
 	try {
