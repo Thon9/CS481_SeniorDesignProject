@@ -38,6 +38,7 @@ public class GetPhoto extends HttpServlet{
 		int imageId = Integer.parseInt(image);
 		GetPhotoByIdController p = new GetPhotoByIdController();
 		Photo tmp = p.getPhotobyID(imageId);
+		System.out.println("temp now contains a photo");
 		byte[] imageData = new byte[2048];
 		
 		try{

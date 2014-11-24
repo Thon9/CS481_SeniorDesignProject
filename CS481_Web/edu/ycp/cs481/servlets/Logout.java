@@ -1,5 +1,10 @@
 package edu.ycp.cs481.servlets;
-
+/*
+ * 
+ * DOES NOT WORK, NEED TO RESET INFORMATION
+ * 
+ * 
+ */
 import java.io.IOException;
 import java.sql.SQLException;
 

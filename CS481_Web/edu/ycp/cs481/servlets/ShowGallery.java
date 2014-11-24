@@ -1,3 +1,5 @@
+
+
 package edu.ycp.cs481.servlets;
 
 import java.io.File;
@@ -28,6 +30,7 @@ public class ShowGallery extends HttpServlet {
        
     @Override
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+    	
     	System.out.println("Creating get all photos controller");
     	GetAllPhotosController getCont = new GetAllPhotosController();
     	
@@ -35,15 +38,20 @@ public class ShowGallery extends HttpServlet {
     	
     	List<Photo> temp = getCont.getAllPhotos();
     	System.out.println(temp.size());
+    	System.out.println("temp should contain all of the photos");
 		List<String> paths = new ArrayList<String>();
 		
 		//show gallery normally
+		
+	
 		if (subject == null || subject.isEmpty()){
 			System.out.println("no search subject detect showing gallery normally...");
-			for(int i=0; i<temp.size(); i++){
+			/*
+			for(int i=0; i<1 ; i++){
 				System.out.println(temp.get(i).getFile().toPath());
 				paths.add("image/"+i);
-			}
+			*/
+			//}
 		}
 		
 		//searching gallery 
@@ -65,7 +73,7 @@ public class ShowGallery extends HttpServlet {
 		
 		request.setAttribute("photoList", paths);
 		request.getRequestDispatcher("/gallery.jsp").forward(request, response); 
-	}
+    }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	

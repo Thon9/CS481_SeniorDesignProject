@@ -47,14 +47,14 @@ public class Login extends HttpServlet {
 			
 			//controller should check for the user in the database
 			LoginController controller = new LoginController();
-
+			
 			try {
 				user = controller.login(userName, password);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-
+			 
 			//if user is null 
 			try {
 				if (controller.login(userName, password) == null){	
