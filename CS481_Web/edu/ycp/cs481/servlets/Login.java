@@ -74,6 +74,7 @@ public class Login extends HttpServlet {
 					session.setAttribute("email", controller.login(userName, password).getUserEmail());
 					session.setAttribute("firstname", controller.login(userName, password).getFirstName());
 					session.setAttribute("lastname", controller.login(userName, password).getLastName());
+					session.setAttribute("password", controller.login(userName, password).getPassword());
 					
 					//to main
 					response.sendRedirect(request.getContextPath()+"/main.jsp");
