@@ -650,7 +650,7 @@ public Photo getPhotoByID(int pID) {
 public Photo getPhotoByID(final int pID, boolean x) throws SQLException{
 	return executeTransaction(new Transaction<Photo>() {
 		//ArrayList<Photo> photos = new ArrayList<Photo>();
-		Photo photo = new Photo();
+		Photo ReqPhoto = new Photo();
 		@Override
 		public Photo execute(Connection conn) throws SQLException {	
 			PreparedStatement preparedStatement = null;
@@ -658,10 +658,22 @@ public Photo getPhotoByID(final int pID, boolean x) throws SQLException{
 				// Return a resultset That contains the photos from the hashtags the user is following.	
 				preparedStatement = conn.prepareStatement("SELECT * FROM PHOTOS WHERE ID = ?");
 				// Execute Search
-				preparedStatement.setLong(1, pID);
+				preparedStatement.setInt(1, pID);
 				resultSet = preparedStatement.executeQuery();
-				while(resultSet.next()){
-					getPhotos(photo, resultSet);
+				
+				if(resultSet.first()){
+					
+					//ReqPhoto.setFileLength(resultSet.getLong("BLOB"));
+					ReqPhoto.setFIS(resultSet.getBlob("PHOTO").getBinaryStream());
+					ReqPhoto.setphotoID(resultSet.getInt("id"));
+					ReqPhoto.setuserID(resultSet.getInt("USERID"));
+					
+					
+					/*
+					ReqPhoto = getPhoto(ReqPhoto, resultSet);*/
+					System.out.println(ReqPhoto.getphotoID());
+					System.out.println(ReqPhoto.getuserID());
+					System.out.println(ReqPhoto.getFIS());
 				}
 				
 		
@@ -671,8 +683,8 @@ public Photo getPhotoByID(final int pID, boolean x) throws SQLException{
 				DBUtil.closeQuietly(preparedStatement);
 			}
 			// Prints out number of photos
-			System.out.println("ID:	"+ photo.getphotoID());
-			return photo;
+			System.out.println("ID:	"+ ReqPhoto.getphotoID());
+			return ReqPhoto;
 		}
 
 	});
@@ -697,7 +709,7 @@ private void getHashtags(HashTag hashtag, ResultSet resultSet) throws SQLExcepti
 // NEED TO FIGURE OUT FILELENGTH AND FIS
 private Photo getPhoto(Photo photo, ResultSet resultSet) throws SQLException {
 	//photo.setFileLength(resultSet.getLong("BLOB"));
-	photo.setFIS((FileInputStream) resultSet.getBinaryStream("BLOB"));
+	photo.setFIS((FileInputStream) resultSet.getBinaryStream("PHOTO"));
 	photo.setphotoID(resultSet.getInt("id"));
 	photo.setuserID(resultSet.getInt("USERID"));
 	

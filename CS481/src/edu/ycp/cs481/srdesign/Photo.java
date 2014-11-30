@@ -14,7 +14,7 @@ public class Photo implements Serializable {
 	private int photoID;
 	private int userID;
 	private long fileLength;
-	private FileInputStream fis;
+	private InputStream fis;
 
 	//private ArrayList<Integer> HashTagID;
 	
@@ -51,7 +51,7 @@ public class Photo implements Serializable {
 		return fis; 
 	}
 
-	public void setFIS(FileInputStream fis) {	
+	public void setFIS(InputStream fis) {	
 		this.fis = fis;	}
 
 	public long getFileLength() {	

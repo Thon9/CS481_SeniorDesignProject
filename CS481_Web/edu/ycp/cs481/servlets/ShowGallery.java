@@ -56,10 +56,10 @@ public class ShowGallery extends HttpServlet {
 		if (subject == null || subject.isEmpty()){
 			// PRINT OUT NOTHING TO SEARCH FOR ON PAGE
 			System.out.println("no search subject detect showing gallery normally...");
-//			for(int i=0; i<temp.size(); i++){
-//				System.out.println(temp.get(i).getFile().toPath());
-//				paths.add("image/"+i);
-//			}
+			for(int i=0; i<temp.size(); i++){
+				//System.out.println(temp.get(i).getFile().toPath());
+				paths.add("image/"+i);
+			}
 		}
 		
 		//searching gallery 
@@ -112,7 +112,8 @@ public class ShowGallery extends HttpServlet {
 			//}
 		}
 		
-		request.setAttribute("photoList", images);
+		//request.setAttribute("photoList", images);
+		request.setAttribute("photoList", paths);
 		request.getRequestDispatcher("/gallery.jsp").forward(request, response); 
     }
 
