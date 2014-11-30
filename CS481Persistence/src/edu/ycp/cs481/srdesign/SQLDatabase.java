@@ -30,11 +30,7 @@ private int userID = 1;
 
 
 public SQLDatabase(){
-	System.out.println("SQL CONSTRUCTOR");
-	users = new ArrayList<User>();
-	photos = new ArrayList<Photo>();
-	hashtags = new ArrayList<HashTag>();
-	initPhotos();
+	
 	
 }
 private String DATABASE_PATH = "jdbc:mysql://localhost/cs481";
@@ -584,17 +580,8 @@ public boolean addPhoto(final String fileName, final FileInputStream fis, final 
 }
 
 
-
-
-/**
- * 
- * 
- *METHODS FROM FAKEDATABASE TO HAVE A WORKING SYSTEM
- * 
- * 
- * 
- */
-
+/*
+// FAKE DATABASE STUFFs
 private void initPhotos(){
 	if(!(new File("C:\\imagesFolder\\")).isDirectory()){
 		(new File("C:\\imagesFolder\\")).mkdirs();
@@ -644,6 +631,8 @@ public ArrayList<Photo> getUserPhotos(int uID) {
 public Photo getPhotoByID(int pID) {
 	return this.photos.get(pID);
 }
+
+*/
 
 @Override
 public Photo getPhotoByID(final int pID, boolean x) throws SQLException{
@@ -715,6 +704,18 @@ private Photo getPhoto(ResultSet resultSet) throws SQLException {
 	interPhoto.setuserID(resultSet.getInt("USERID"));
 	
 	return interPhoto;
+}
+
+@Override
+public Photo getPhotoByID(int pID) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public ArrayList<Photo> getPhotos() {
+	// TODO Auto-generated method stub
+	return null;
 }
 
 

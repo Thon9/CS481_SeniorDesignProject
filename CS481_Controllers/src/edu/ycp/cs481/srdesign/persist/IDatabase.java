@@ -68,9 +68,11 @@ public interface IDatabase {
 
 		public ArrayList<Photo> getPhotos();
 
-		public ArrayList<Photo> getUserPhotos(int uID);
+		//public ArrayList<Photo> getUserPhotos(int uID);
 
 		Photo getPhotoByID(int pID, boolean x) throws SQLException;
+
+
 
 		
 }

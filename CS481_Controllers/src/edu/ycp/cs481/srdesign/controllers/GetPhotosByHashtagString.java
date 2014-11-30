@@ -7,7 +7,7 @@ import edu.ycp.cs481.srdesign.Photo;
 import edu.ycp.cs481.srdesign.persist.DatabaseProvider;
 
 public class GetPhotosByHashtagString {
-	public ArrayList<Photo> Photo(String hashtagstring) throws SQLException{
+	public ArrayList<Photo> GetPhotosByHashtagString(String hashtagstring) throws SQLException{
 		return DatabaseProvider.getInstance().getUserSearchPhotos(hashtagstring);
 	}
 }

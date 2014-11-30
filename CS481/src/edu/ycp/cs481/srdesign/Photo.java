@@ -48,7 +48,7 @@ public class Photo implements Serializable {
 	
 	
 	public InputStream getFIS() {	
-		return fis; 
+		return  fis; 
 	}
 
 	public void setFIS(InputStream fis) {	
