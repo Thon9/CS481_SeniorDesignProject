@@ -293,6 +293,13 @@ public class FakeDatabase implements IDatabase {
 		return false;
 	}
 
+	@Override
+	public ArrayList<Photo> getUserSearchPhotos(String hashtagstring)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 	

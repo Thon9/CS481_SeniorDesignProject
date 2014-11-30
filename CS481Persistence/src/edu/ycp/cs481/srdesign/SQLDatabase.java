@@ -204,6 +204,41 @@ public boolean addHashtag(final HashTag hashtag) throws SQLException {
 	
 }
 
+/**
+ * 
+ * NEEDS TESTED
+ * 
+ */
+@Override
+public ArrayList<Photo> getUserSearchPhotos(final String hashtagstring) throws SQLException {
+	return executeTransaction(new Transaction<ArrayList<Photo>>() {
+		@Override
+		public ArrayList<Photo> execute(Connection conn) throws SQLException {
+			PreparedStatement preparedStatement = null;
+			try{
+				// Return a resultset That contains the photos from the hashtags the user is following.	
+				// CORRECT PREPARESTATEMENT
+				preparedStatement = conn.prepareStatement("(SELECT PHOTOID FROM HASHTAGS h join PHOTOHASHTAG ph on h.HASHTAGNAME=? "
+						+ "AND h.ID=ph.HASHTAGID JOIN PHOTOS p ON ph.PHOTOID=p.id)");
+				preparedStatement.setString(1, hashtagstring);
+				// Execute Search
+				resultSet = preparedStatement.executeQuery();
+				while(resultSet.next()){
+					System.out.println("Should be adding a photo to arrayList PHOTOS");
+					//photos.add(getPhoto(photo, resultSet));
+				}
+			}
+			finally
+			{
+				DBUtil.closeQuietly(preparedStatement);
+				DBUtil.closeQuietly(conn);
+			}
+			return photos;
+		
+		}
+	});
+}
+
 // Implemented - Need Controller to TEST
 @Override
 public boolean deleteUser(final int userID) throws SQLException {
@@ -630,13 +665,15 @@ private void getHashtags(HashTag hashtag, ResultSet resultSet) throws SQLExcepti
 
 // NEED TO FIGURE OUT FILELENGTH AND FIS
 private Photo getPhoto(Photo photo, ResultSet resultSet) throws SQLException {
-	photo.setFileLength(resultSet.getLong("PHOTO"));
-	photo.setFIS((FileInputStream) resultSet.getBinaryStream("PHOTO"));
+	//photo.setFileLength(resultSet.getLong("BLOB"));
+	photo.setFIS((FileInputStream) resultSet.getBinaryStream("BLOB"));
 	photo.setphotoID(resultSet.getInt("id"));
 	photo.setuserID(resultSet.getInt("USERID"));
 	
 	return photo;
 }
+
+
 
 
 
