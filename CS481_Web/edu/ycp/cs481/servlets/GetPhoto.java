@@ -1,6 +1,8 @@
 package edu.ycp.cs481.servlets;
 
 import java.io.IOException;
+import oracle.sql.*;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -41,10 +43,25 @@ public class GetPhoto extends HttpServlet{
 		byte[] imageData = new byte[2048];
 		
 		try{
-			Path path = Paths.get(tmp.getFile().getAbsolutePath());//image);
-			imageData = Files.readAllBytes(path);
+			//Path path = Paths.get(tmp.getFile().getAbsolutePath());//image);
+			//imageData = Files.//.readAllBytes(path);
+			
+			int bytesRead;
+			//OutputStream output = null;
+			//response.setContentType("image/jpeg");
+			//ByteStreams.copy(tmp.getInStream(), )
+			
+		    /*while ((bytesRead = tmp.getInStream().read(imageData)) != -1)
+		    {
+		        //output.write(imageData, 0, bytesRead);
+		    	response.getOutputStream().write(imageData, 0, bytesRead);
+		    }*/
+			
 			response.setContentType("image/jpeg");
-			response.getOutputStream().write(imageData);
+			//Blob b;
+			//(oracle.sql.Blob) b;
+			//response.getOutputStream().write((tmp.getBlob()).getBinaryStream());
+			//response.getOutputStream().write(tmp.getBlob());
 		}catch(Exception e){
 			e.printStackTrace();
 		}

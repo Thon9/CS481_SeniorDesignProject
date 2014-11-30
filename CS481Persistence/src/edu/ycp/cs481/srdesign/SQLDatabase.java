@@ -571,7 +571,7 @@ private void initPhotos(){
 			    if (file.isFile()) {
 			       if (file.getName().endsWith(".jpg")||file.getName().endsWith(".png")) {
 			    	   System.out.println("Adding a photo");
-			    	   photos.add(new Photo());
+			    	   this.photos.add(new Photo());
 			       }
 			    } 
 			}
@@ -598,18 +598,49 @@ public ArrayList<Photo> getPhotos(){
 }
 public ArrayList<Photo> getUserPhotos(int uID) {
 	ArrayList<Photo> userPhotos = new ArrayList<Photo>();
-	for(int i=0; i<photos.size();i++){
-		if(photos.get(i).getuserID()==uID){
-			userPhotos.add(photos.get(i));
+	for(int i=0; i<this.photos.size();i++){
+		if(this.photos.get(i).getuserID()==uID){
+			userPhotos.add(this.photos.get(i));
 		}
 	}
 	return userPhotos;
 }
 @Override
 public Photo getPhotoByID(int pID) {
-	return photos.get(pID);
+	return this.photos.get(pID);
 }
 
+@Override
+public Photo getPhotoByID(final int pID, boolean x) throws SQLException{
+	return executeTransaction(new Transaction<Photo>() {
+		//ArrayList<Photo> photos = new ArrayList<Photo>();
+		Photo photo = new Photo();
+		@Override
+		public Photo execute(Connection conn) throws SQLException {	
+			PreparedStatement preparedStatement = null;
+			try{
+				// Return a resultset That contains the photos from the hashtags the user is following.	
+				preparedStatement = conn.prepareStatement("SELECT * FROM PHOTOS WHERE ID = ?");
+				// Execute Search
+				preparedStatement.setLong(1, pID);
+				resultSet = preparedStatement.executeQuery();
+				while(resultSet.next()){
+					getPhotos(photo, resultSet);
+				}
+				
+		
+			}
+			finally {
+				DBUtil.closeQuietly(resultSet);
+				DBUtil.closeQuietly(preparedStatement);
+			}
+			// Prints out number of photos
+			System.out.println("ID:	"+ photo.getphotoID());
+			return photo;
+		}
+
+	});
+}
 
 
 ////////////  UTILITY METHODS  ///////////////
