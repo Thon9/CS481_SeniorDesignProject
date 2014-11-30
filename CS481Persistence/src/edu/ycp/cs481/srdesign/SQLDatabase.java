@@ -341,8 +341,7 @@ public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException
 					preparedStatement.setInt(1, uID);
 				resultSet = preparedStatement.executeQuery();
 				if(resultSet.next()){
-					getPhoto(photo, resultSet);
-					photos.add(photo);
+					photos.add(getPhoto(resultSet));
 				} else {
 					System.out.println("NO PHOTOS FROM USER");
 				}
@@ -371,7 +370,7 @@ public ArrayList<Photo> getUserFollowingPhotos(final int uID, int hashtagID) thr
 				// Execute Search
 				resultSet = preparedStatement.executeQuery();
 				while(resultSet.next()){
-					photos.add(getPhoto(photo, resultSet));
+					photos.add(getPhoto(resultSet));
 				}
 				
 		
@@ -664,16 +663,16 @@ public Photo getPhotoByID(final int pID, boolean x) throws SQLException{
 				if(resultSet.first()){
 					
 					//ReqPhoto.setFileLength(resultSet.getLong("BLOB"));
-					ReqPhoto.setFIS(resultSet.getBlob("PHOTO").getBinaryStream());
+					/*ReqPhoto.setFIS(resultSet.getBlob("PHOTO").getBinaryStream());
 					ReqPhoto.setphotoID(resultSet.getInt("id"));
 					ReqPhoto.setuserID(resultSet.getInt("USERID"));
-					
-					
-					/*
-					ReqPhoto = getPhoto(ReqPhoto, resultSet);*/
 					System.out.println(ReqPhoto.getphotoID());
 					System.out.println(ReqPhoto.getuserID());
 					System.out.println(ReqPhoto.getFIS());
+					
+					*/
+					ReqPhoto = getPhoto(resultSet);
+					
 				}
 				
 		
@@ -707,13 +706,15 @@ private void getHashtags(HashTag hashtag, ResultSet resultSet) throws SQLExcepti
 }
 
 // NEED TO FIGURE OUT FILELENGTH AND FIS
-private Photo getPhoto(Photo photo, ResultSet resultSet) throws SQLException {
-	//photo.setFileLength(resultSet.getLong("BLOB"));
-	photo.setFIS((FileInputStream) resultSet.getBinaryStream("PHOTO"));
-	photo.setphotoID(resultSet.getInt("id"));
-	photo.setuserID(resultSet.getInt("USERID"));
+private Photo getPhoto(ResultSet resultSet) throws SQLException {
+	Photo interPhoto = new Photo();
 	
-	return photo;
+	interPhoto.setFileLength(resultSet.getLong("BLOB"));
+	interPhoto.setFIS(resultSet.getBinaryStream("PHOTO"));
+	interPhoto.setphotoID(resultSet.getInt("id"));
+	interPhoto.setuserID(resultSet.getInt("USERID"));
+	
+	return interPhoto;
 }
 
 
