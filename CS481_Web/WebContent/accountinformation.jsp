@@ -10,6 +10,14 @@ body {
 	background-size: 100%;
 	background-color: #cccccc;
 }
+
+button {
+	border-radius: 15px;
+}
+
+input {
+	border-radius: 15px;
+}
 </style>
 
 </head>

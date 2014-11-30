@@ -32,6 +32,10 @@ input {
 	border-radius: 15px;
 }
 
+button {
+	border-radius: 15px;
+}
+
 select {
 	border-radius: 15px;
 }
@@ -48,9 +52,22 @@ span#search_bar {
 
 <h1 align=center>MyPhotoSpace 2 Gallery</h1>
 <body>
-	<center>
-	<a href="main.jsp">User Page</a>
-	</center>
+	<!-- user page selection -->
+	<!-- logout button -->
+	<div style = "float:right">
+	<form action="${pageContext.servletContext.contextPath}/Logout"
+			method="post">
+		<input type="submit" value="Logout" />
+	</form>
+	</div>
+	
+	<!-- account and home button -->
+	<div style = "float:left">
+		<button type="button" onClick="JavaScript:window.location='main.jsp';">Home</button>
+		<button type="button" onClick="JavaScript:window.location='accountinformation.jsp';">Account Information</button>
+	</div>
+	<br>
+	<br>
 	
 	<div style = "float:left">
 	<!-- Sort tab -->
@@ -67,24 +84,27 @@ span#search_bar {
 			<input type="submit" name="sort"></input>
 			</span>
 		</form>
-		<form action="${pageContext.servletContext.contextPath}/Logout"
-			method="post">
-			<input type="submit" value="Logout"/>
-		</form>
 	</div>
+	
 	
 	<!-- Search Bar -->
 	<div style = "float:right">
-		<form action="${pageContext.servletContext.contextPath}/Gallery?hashTag=${request.getParameter(search_object)}">
+		<form action="${pageContext.servletContext.contextPath}/Gallery?${request.getParameter(search_object)}">
 			<span id="search_bar"> 
 			search for: <input type="text"
-				name="search_object" size="20" /> 
+				name="search_object" value="${search_object}" size="20" /> 
 			
 			<input type="submit" value="Enter" ></input>
 			</span>
-			<center>${result}</center>
 		</form>
-</div>
+		
+	</div>
+	<!-- Follow button -->
+	<form action="${pageContext.servletContext.contextPath}/Follow" method="post">
+			<input type="submit" value="Follow"></input>
+	</form>
+	
+	${result}
 	<br>
 	<br>
 	<center>

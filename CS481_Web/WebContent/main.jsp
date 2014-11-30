@@ -16,6 +16,15 @@ body {
 	background-size: 100%;
 	background-color: #cccccc;
 }
+
+button {
+	border-radius: 15px;
+}
+
+input {
+	border-radius: 15px;
+}
+
 </style>
 
 </head>
@@ -24,8 +33,20 @@ body {
 	<script type="text/javascript">
 	</script>
 
+	<!-- logout button -->
+	<div style = "float:right">
+	<form action="${pageContext.servletContext.contextPath}/Logout"
+			method="post">
+		<input type="submit" value="Logout" />
+	</form>
+	</div>
+	
+	<!-- account button -->
+	<div style = "float:left">
+		<button type="button" onClick="JavaScript:window.location='accountinformation.jsp';">Account Information</button>
+	</div>
+	
 	<!--input type="text" name="description" /-->
-
 	<br>
 
 	<center>
@@ -38,16 +59,13 @@ body {
 			<br>
 			<a href="photo.jsp">Add Photo</a>
 			<br>
-			<button type="button" onClick="JavaScript:window.location='accountinformation.jsp';">Account Information</button>
-		<form action="${pageContext.servletContext.contextPath}/Logout"
-			method="post">
-			<input type="submit" value="Logout" />
-		</form>
+			
 	</center>
 	<br>
+<!-- 
 <h2>List of Followed HashTags</h2>
 <a href="Gallery?hashTag=#undefine">#undefine</a>
-
+ -->
 </body>
 </html>
 
