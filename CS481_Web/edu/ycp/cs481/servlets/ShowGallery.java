@@ -57,6 +57,7 @@ public class ShowGallery extends HttpServlet {
 			System.out.println("searching for "+subject+"...");
 			ArrayList<Photo> gallery  = getCont.getAllPhotos();
 			for (Photo photo : gallery){
+				
 				if (photo.getFile().getName().toString().contains(subject)){
 					//remove the extension
 					String path = photo.getFile().getName().toString();
