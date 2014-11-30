@@ -45,6 +45,7 @@ public interface IDatabase {
 		// Get Photos User is Following
 		public ArrayList<Photo> getUserFollowingPhotos(int uID, int hashtagID) throws SQLException;
 		
+		public ArrayList<Photo> getUserSearchPhotos(String hashtagstring) throws SQLException;
 		
 		/* TESTING PURPOSES ONLY
 		public ArrayList<Photo> getPhotos();

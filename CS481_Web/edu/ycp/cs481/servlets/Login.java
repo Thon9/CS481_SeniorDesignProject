@@ -47,14 +47,14 @@ public class Login extends HttpServlet {
 			
 			//controller should check for the user in the database
 			LoginController controller = new LoginController();
-
+			
 			try {
 				user = controller.login(userName, password);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-
+			 
 			//if user is null 
 			try {
 				if (controller.login(userName, password) == null){	
@@ -74,6 +74,7 @@ public class Login extends HttpServlet {
 					session.setAttribute("email", controller.login(userName, password).getUserEmail());
 					session.setAttribute("firstname", controller.login(userName, password).getFirstName());
 					session.setAttribute("lastname", controller.login(userName, password).getLastName());
+					session.setAttribute("password", controller.login(userName, password).getPassword());
 					
 					//to main
 					response.sendRedirect(request.getContextPath()+"/main.jsp");

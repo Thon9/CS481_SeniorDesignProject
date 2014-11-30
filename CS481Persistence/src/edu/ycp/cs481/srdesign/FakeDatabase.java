@@ -52,8 +52,9 @@ public class FakeDatabase implements IDatabase {
 				File directory = new File("C:\\imagesFolder\\");
 				for (File file : directory.listFiles()) {
 				    if (file.isFile()) {
-				       if (file.getName().endsWith(".jpg")||file.getName().endsWith(".png")) {
-				           photos.add(new Photo(file));
+				       //FileInputStream fis = directory
+				    	if (file.getName().endsWith(".jpg")||file.getName().endsWith(".png")) {
+				           photos.add(new Photo());
 				       }
 				    } 
 				}
@@ -146,7 +147,7 @@ public class FakeDatabase implements IDatabase {
 			    if (file.isFile()) {
 			       if (file.getName().endsWith(".jpg")||file.getName().endsWith(".png")) {
 			           //System.out.println(file.getAbsolutePath());
-			           PICS.add(new Photo(file));
+			           PICS.add(new Photo());
 			       }
 			    } 
 			}
@@ -157,7 +158,7 @@ public class FakeDatabase implements IDatabase {
 	@Override
 
 	
-	public void addPhoto(Photo newPhoto) {
+	public boolean addPhoto(Photo newPhoto) {
 
 		OutputStream OStream = null;
 		try{
@@ -172,7 +173,7 @@ public class FakeDatabase implements IDatabase {
 			int read=0;
 			byte[] data = new byte[1024];
 			
-			while((read = newPhoto.getInStream().read(data)) !=-1){
+			while((read = newPhoto.getFIS().read(data)) !=-1){
 				OStream.write(data, 0, read);
 			}
 			this.photos.add(newPhoto);
@@ -183,9 +184,9 @@ public class FakeDatabase implements IDatabase {
 			
 		}
 		finally{
-			if (newPhoto.getInStream() != null) {
+			if (newPhoto.getFIS() != null) {
 				try {
-					newPhoto.getInStream().close();
+					newPhoto.getFIS().close();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -200,27 +201,22 @@ public class FakeDatabase implements IDatabase {
 			}
 		}
 
-		return;
+		return true;
 		
 
 		
 	}
 
 	@Override
-	public void addHashtag(HashTag hashtag) {
+	public boolean addHashtag(HashTag hashtag) {
 		hashtags.add(hashtag);
+		return true;
 	}
 
 	@Override
 	public Boolean execute(Connection conn) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public boolean addHashtag(String hashtagname, int userID, String username)
-			throws SQLException {
-		return false;
 	}
 
 	@Override
@@ -234,13 +230,6 @@ public class FakeDatabase implements IDatabase {
 		
 	}
 
-	@Override
-	public boolean createAccount(String username, String password,
-			String firstname, String lastname, String email)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	public ArrayList<Photo> getUserPhotos(int uID) {
 		ArrayList<Photo> userPhotos = new ArrayList<Photo>();
@@ -266,24 +255,12 @@ public class FakeDatabase implements IDatabase {
 */
 
 	@Override
-	public boolean addHashtagtoDatabase(String hashtagname) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
 	public boolean addPhoto(String fileName, FileInputStream fis,
 			long filelength) throws SQLException {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
-	public boolean addPhoto(Photo newPhoto) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public ArrayList<Photo> getUserUploadedPhotos(int uID) throws SQLException {
@@ -299,12 +276,6 @@ public class FakeDatabase implements IDatabase {
 	}
 
 	@Override
-	public boolean addHashtag(HashTag hashtag) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public String getHashtagByID(int id) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
@@ -317,14 +288,22 @@ public class FakeDatabase implements IDatabase {
 	}
 
 	@Override
-	public void addRelaHTP(int hashtagID, int photoID) {
+	public boolean addRelaHTP(int hashtagID, int photoID) {
 		// TODO Auto-generated method stub
-		
+		return false;
 	}
 
 	@Override
-	public void getUserPhotos(int uID) {
+	public ArrayList<Photo> getUserSearchPhotos(String hashtagstring)
+			throws SQLException {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
+
+
+
+	
 }
+
+
+

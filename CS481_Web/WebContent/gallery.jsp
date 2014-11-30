@@ -51,38 +51,40 @@ span#search_bar {
 	<center>
 	<a href="main.jsp">User Page</a>
 	</center>
-	<form action="${pageContext.servletContext.contextPath}/Sort_Gallery"
-		method="post">
-		<span id="sort_bar"> 
-		<select name = "sort_type" >
-				<option value="default">sort by </option>
-				<option value="date">date</option>
-				<option value="views">views</option>
-				<option value="likes">likes</option>
-				<option value="random">random</option>
-		</select> 
-		<input type="submit" name="sort"></input>
-		</span>
-	</form>
-	<form action="${pageContext.servletContext.contextPath}/Logout"
-		method="post">
-		<input type="submit" value="Logout"/>
-	</form>
-
-	<form action="${pageContext.servletContext.contextPath}/Gallery?hashTag=${request.getParameter(search_object)}">
-		<span id="search_bar"> search for: <input type="text"
-			name="search_object" size="20" /> 
-		<select name = "search_type">
-				<option value="id">id</option>
-				<option value="title">title</option>
-				<option value="tags">tags</option>
-				<option value="users">users</option>
-		</select>
-		<input type="submit" value="Enter" ></input>
-		</span>
-		<center>${result}</center>
-	</form>
 	
+	<div style = "float:left">
+	<!-- Sort tab -->
+		<form action="${pageContext.servletContext.contextPath}/Sort_Gallery"
+			method="post">
+			<span id="sort_bar"> 
+			<select name = "sort_type" >
+					<option value="default">sort by </option>
+					<option value="date">date</option>
+					<option value="views">views</option>
+					<option value="likes">likes</option>
+					<option value="random">random</option>
+			</select> 
+			<input type="submit" name="sort"></input>
+			</span>
+		</form>
+		<form action="${pageContext.servletContext.contextPath}/Logout"
+			method="post">
+			<input type="submit" value="Logout"/>
+		</form>
+	</div>
+	
+	<!-- Search Bar -->
+	<div style = "float:right">
+		<form action="${pageContext.servletContext.contextPath}/Gallery?hashTag=${request.getParameter(search_object)}">
+			<span id="search_bar"> 
+			search for: <input type="text"
+				name="search_object" size="20" /> 
+			
+			<input type="submit" value="Enter" ></input>
+			</span>
+			<center>${result}</center>
+		</form>
+</div>
 	<br>
 	<br>
 	<center>
