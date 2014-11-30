@@ -30,11 +30,7 @@ private int userID = 1;
 
 
 public SQLDatabase(){
-	System.out.println("SQL CONSTRUCTOR");
-	users = new ArrayList<User>();
-	photos = new ArrayList<Photo>();
-	hashtags = new ArrayList<HashTag>();
-	initPhotos();
+	
 	
 }
 private String DATABASE_PATH = "jdbc:mysql://localhost/cs481";
@@ -225,7 +221,7 @@ public ArrayList<Photo> getUserSearchPhotos(final String hashtagstring) throws S
 				resultSet = preparedStatement.executeQuery();
 				while(resultSet.next()){
 					System.out.println("Should be adding a photo to arrayList PHOTOS");
-					//photos.add(getPhoto(photo, resultSet));
+					photos.add(getPhotoUtil(photo, resultSet));
 				}
 			}
 			finally
@@ -341,8 +337,7 @@ public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException
 					preparedStatement.setInt(1, uID);
 				resultSet = preparedStatement.executeQuery();
 				if(resultSet.next()){
-					getPhoto(photo, resultSet);
-					photos.add(photo);
+					photos.add(getPhotoUtil(photo, resultSet));
 				} else {
 					System.out.println("NO PHOTOS FROM USER");
 				}
@@ -371,7 +366,7 @@ public ArrayList<Photo> getUserFollowingPhotos(final int uID, int hashtagID) thr
 				// Execute Search
 				resultSet = preparedStatement.executeQuery();
 				while(resultSet.next()){
-					photos.add(getPhoto(photo, resultSet));
+					photos.add(getPhotoUtil(photo, resultSet));
 				}
 				
 		
@@ -585,17 +580,8 @@ public boolean addPhoto(final String fileName, final FileInputStream fis, final 
 }
 
 
-
-
-/**
- * 
- * 
- *METHODS FROM FAKEDATABASE TO HAVE A WORKING SYSTEM
- * 
- * 
- * 
- */
-
+/*
+// FAKE DATABASE STUFFs
 private void initPhotos(){
 	if(!(new File("C:\\imagesFolder\\")).isDirectory()){
 		(new File("C:\\imagesFolder\\")).mkdirs();
@@ -646,7 +632,7 @@ public Photo getPhotoByID(int pID) {
 	return photos.get(pID);
 }
 
-
+*/
 
 ////////////  UTILITY METHODS  ///////////////
 private void getUser(User user, ResultSet resultSet) throws SQLException {
@@ -664,13 +650,23 @@ private void getHashtags(HashTag hashtag, ResultSet resultSet) throws SQLExcepti
 }
 
 // NEED TO FIGURE OUT FILELENGTH AND FIS
-private Photo getPhoto(Photo photo, ResultSet resultSet) throws SQLException {
+private Photo getPhotoUtil(Photo photo, ResultSet resultSet) throws SQLException {
 	//photo.setFileLength(resultSet.getLong("BLOB"));
-	photo.setFIS((FileInputStream) resultSet.getBinaryStream("BLOB"));
+	photo.setBlob(resultSet.getBlob("PHOTO"));
 	photo.setphotoID(resultSet.getInt("id"));
 	photo.setuserID(resultSet.getInt("USERID"));
 	
+	// Print statements
+	System.out.println(resultSet.getInt("id"));
+	System.out.println(resultSet.getInt("USERID"));
+	
 	return photo;
+}
+
+@Override
+public Photo getPhotoByID(int pID) {
+	// TODO Auto-generated method stub
+	return null;
 }
 
 

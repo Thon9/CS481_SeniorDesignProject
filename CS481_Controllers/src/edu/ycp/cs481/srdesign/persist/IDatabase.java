@@ -66,9 +66,9 @@ public interface IDatabase {
 		//Adds relation of hashtag to photo in database
 		public boolean addRelaHTP(int hashtagID, int photoID);
 
-		public ArrayList<Photo> getPhotos();
+		//public ArrayList<Photo> getPhotos();
 
-		public ArrayList<Photo> getUserPhotos(int uID);
+		//public ArrayList<Photo> getUserPhotos(int uID);
 
 		
 }
