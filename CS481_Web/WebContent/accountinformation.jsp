@@ -10,6 +10,14 @@ body {
 	background-size: 100%;
 	background-color: #cccccc;
 }
+
+button {
+	border-radius: 15px;
+}
+
+input {
+	border-radius: 15px;
+}
 </style>
 
 </head>
@@ -30,6 +38,7 @@ body {
 	<!--user infomation /-->
 	<script type="text/javascript">
 	</script>
+	<form action="${pageContext.servletContext.contextPath}/EditUser" method="post">
 	<table align = "center">
 		<tr>
 			<th>First Name:</th>
@@ -52,10 +61,19 @@ body {
 			<th>E-mail address:</th>
 			<th><input type="text" name="email" value="${email}" size="20" /></th>
 		</tr>
+		<tr>
+		
+		</tr>
 	</table>
-	
-	<!--delete user button /-->
 	<center>
+		<!-- edit user button -->
+		<button type="submit" >Save Change</button>
+	</center>
+	</form>
+	
+	<center>
+	<br><br><br><br>
+	<!--delete user button -->
 	<form action="${pageContext.servletContext.contextPath}/AccountInformation" method="post">
 		<button type="submit" >DELETE ACCOUNT</button>
 	</form>

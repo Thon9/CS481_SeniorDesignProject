@@ -300,6 +300,12 @@ public class FakeDatabase implements IDatabase {
 		return null;
 	}
 
+	@Override
+	public Photo getPhotoByID(int pID, boolean x) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 	
