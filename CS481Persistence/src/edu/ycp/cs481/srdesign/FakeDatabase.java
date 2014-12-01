@@ -294,7 +294,7 @@ public class FakeDatabase implements IDatabase {
 	}
 
 	@Override
-	public ArrayList<Photo> getUserSearchPhotos(String hashtagstring)
+	public ArrayList<Integer> getUserSearchPhotos(String hashtagstring)
 			throws SQLException {
 		// TODO Auto-generated method stub
 		return null;

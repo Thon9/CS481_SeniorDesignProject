@@ -50,13 +50,15 @@ public class GetPhoto extends HttpServlet{
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
-			if (tmp.getFIS() != null) {
-				try {
+			//if (tmp.getFIS() != null) {
+			/*	
+			try {
 					tmp.getFIS().close();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			}
+				*/
+			//}
 		}
 		
 	}

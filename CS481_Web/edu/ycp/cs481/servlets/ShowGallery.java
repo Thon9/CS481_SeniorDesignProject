@@ -35,7 +35,7 @@ import edu.ycp.cs481.srdesign.controllers.GetPhotosByHashtagString;
 @MultipartConfig
 public class ShowGallery extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	static ArrayList<Photo> temp;
+
 	
     @Override
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
@@ -46,7 +46,8 @@ public class ShowGallery extends HttpServlet {
     	String subject = request.getParameter("search_object");
     	
     	System.out.println(subject);
-    	temp = null;
+    	ArrayList<Photo>temp = new ArrayList<Photo>();
+  
 		ArrayList<String> paths = new ArrayList<String>();
 		//show gallery normally
 		
@@ -54,10 +55,10 @@ public class ShowGallery extends HttpServlet {
 		if (subject == null || subject.isEmpty()){
 			// PRINT OUT NOTHING TO SEARCH FOR ON PAGE
 			System.out.println("no search subject detect showing gallery normally...");
-			for(int i=0; i<temp.size(); i++){
+			//for(int i=0; i<temp.size(); i++){
 				//System.out.println(temp.get(i).getFile().toPath());
-				paths.add("image/"+i);
-			}
+				//paths.add("image/"+i);
+			//}
 		}
 		
 		//searching gallery 
@@ -67,42 +68,20 @@ public class ShowGallery extends HttpServlet {
 			try {
 				// Creating arraylist of photos based on search subject
 				System.out.println("Should be adding photos containing subect " + subject);
+				System.out.println(temp);
 				temp = getPhotos.GetPhotosByHashtagString(subject);	
-				
+				System.out.println("The temp size is " + temp.size());
 			} catch (SQLException e) {
 				// Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			System.out.println(temp.size());
-			/*
-			for(int i = 0; i < temp.size(); i++){
-				//InputStream is = temp.get(i).getFIS();
-				System.out.println(temp.get(i).getphotoID());
-				System.out.println(temp.get(i).getuserID());
-				System.out.println(temp.get(i).getFIS());
-				
-				// File path
-				File newImage = new File("C:\\imagesFolder\\"+subject+"\\"+temp.get(i).getphotoID());
-				String formatName="image/jpeg";
-				// Write image to filePath
-				BufferedImage bufferedImage= ImageIO.read(temp.get(i).getFIS());
-				ImageIO.write(bufferedImage,formatName,newImage);
-				
-				if (newImage.toString().contains(subject)){
-					//remove the extension
-					String path = newImage.getName().toString();
-					if (path.indexOf(".") > 0){
-						path = path.substring(0, path.lastIndexOf("."));
-					}
-					paths.add("image/"+path);
-					System.out.println("doGet found "+path);
-				}	
+			for(int i = 1; i < temp.size()+1; i++){
+				paths.add("image/"+i);			
 			}
-			*/
 		}
 
-	
+		
+		
 		// Store photos as photolist
 
 		//request.setAttribute("photoList", images);
@@ -117,3 +96,26 @@ public class ShowGallery extends HttpServlet {
 	
 }
 
+/*
+/InputStream is = temp.get(i).getFIS();
+System.out.println(temp.get(i).getphotoID());
+System.out.println(temp.get(i).getuserID());
+System.out.println(temp.get(i).getFIS());
+
+//
+//File newImage = new File("C:\\imagesFolder\\"+subject+"\\"+temp.get(i).getphotoID());
+//String formatName="image/jpeg";
+// Write image to filePath
+//BufferedImage bufferedImage= ImageIO.read(temp.get(i).getFIS());
+//ImageIO.write(bufferedImage,formatName,newImage);
+
+if (newImage.toString().contains(subject)){
+	//remove the extension
+	String path = newImage.getName().toString();
+	if (path.indexOf(".") > 0){
+		path = path.substring(0, path.lastIndexOf("."));
+	}
+	paths.add("image/"+path);
+	System.out.println("doGet found "+path);
+}	
+*/
