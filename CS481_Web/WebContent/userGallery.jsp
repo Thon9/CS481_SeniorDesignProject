@@ -50,7 +50,7 @@ span#search_bar {
 </style>
 </head>
 
-<h1 align=center>$(userName) uploads</h1>
+<h1 align=center>${userName}'s Photos</h1>
 <body>
 	<!-- user page selection -->
 	<!-- logout button -->
@@ -65,48 +65,11 @@ span#search_bar {
 	<div style = "float:left">
 		<button type="button" onClick="JavaScript:window.location='main.jsp';">Home</button>
 		<button type="button" onClick="JavaScript:window.location='accountinformation.jsp';">Account Information</button>
+		<button type="button" onClick="JavaScript:window.location='Gallery';">Gallery</button>
 	</div>
 	<br>
 	<br>
 	
-	<div style = "float:left">
-	<!-- Sort tab -->
-		<form action="${pageContext.servletContext.contextPath}/Sort_Gallery"
-			method="post">
-			<span id="sort_bar"> 
-			<select name = "sort_type" >
-					<option value="default">sort by </option>
-					<option value="date">date</option>
-					<option value="views">views</option>
-					<option value="likes">likes</option>
-					<option value="random">random</option>
-			</select> 
-			<input type="submit" name="sort"></input>
-			</span>
-		</form>
-	</div>
-	
-	
-	<!-- Search Bar -->
-	<div style = "float:right">
-		<form action="${pageContext.servletContext.contextPath}/Gallery?${request.getParameter(search_object)}">
-			<span id="search_bar"> 
-			search for: <input type="text"
-				name="search_object" value="${search_object}" size="20" /> 
-			
-			<input type="submit" value="Enter" ></input>
-			</span>
-		</form>
-		
-	</div>
-	<!-- Follow button -->
-	<form action="${pageContext.servletContext.contextPath}/Follow" method="post">
-			<input type="submit" value="Follow"></input>
-	</form>
-	
-	${result}
-	<br>
-	<br>
 	<center>
 	<!--
 		<a href="test_images/test1.jpg" target="_blank"><img
@@ -118,7 +81,7 @@ span#search_bar {
 			target="_blank"><img src="test_images/test2.jpg"></a>
 	/-->	
 			
-	<form enctype="multipart/form-data" action="${pageContext.servletContext.contextPath}/ShowGallery">
+	<form enctype="multipart/form-data" action="${pageContext.servletContext.contextPath}/ShowUserGallery">
 		<c:forEach var="photo" items="${photoList}">
 					<a href="${photo}" target="_blank"><img src="${photo}"></a>
 					<!-- img src=photo height="200px" width="200px" /-->

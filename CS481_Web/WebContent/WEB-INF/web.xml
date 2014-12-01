@@ -32,6 +32,11 @@
   	<servlet-name>ShowUserGallery</servlet-name>
   	<servlet-class>edu.ycp.cs481.servlets.ShowUserGallery</servlet-class>
   </servlet>
+  
+  <servlet>
+  	<servlet-name>Main</servlet-name>
+  	<servlet-class>edu.ycp.cs481.servlets.Main</servlet-class>
+  </servlet>
   <!-- Servlet mappings (mapping of paths to servlets). -->
   
   <servlet-mapping>
@@ -42,6 +47,11 @@
   <servlet-mapping>
   	<servlet-name>ShowUserGallery</servlet-name>
   	<url-pattern>/ShowUserGallery/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>Main</servlet-name>
+  	<url-pattern>/Main/*</url-pattern>
   </servlet-mapping>
   
 </web-app>

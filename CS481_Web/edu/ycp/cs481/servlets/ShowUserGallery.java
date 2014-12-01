@@ -95,7 +95,7 @@ public class ShowUserGallery extends HttpServlet {
 		//request.setAttribute("photoList", images);
 
 		request.setAttribute("photoList", paths);
-		request.getRequestDispatcher("/gallery.jsp").forward(request, response); 
+		request.getRequestDispatcher("/userGallery.jsp").forward(request, response); 
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

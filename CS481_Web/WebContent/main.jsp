@@ -52,10 +52,6 @@ input {
 	<br>
 
 	<center>
-		<form action="${pageContext.servletContext.contextPath}/Gallery?hashTag=${request.getParameter(search_object)}">
-			 <input type="text" name="search_object" size="30" />
-			 <input type="submit" value="Search for HashTag" /> 
-		</form>
 			<br>
 			<a href="photo.jsp">Add Photo</a>
 			<br>
