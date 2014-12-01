@@ -63,8 +63,10 @@ public class ShowGallery extends HttpServlet {
 				// Creating arraylist of photos based on search subject
 				//System.out.println("Should be adding photos containing subect " + subject);
 				//System.out.println(temp);
-				temp = getPhotos.GetPhotosByHashtagString(subject);
-				//System.out.println(temp.size());
+				temp = getPhotos.getPhotos(subject);
+						//GetPhotosByHashtagString(subject);
+				
+				System.out.println("The size of the temp array is " + temp.size());
 				for(int i = 0; i < temp.size(); i++){
 					System.out.println("Counter is at " + i);
 					System.out.println("PhotoID is " + temp.get(i).getphotoID());

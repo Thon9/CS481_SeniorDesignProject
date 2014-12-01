@@ -229,10 +229,10 @@ public ArrayList<Photo> getUserSearchPhotos(final String hashtagstring) throws S
  				// Execute Search
  				resultSet = preparedStatement.executeQuery();
  				while(resultSet.next()){
- 					System.out.println("Should be adding a photo to arrayList PHOTOS");
+ 					//System.out.println("Should be adding a photo to arrayList PHOTOS");
 					getPhoto(newPhoto, resultSet);
 					searchPhotos.add(newPhoto);
-					System.out.println("PHOTO ADDED TO SEARCHPHOTOS");
+					//System.out.println("PHOTO ADDED TO SEARCHPHOTOS");
 				}
 			}
 			finally
@@ -352,6 +352,7 @@ public int addPhoto(final Photo newPhoto) throws SQLException {
 @Override
 public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException {
 	return executeTransaction(new Transaction<ArrayList<Photo>>() {
+		Photo newPhoto = new Photo();
 		ArrayList<Photo> photos = new ArrayList<Photo>();
 		@Override
 		public ArrayList<Photo> execute(Connection conn) throws SQLException {	
@@ -361,7 +362,8 @@ public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException
 					preparedStatement.setInt(1, uID);
 				resultSet = preparedStatement.executeQuery();
 				if(resultSet.next()){
-					photos.add(getPhoto(resultSet));
+					getPhoto(newPhoto,resultSet);
+					photos.add(newPhoto);
 				} else {
 					System.out.println("NO PHOTOS FROM USER");
 				}
@@ -701,6 +703,7 @@ private void getPhoto(Photo photo, ResultSet resultSet) throws SQLException {
 	photo.setphotoID(resultSet.getInt("id"));
 	photo.setuserID(resultSet.getInt("USERID"));
 	photo.setFIS(resultSet.getBinaryStream("PHOTO"));
+	System.out.println("getPHOTO utility method has photo id of " + resultSet.getInt("id"));
 	//System.out.println(resultSet.getBinaryStream("PHOTO"));
 	//System.out.println(resultSet.getInt("id"));
 	//System.out.println(resultSet.getInt("USERID"));
@@ -720,17 +723,7 @@ private void getHashtags(HashTag hashtag, ResultSet resultSet) throws SQLExcepti
 	hashtag.sethashtagID(resultSet.getInt("id"));
 }
 
-// NEED TO FIGURE OUT FILELENGTH AND FIS
-private Photo getPhoto(ResultSet resultSet) throws SQLException {
-	Photo interPhoto = new Photo();
-	
-	//interPhoto.setFileLength(resultSet.getLong("BLOB"));
-	interPhoto.setFIS(resultSet.getBinaryStream("PHOTO"));
-	interPhoto.setphotoID(resultSet.getInt("id"));
-	interPhoto.setuserID(resultSet.getInt("USERID"));
-	
-	return interPhoto;
-}
+
 
 @Override
 public Photo getPhotoByID(int pID) {
