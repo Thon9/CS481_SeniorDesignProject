@@ -31,7 +31,7 @@ public class FakeDatabase implements IDatabase {
 		
 		//numPhotos = 0;
 		//numUsers = 0;
-		
+		 
 		User test = new User();
 		test.setFirstName("Test");
 		test.setLastName("Testy");
