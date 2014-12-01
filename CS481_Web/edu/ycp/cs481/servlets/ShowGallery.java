@@ -39,10 +39,7 @@ public class ShowGallery extends HttpServlet {
 	
     @Override
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-    	
-    	//System.out.println("Creating get all photos controller");
-    	//GetAllPhotosController getCont = new GetAllPhotosController();
-    	
+
     	String subject = request.getParameter("search_object");
     	
     	System.out.println(subject);
@@ -53,12 +50,8 @@ public class ShowGallery extends HttpServlet {
 		
 	
 		if (subject == null || subject.isEmpty()){
-			// PRINT OUT NOTHING TO SEARCH FOR ON PAGE
 			System.out.println("no search subject detect showing gallery normally...");
-			//for(int i=0; i<temp.size(); i++){
-				//System.out.println(temp.get(i).getFile().toPath());
-				//paths.add("image/"+i);
-			//}
+			// Print message 
 		}
 		
 		//searching gallery 
@@ -66,21 +59,36 @@ public class ShowGallery extends HttpServlet {
 			System.out.println("searching for "+subject+"...");
 			GetPhotosByHashtagString getPhotos = new GetPhotosByHashtagString();
 			try {
+				//temp=null;
 				// Creating arraylist of photos based on search subject
-				System.out.println("Should be adding photos containing subect " + subject);
-				System.out.println(temp);
-				temp = getPhotos.GetPhotosByHashtagString(subject);	
-				System.out.println("The temp size is " + temp.size());
+				//System.out.println("Should be adding photos containing subect " + subject);
+				//System.out.println(temp);
+				temp = getPhotos.GetPhotosByHashtagString(subject);
+				System.out.println(temp.size());
+				for(int i = 0; i < temp.size(); i++){
+					System.out.println("Counter is at " + i);
+					System.out.println("PhotoID is " + temp.get(i).getphotoID());
+					System.out.println("User ID is " + temp.get(i).getuserID());
+				}
+				//System.out.println("The temp size is " + temp.size());
 			} catch (SQLException e) {
 				// Auto-generated catch block
 				e.printStackTrace();
 			}
-			for(int i = 1; i < temp.size()+1; i++){
-				paths.add("image/"+i);			
-			}
+			
 		}
-
+		// if temp.size==0, NO PHOTOS
+		// PRINT OUT MESSAGE ON WEBSITE
 		
+		
+		for(int i = 0; i < temp.size(); i++){
+			//temp.get(i).getphotoID()	
+			//System.out.println(temp.get(i))
+			//paths.add("image/"+i);
+			System.out.println("The PHOTO ID of temp photo " + i + " is " + temp.get(i).getphotoID());
+			// NEEDS TO BE FIXED, HARDCORDED
+			paths.add("image/"+(temp.get(i).getphotoID()-temp.size()+i+1));			
+		}
 		
 		// Store photos as photolist
 
