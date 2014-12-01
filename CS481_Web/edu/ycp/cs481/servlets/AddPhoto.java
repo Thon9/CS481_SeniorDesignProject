@@ -1,14 +1,9 @@
 package edu.ycp.cs481.servlets;
 
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-
-
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -16,12 +11,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-import javax.websocket.Session;
 
+import edu.ycp.cs481.srdesign.HashTag;
 import edu.ycp.cs481.srdesign.Photo;
+import edu.ycp.cs481.srdesign.controllers.AddHashtagController;
 import edu.ycp.cs481.srdesign.controllers.AddPhotoController;
-import edu.ycp.cs481.srdesign.controllers.GetAllPhotosController;
+import edu.ycp.cs481.srdesign.controllers.HashToPhotoRelaController;
 
 /**
  * Servlet implementation class
@@ -30,7 +27,7 @@ import edu.ycp.cs481.srdesign.controllers.GetAllPhotosController;
 @MultipartConfig
 public class AddPhoto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	
     @Override
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
     	response.setStatus(HttpServletResponse.SC_OK);
@@ -44,6 +41,10 @@ public class AddPhoto extends HttpServlet {
 		
 		ArrayList<String> tagsParsed = parseHashtags(tagsUnparsed);
 		
+		HttpSession session = request.getSession();
+		
+		int userID = (int)session.getAttribute("userID");
+		
 				/**Todo
 				 * -send parsed hashtags to database
 				 * -relate added hashtags to uploaded photo
@@ -53,25 +54,36 @@ public class AddPhoto extends HttpServlet {
 			
 			String filename = null; 
 			filename = getFilename(filePart);
-			FileInputStream filecontent = null;
-			filecontent =  (FileInputStream) filePart.getInputStream();
+			InputStream filecontent = null;
+			filecontent = filePart.getInputStream();
 			
 			if (filename != null && filecontent != null && filename != ""){
-				AddPhotoController controller = new AddPhotoController();
+				AddPhotoController addPCont = new AddPhotoController();
+				AddHashtagController addHCont = new AddHashtagController(); 
+				HashToPhotoRelaController hTPCont = new HashToPhotoRelaController();
 
 
-				//Photo nPhoto = new Photo();
-				//nPhoto.setInStream(filecontent);
-			
-				
-
+				Photo nPhoto = new Photo();
+				nPhoto.setFIS(filecontent);
+				nPhoto.setFileLength(filecontent.available());
+				nPhoto.setuserID(userID);
 				try {
-					/*int photoId = */controller.addPhoto(filename, filecontent,filePart.getSize());
-					/*for(int i=0; i<tagsParsed.size(); i++){
-						GetHashtagID
-					}*/
 					
-				} catch (SQLException e) {
+					int photoId = addPCont.addPhoto(nPhoto);
+					
+					
+					for(int i=0; i<tagsParsed.size(); i++){
+						HashTag tempH = new HashTag();
+						tempH.sethashtagName(tagsParsed.get(i));
+						System.out.println(tagsParsed.get(i));
+						int hashID = addHCont.addHashtag(tempH);
+						
+						hTPCont.addRelaHTP(hashID, photoId);
+						
+						
+					}
+					
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					System.out.println("DID NOT WORK");
@@ -119,7 +131,7 @@ public class AddPhoto extends HttpServlet {
 		String tmp;
 		ArrayList<String> hashtags = new ArrayList<String>();
 		while(tagString.length()>0){
-			tmp = tagString.substring(tagString.lastIndexOf("#"));
+			tmp = tagString.substring(tagString.lastIndexOf("#")+1);
 			tagString = tagString.substring(0, tagString.lastIndexOf("#"));
 			
 			if(tmp.charAt(tmp.length()-1) == ' '){

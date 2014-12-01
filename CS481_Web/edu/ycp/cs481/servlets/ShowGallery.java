@@ -64,7 +64,7 @@ public class ShowGallery extends HttpServlet {
 				//System.out.println("Should be adding photos containing subect " + subject);
 				//System.out.println(temp);
 				temp = getPhotos.GetPhotosByHashtagString(subject);
-				System.out.println(temp.size());
+				//System.out.println(temp.size());
 				for(int i = 0; i < temp.size(); i++){
 					System.out.println("Counter is at " + i);
 					System.out.println("PhotoID is " + temp.get(i).getphotoID());
@@ -77,6 +77,7 @@ public class ShowGallery extends HttpServlet {
 			}
 			
 		}
+		
 		// if temp.size==0, NO PHOTOS
 		// PRINT OUT MESSAGE ON WEBSITE
 		
