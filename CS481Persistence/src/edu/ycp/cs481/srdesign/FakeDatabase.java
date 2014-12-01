@@ -158,7 +158,7 @@ public class FakeDatabase implements IDatabase {
 	@Override
 
 	
-	public boolean addPhoto(Photo newPhoto) {
+	public int addPhoto(Photo newPhoto) {
 
 		OutputStream OStream = null;
 		try{
@@ -201,16 +201,10 @@ public class FakeDatabase implements IDatabase {
 			}
 		}
 
-		return true;
+		return 0;
 		
 
 		
-	}
-
-	@Override
-	public boolean addHashtag(HashTag hashtag) {
-		hashtags.add(hashtag);
-		return true;
 	}
 
 	@Override
@@ -255,14 +249,6 @@ public class FakeDatabase implements IDatabase {
 */
 
 	@Override
-	public boolean addPhoto(String fileName, FileInputStream fis,
-			long filelength) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
 	public ArrayList<Photo> getUserUploadedPhotos(int uID) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
@@ -304,6 +290,12 @@ public class FakeDatabase implements IDatabase {
 	public Photo getPhotoByID(int pID, boolean x) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int addHashtag(HashTag hashtag) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 

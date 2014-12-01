@@ -25,7 +25,7 @@ public interface IDatabase {
 		public boolean deleteUser(int userID) throws SQLException;
 		
 		// Add new photo to the SQLDatabase - mediumblob
-		public boolean addPhoto(String fileName, FileInputStream fis, long filelength) throws SQLException;
+		//public boolean addPhoto(String fileName, FileInputStream fis, long filelength) throws SQLException;
 
 		// Login handling for the User
 		public User login(String username, String password) throws SQLException;
@@ -37,7 +37,7 @@ public interface IDatabase {
 		Boolean execute(Connection conn) throws SQLException;
 		
 		// 	Add new photo
-		public boolean addPhoto(Photo newPhoto) throws SQLException;
+		public int addPhoto(Photo newPhoto) throws SQLException;
 		
 		// Get Photos Uploaded by User
 		public ArrayList<Photo> getUserUploadedPhotos(int uID) throws SQLException;
@@ -55,7 +55,7 @@ public interface IDatabase {
 		public Photo getPhotoByID(int pID);
 		
 		// Add Hashtag to HashTagTable
-		public boolean addHashtag(HashTag hashtag) throws SQLException;
+		public int addHashtag(HashTag hashtag) throws SQLException;
 		
 		// Return name of hashtag based on it
 		public String getHashtagByID(int id) throws SQLException;

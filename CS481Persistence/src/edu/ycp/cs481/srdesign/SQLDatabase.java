@@ -1,11 +1,5 @@
 package edu.ycp.cs481.srdesign;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import edu.ycp.cs481.srdesign.controllers.GetPhotoByIdController;
 import edu.ycp.cs481.srdesign.persist.IDatabase;
 
 
@@ -178,23 +171,35 @@ public boolean createAccountUser(final User user) throws SQLException {
 // Adds hashtag to database if does not exist!
 // Implemented - Need Controller to TEST
 @Override
-public boolean addHashtag(final HashTag hashtag) throws SQLException {
-	return executeTransaction(new Transaction<Boolean>() {
+public int addHashtag(final HashTag hashtag) throws SQLException {
+	return executeTransaction(new Transaction<Integer>() {
 		@Override
-		public Boolean execute(Connection conn) throws SQLException {
+		public Integer execute(Connection conn) throws SQLException {
 			PreparedStatement preparedStatement = null;
+			int newHashID;
 			try{
 				preparedStatement = conn.prepareStatement(
-						"INSERT INTO HASHTAGS (HASHTAGNAME) VALUES (?)");
+						"INSERT INTO HASHTAGS (HASHTAGNAME) VALUES (?)",Statement.RETURN_GENERATED_KEYS);
 						preparedStatement.setString(1, hashtag.gethashtagName());
-				preparedStatement.executeUpdate();
+						preparedStatement.executeUpdate();
+						
+						try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+				            if (generatedKeys.next()) {
+				            	newHashID = generatedKeys.getInt(1);
+				            }
+				            else {
+				                throw new SQLException("Creating user failed, no ID obtained.");
+				            }
+				        }
+						
+						System.out.println(newHashID);
 			}
 			finally
 			{
 				DBUtil.closeQuietly(preparedStatement);
 				DBUtil.closeQuietly(conn);
 			}
-		return true;
+		return newHashID;
 		}
 	});
 	
@@ -294,31 +299,44 @@ public boolean checkExistence(final String username) throws SQLException {
 
 // Implemented - NEEDS TO BE TESTED
 @Override
-public boolean addPhoto(final Photo newPhoto) throws SQLException {
-	return executeTransaction(new Transaction<Boolean>() {
+public int addPhoto(final Photo newPhoto) throws SQLException {
+	return executeTransaction(new Transaction<Integer>() {
 		@Override
-		public Boolean execute(Connection conn) throws SQLException {
+		public Integer execute(Connection conn) throws SQLException {
 			
 			PreparedStatement preparedStatement = null;
+			int newPhotoID;
 			try{
 				// CREATE FILE INPUT STREAM FROM FILE
 				preparedStatement = conn.prepareStatement(
-						"INSERT INTO PHOTOS (USERID, PHOTO) VALUES (?, ?)");
+						"INSERT INTO PHOTOS (USERID, PHOTO) VALUES (?, ?)",Statement.RETURN_GENERATED_KEYS);
 					// Set Values to be inserted into DB
-					System.out.println("Setting values FOR USERID");
+					System.out.println("Setting "+newPhoto.getuserID()+" FOR USERID");
 					preparedStatement.setInt(1, newPhoto.getuserID());
 					System.out.println("Setting values FOR PHOTO");
 					preparedStatement.setBinaryStream(2, newPhoto.getFIS(), newPhoto.getFileLength());
+					
+					
+					
 					// Update DATABASE
 					preparedStatement.executeUpdate();
-					System.out.println("Check database to see if updated");
+					
+					try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+			            if (generatedKeys.next()) {
+			            	newPhotoID = generatedKeys.getInt(1);
+			            }
+			            else {
+			                throw new SQLException("Creating user failed, no ID obtained.");
+			            }
+			        }
+					System.out.println("Check database to see if updated:	"+newPhotoID);
 			}
 			finally
 			{
 				DBUtil.closeQuietly(preparedStatement);
 				DBUtil.closeQuietly(conn);
 			}
-		return true;
+		return newPhotoID;
 		}
 	});
 }
@@ -547,7 +565,7 @@ public User getUserString(String username) throws SQLException {
 
 
 
-// Implemented and Working
+/* Implemented and Working
 @Override
 public boolean addPhoto(final String fileName, final FileInputStream fis, final long filelength) throws SQLException {
 	return executeTransaction(new Transaction<Boolean>() {
@@ -579,7 +597,7 @@ public boolean addPhoto(final String fileName, final FileInputStream fis, final 
 	});
 }
 
-
+*/
 /*
 // FAKE DATABASE STUFFs
 private void initPhotos(){
@@ -698,7 +716,7 @@ private void getHashtags(HashTag hashtag, ResultSet resultSet) throws SQLExcepti
 private Photo getPhoto(ResultSet resultSet) throws SQLException {
 	Photo interPhoto = new Photo();
 	
-	interPhoto.setFileLength(resultSet.getLong("BLOB"));
+	//interPhoto.setFileLength(resultSet.getLong("BLOB"));
 	interPhoto.setFIS(resultSet.getBinaryStream("PHOTO"));
 	interPhoto.setphotoID(resultSet.getInt("id"));
 	interPhoto.setuserID(resultSet.getInt("USERID"));

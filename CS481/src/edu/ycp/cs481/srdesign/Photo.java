@@ -1,12 +1,8 @@
 package edu.ycp.cs481.srdesign;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.sql.Blob;
-import java.util.ArrayList;
-
 
 public class Photo implements Serializable {
 
@@ -15,8 +11,6 @@ public class Photo implements Serializable {
 	private int userID;
 	private long fileLength;
 	private InputStream fis;
-
-	//private ArrayList<Integer> HashTagID;
 	
 	public Photo(){}
 	
