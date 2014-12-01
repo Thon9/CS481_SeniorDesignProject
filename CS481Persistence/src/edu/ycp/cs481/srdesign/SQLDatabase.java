@@ -213,7 +213,7 @@ public int addHashtag(final HashTag hashtag) throws SQLException {
 @Override
 public ArrayList<Photo> getUserSearchPhotos(final String hashtagstring) throws SQLException {
 	return executeTransaction(new Transaction<ArrayList<Photo>>() {
-		@Override
+		@Override 
 		public ArrayList<Photo> execute(Connection conn) throws SQLException {
 			PreparedStatement preparedStatement = null;
 			try{

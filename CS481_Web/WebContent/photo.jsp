@@ -16,28 +16,49 @@ body {
 	background-size: 100%;
 	background-color: #cccccc;
 }
+button {
+	border-radius: 15px;
+}
+
+input {
+	border-radius: 15px;
+}
 </style>
 
-<h1 align="center">${userName}</h1>
+
 </head>
 <body>
+	<h1 align="center">Add a Photo</h1>
 	<script type="text/javascript"></script>
-	<center>
-		<a href="Gallery">gallery page</a>
-		<form action="${pageContext.servletContext.contextPath}/Logout"method="post">
-			<input type="submit" value="Logout"/>
-		</form>
-	</center>
-	<br>
-	<br>
-	<form enctype="multipart/form-data"action="${pageContext.servletContext.contextPath}/AddPhoto" method=post>
+	
+	<!-- logout button -->
+	<div style = "float:right">
+	<form action="${pageContext.servletContext.contextPath}/Logout"
+			method="post">
+		<input type="submit" value="Logout" />
+	</form>
+	</div>
+	
+	<!-- account button -->
+	<div style = "float:left">
+		<button type="button" onClick="JavaScript:window.location='main.jsp';">Home</button>
+		<button type="button" onClick="JavaScript:window.location='accountinformation.jsp';">Account Information</button>
+		<button type="button" onClick="JavaScript:window.location='Gallery';">Gallery</button>
+	</div>
 
+	<br>
+	<br>
+	<br>
+	<br>
+	<center>
+	<form enctype="multipart/form-data"action="${pageContext.servletContext.contextPath}/AddPhoto" method=post>
 			<input type="file" name="uploadFile" />
 		<br><br>
 			<p>Enter Hashtag(s): <input type="text" name="hashTags" /><i>(Separate Hashtags by # {e.g. #cats #fluffy...})</i></p>
 		<br><br>
 			<input type="submit" />
 	</form>
+	</center>
 </body>
 </html>
 
