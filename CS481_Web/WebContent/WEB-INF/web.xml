@@ -29,8 +29,8 @@
   </servlet>
   
   <servlet>
-  	<servlet-name>Search_Gallery</servlet-name>
-  	<servlet-class>edu.ycp.cs481.servlets.Search_Gallery</servlet-class>
+  	<servlet-name>ShowUserGallery</servlet-name>
+  	<servlet-class>edu.ycp.cs481.servlets.ShowUserGallery</servlet-class>
   </servlet>
   <!-- Servlet mappings (mapping of paths to servlets). -->
   
@@ -40,8 +40,8 @@
   </servlet-mapping>
   
   <servlet-mapping>
-  	<servlet-name>Search_Gallery</servlet-name>
-  	<url-pattern>/Search_Gallery/*</url-pattern>
+  	<servlet-name>ShowUserGallery</servlet-name>
+  	<url-pattern>/ShowUserGallery/*</url-pattern>
   </servlet-mapping>
   
 </web-app>

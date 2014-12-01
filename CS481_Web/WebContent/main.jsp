@@ -45,6 +45,7 @@ input {
 	<div style = "float:left">
 		<button type="button" onClick="JavaScript:window.location='accountinformation.jsp';">Account Information</button>
 		<button type="button" onClick="JavaScript:window.location='Gallery';">Gallery</button>
+		<button type="button" onClick="JavaScript:window.location='ShowUserGallery';">User Uploads</button>
 	</div>
 	
 	<!--input type="text" name="description" /-->
