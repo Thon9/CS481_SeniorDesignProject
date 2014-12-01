@@ -44,6 +44,7 @@ input {
 	<!-- account button -->
 	<div style = "float:left">
 		<button type="button" onClick="JavaScript:window.location='accountinformation.jsp';">Account Information</button>
+		<button type="button" onClick="JavaScript:window.location='Gallery';">Gallery</button>
 	</div>
 	
 	<!--input type="text" name="description" /-->
@@ -54,8 +55,6 @@ input {
 			 <input type="text" name="search_object" size="30" />
 			 <input type="submit" value="Search for HashTag" /> 
 		</form>
-			<br> 
-			<a href="Gallery">gallery page</a>
 			<br>
 			<a href="photo.jsp">Add Photo</a>
 			<br>
