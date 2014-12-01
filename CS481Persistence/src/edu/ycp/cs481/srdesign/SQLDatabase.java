@@ -184,7 +184,7 @@ public int addHashtag(final HashTag hashtag) throws SQLException {
 						preparedStatement.executeUpdate();
 						
 						try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-				            if (generatedKeys.next()) {
+				            if (generatedKeys.next()) { 
 				            	newHashID = generatedKeys.getInt(1);
 				            }
 				            else {
