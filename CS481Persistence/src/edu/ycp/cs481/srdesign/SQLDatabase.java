@@ -361,6 +361,7 @@ public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException
 	});
 }
 
+// show be good to go!
 @Override
 public ArrayList<Photo> getUserFollowingPhotos(final int uID, int hashtagID) throws SQLException {
 	return executeTransaction(new Transaction<ArrayList<Photo>>() {
@@ -371,8 +372,9 @@ public ArrayList<Photo> getUserFollowingPhotos(final int uID, int hashtagID) thr
 			PreparedStatement preparedStatement = null;
 			try{
 				// Return a resultset That contains the photos from the hashtags the user is following.	
-				preparedStatement = conn.prepareStatement("(SELECT PHOTOID, PH.USERID, PH.PHOTO FROM USERHASHTAG u JOIN PHOTOHASHTAG p on u.USERID=uID "
+				preparedStatement = conn.prepareStatement("(SELECT PHOTOID, PH.USERID, PH.PHOTO FROM USERHASHTAG u JOIN PHOTOHASHTAG p on u.USERID=?"
 						+ "and u.HASHTAGID=p.HASHTAGID JOIN PHOTOS ph ON p.PHOTOID=p.id)");
+				preparedStatement.setInt(1, 1);
 				// Execute Search
 				resultSet = preparedStatement.executeQuery();
 				while(resultSet.next()){
@@ -466,15 +468,16 @@ public String getHashtagByID(int id) throws SQLException {
 
 // Implemented - NEED TO TEST
 @Override
-public int getHashtagByName(String hashtagName) throws SQLException {
+public int getHashtagByName(final String hashtagName) throws SQLException {
 	return executeTransaction(new Transaction<Integer>() {
 		@Override
 		public Integer execute(Connection conn) throws SQLException {
 			PreparedStatement preparedStatement = null;
 			try{
 				// Prepare statement
-				preparedStatement = conn.prepareStatement("SELECT * FROM HASHTAGS WHERE HASHTAGNAME = hashtagName");
+				preparedStatement = conn.prepareStatement("SELECT * FROM HASHTAGS WHERE HASHTAGNAME=?");
 				// Execute Query
+				preparedStatement.setString(1, hashtagName);
 				resultSet = preparedStatement.executeQuery();
 				
 				if(resultSet != null){
@@ -654,28 +657,15 @@ public Photo getPhotoByID(final int pID, boolean x) throws SQLException{
 		public Photo execute(Connection conn) throws SQLException {	
 			PreparedStatement preparedStatement = null;
 			try{
-				// Return a resultset That contains the photos from the hashtags the user is following.	
+				// Return a resultSet That contains the photos from the hashtags the user is following.	
 				preparedStatement = conn.prepareStatement("SELECT * FROM PHOTOS WHERE ID = ?");
 				// Execute Search
 				preparedStatement.setInt(1, pID);
 				resultSet = preparedStatement.executeQuery();
 				
 				if(resultSet.first()){
-					
-					//ReqPhoto.setFileLength(resultSet.getLong("BLOB"));
-					/*ReqPhoto.setFIS(resultSet.getBlob("PHOTO").getBinaryStream());
-					ReqPhoto.setphotoID(resultSet.getInt("id"));
-					ReqPhoto.setuserID(resultSet.getInt("USERID"));
-					System.out.println(ReqPhoto.getphotoID());
-					System.out.println(ReqPhoto.getuserID());
-					System.out.println(ReqPhoto.getFIS());
-					
-					*/
-					getPhoto(ReqPhoto, resultSet);
-					
+					getPhoto(ReqPhoto, resultSet);	
 				}
-				
-		
 			}
 			finally {
 				DBUtil.closeQuietly(resultSet);
@@ -694,11 +684,11 @@ public Photo getPhotoByID(final int pID, boolean x) throws SQLException{
 //NEED TO FIGURE OUT FILELENGTH AND FIS
 private void getPhoto(Photo photo, ResultSet resultSet) throws SQLException {	
 	photo.setphotoID(resultSet.getInt("id"));
-	System.out.println(resultSet.getInt("id"));
 	photo.setuserID(resultSet.getInt("USERID"));
-	System.out.println(resultSet.getInt("USERID"));
 	photo.setFIS(resultSet.getBinaryStream("PHOTO"));
-	System.out.println(resultSet.getBinaryStream("PHOTO"));
+	//System.out.println(resultSet.getBinaryStream("PHOTO"));
+	//System.out.println(resultSet.getInt("id"));
+	//System.out.println(resultSet.getInt("USERID"));
 }
 
 
