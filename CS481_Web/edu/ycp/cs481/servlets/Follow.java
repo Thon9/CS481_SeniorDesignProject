@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class
@@ -26,16 +27,18 @@ public class Follow extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String hashtag = request.getParameter("search_object");
-		System.out.println("Following "+hashtag);
+		HttpSession session = request.getSession();
+		
 		//do nothing with no hashtag to follow
-		if (hashtag == null){
+		if (session.getAttribute("hashTag") == null){
 			request.setAttribute("result", "no hashtag to follow");
 			this.doGet(request, response);
 		}
 		
 		//follow hashtag
 		else {
+			String hashtag = session.getAttribute("hashTag").toString();
+			System.out.println("Fol: Following "+hashtag);
 			response.sendRedirect(request.getContextPath()+"/main.jsp");
 		}
 	}

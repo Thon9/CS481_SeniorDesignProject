@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -41,12 +42,15 @@ public class ShowGallery extends HttpServlet {
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 
     	String subject = request.getParameter("search_object");
-    	
+
+    	//save the hashtag to the session
+    	HttpSession session = request.getSession();
+		session.setAttribute("hashTag", subject);
+		
     	System.out.println(subject);
     	ArrayList<Photo>temp = new ArrayList<Photo>();
-  
 		ArrayList<String> paths = new ArrayList<String>();
-		//show gallery normally
+		
 		
 	
 		if (subject == null || subject.isEmpty()){

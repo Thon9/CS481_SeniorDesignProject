@@ -63,8 +63,11 @@ span#search_bar {
 	
 	<!-- account and home button -->
 	<div style = "float:left">
-		<button type="button" onClick="JavaScript:window.location='main.jsp';">Home</button>
+		<button type="button" onClick="JavaScript:window.location='Home';">Home</button>
 		<button type="button" onClick="JavaScript:window.location='accountinformation.jsp';">Account Information</button>
+		<button type="button" onClick="JavaScript:window.location='Gallery';">Gallery</button>
+		<button type="button" onClick="JavaScript:window.location='ShowUserGallery';">User Uploads</button>
+		<button type="button" onClick="JavaScript:window.location='photo.jsp';">Add Photo</button>
 	</div>
 	<br>
 	<br>
@@ -101,10 +104,10 @@ span#search_bar {
 	</div>
 	<!-- Follow button -->
 	<form action="${pageContext.servletContext.contextPath}/Follow" method="post">
-			<input type="submit" value="Follow"></input>
+			<input type="submit" value="Follow ${hashTag}"></input>
 	</form>
-	
 	${result}
+	<h2 align=center>${hashTag}</h2>
 	<br>
 	<br>
 	<center>

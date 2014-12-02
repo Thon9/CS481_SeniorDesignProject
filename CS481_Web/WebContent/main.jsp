@@ -17,6 +17,13 @@ body {
 	background-color: #cccccc;
 }
 
+img {
+	width: 100%;
+	max-width: 250px;
+	max-height: 250px;
+	border-radius: 10px;
+}
+
 button {
 	border-radius: 15px;
 }
@@ -43,25 +50,26 @@ input {
 	
 	<!-- account button -->
 	<div style = "float:left">
+		<button type="button" onClick="JavaScript:window.location='Home';">Home</button>
 		<button type="button" onClick="JavaScript:window.location='accountinformation.jsp';">Account Information</button>
 		<button type="button" onClick="JavaScript:window.location='Gallery';">Gallery</button>
 		<button type="button" onClick="JavaScript:window.location='ShowUserGallery';">User Uploads</button>
+		<button type="button" onClick="JavaScript:window.location='photo.jsp';">Add Photo</button>
 	</div>
-	
-	<!--input type="text" name="description" /-->
 	<br>
-
+	<br>
 	<center>
-			<br>
-			<a href="photo.jsp">Add Photo</a>
-			<br>
-			
+	<h2>List of Followed Photos</h2>
 	</center>
-	<br>
-<!-- 
-<h2>List of Followed HashTags</h2>
-<a href="Gallery?hashTag=#undefine">#undefine</a>
- -->
+	<center>
+	<form enctype="multipart/form-data" action="${pageContext.servletContext.contextPath}/Home">
+		<c:forEach var="photo" items="${photoList}">
+					<a href="${photo}" target="_blank"><img src="${photo}"></a>
+					<!-- img src=photo height="200px" width="200px" /-->
+		</c:forEach>
+	</form>
+	</center>
+	
 </body>
 </html>
 
