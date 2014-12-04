@@ -3,12 +3,14 @@ package edu.ycp.cs481.servlets;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import edu.ycp.cs481.srdesign.Photo;
 import edu.ycp.cs481.srdesign.controllers.GetPhotosByHashtagString;
@@ -20,18 +22,21 @@ import edu.ycp.cs481.srdesign.controllers.GetPhotosByHashtagString;
 @MultipartConfig
 public class ShowGallery extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	public Photo newPhoto = new Photo();
 	
     @Override
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 
     	String subject = request.getParameter("search_object");
-    	
+
+    	//save the hashtag to the session
+    	HttpSession session = request.getSession();
+		session.setAttribute("hashTag", subject);
+		
     	System.out.println(subject);
     	ArrayList<Photo>temp = new ArrayList<Photo>();
-  
 		ArrayList<String> paths = new ArrayList<String>();
-		//show gallery normally
+		
 		
 	
 		if (subject == null || subject.isEmpty()){
@@ -48,13 +53,16 @@ public class ShowGallery extends HttpServlet {
 				// Creating arraylist of photos based on search subject
 				//System.out.println("Should be adding photos containing subect " + subject);
 				//System.out.println(temp);
-				temp = getPhotos.GetPhotosByHashtagString(subject);
-				System.out.println(temp.size());
+				temp = getPhotos.getPhotos(subject);
+				
+				System.out.println("The size of the temp array is " + temp.size());
+				/*
 				for(int i = 0; i < temp.size(); i++){
 					System.out.println("Counter is at " + i);
 					System.out.println("PhotoID is " + temp.get(i).getphotoID());
 					System.out.println("User ID is " + temp.get(i).getuserID());
 				}
+				*/
 				//System.out.println("The temp size is " + temp.size());
 			} catch (SQLException e) {
 				// Auto-generated catch block
@@ -62,17 +70,19 @@ public class ShowGallery extends HttpServlet {
 			}
 			
 		}
+		
 		// if temp.size==0, NO PHOTOS
 		// PRINT OUT MESSAGE ON WEBSITE
 		
-		
-		for(int i = 0; i < temp.size(); i++){
-			//temp.get(i).getphotoID()	
-			//System.out.println(temp.get(i))
-			//paths.add("image/"+i);
-			System.out.println("The PHOTO ID of temp photo " + i + " is " + temp.get(i).getphotoID());
+		Iterator<Photo> iter = temp.iterator();
+		while (iter.hasNext()){
+			newPhoto = iter.next();
+			//System.out.println(newPhoto.getuserID());
+			
 			// NEEDS TO BE FIXED, HARDCORDED
-			paths.add("image/"+(temp.get(i).getphotoID()-temp.size()+i+1));			
+			System.out.println("The photo ID is " + newPhoto.getphotoID());
+			paths.add("image/" + newPhoto.getphotoID());
+			//paths.add("image/"+(temp.get(i).getphotoID()-temp.size()+i+1));			
 		}
 		
 		// Store photos as photolist

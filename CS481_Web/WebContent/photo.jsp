@@ -41,9 +41,11 @@ input {
 	
 	<!-- account button -->
 	<div style = "float:left">
-		<button type="button" onClick="JavaScript:window.location='main.jsp';">Home</button>
+		<button type="button" onClick="JavaScript:window.location='Home';">Home</button>
 		<button type="button" onClick="JavaScript:window.location='accountinformation.jsp';">Account Information</button>
 		<button type="button" onClick="JavaScript:window.location='Gallery';">Gallery</button>
+		<button type="button" onClick="JavaScript:window.location='ShowUserGallery';">User Uploads</button>
+		<button type="button" onClick="JavaScript:window.location='photo.jsp';">Add Photo</button>
 	</div>
 
 	<br>

@@ -77,14 +77,14 @@ public class Login extends HttpServlet {
 					session.setAttribute("password", controller.login(userName, password).getPassword());
 					
 					//to main
-					response.sendRedirect(request.getContextPath()+"/main.jsp");
+					response.sendRedirect(request.getContextPath()+"/Home");
 
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				//to main
-				response.sendRedirect(request.getContextPath()+"/main.jsp");
+				response.sendRedirect(request.getContextPath()+"/Home");
 			}
 		}
 		else {

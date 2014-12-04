@@ -47,6 +47,10 @@ public interface IDatabase {
 		
 		public ArrayList<Photo> getUserSearchPhotos(String hashtagstring) throws SQLException;
 		
+		// Get Hashtags Based On PhotoID
+		public ArrayList<HashTag> getHashtagsFromPhoto(int photoID) throws SQLException;
+		
+		public ArrayList<String> autoCompleteSearch (String entered) throws SQLException;
 		/* TESTING PURPOSES ONLY
 		public ArrayList<Photo> getPhotos();
 		*/

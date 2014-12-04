@@ -215,18 +215,22 @@ public ArrayList<Photo> getUserSearchPhotos(final String hashtagstring) throws S
 	return executeTransaction(new Transaction<ArrayList<Photo>>() {
 		@Override 
 		public ArrayList<Photo> execute(Connection conn) throws SQLException {
+			ArrayList<Photo> searchPhotos = new ArrayList<Photo>();
 			PreparedStatement preparedStatement = null;
 			try{
 				// Return a resultset That contains the photos from the hashtags the user is following.	
 				// CORRECT PREPARESTATEMENT
-				preparedStatement = conn.prepareStatement("(SELECT PHOTOID FROM HASHTAGS h join PHOTOHASHTAG ph on h.HASHTAGNAME=? "
-						+ "AND h.ID=ph.HASHTAGID JOIN PHOTOS p ON ph.PHOTOID=p.id)");
+				preparedStatement = conn.prepareStatement("(SELECT p.id,P.USERID,P.PHOTO FROM HASHTAGS H join PHOTOHASHTAG ph on h.HASHTAGNAME=? "
+				+ "AND h.id=ph.HASHTAGID JOIN PHOTOS p ON ph.PHOTOID=p.id)");
 				preparedStatement.setString(1, hashtagstring);
-				// Execute Search
-				resultSet = preparedStatement.executeQuery();
-				while(resultSet.next()){
-					System.out.println("Should be adding a photo to arrayList PHOTOS");
-					//photos.add(getPhoto(photo, resultSet));
+ 				resultSet = preparedStatement.executeQuery();
+ 				while(resultSet.next()){
+ 					//System.out.println("Should be adding a photo to arrayList PHOTOS");
+ 					//photos = getArrayListPhotos(newPhoto, resultSet);
+ 					Photo newPhoto = new Photo();
+					getPhoto(newPhoto, resultSet);
+					searchPhotos.add(newPhoto);
+					//System.out.println("PHOTO ADDED TO SEARCHPHOTOS");
 				}
 			}
 			finally
@@ -234,7 +238,7 @@ public ArrayList<Photo> getUserSearchPhotos(final String hashtagstring) throws S
 				DBUtil.closeQuietly(preparedStatement);
 				DBUtil.closeQuietly(conn);
 			}
-			return photos;
+			return searchPhotos;
 		
 		}
 	});
@@ -346,6 +350,7 @@ public int addPhoto(final Photo newPhoto) throws SQLException {
 @Override
 public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException {
 	return executeTransaction(new Transaction<ArrayList<Photo>>() {
+		Photo newPhoto = new Photo();
 		ArrayList<Photo> photos = new ArrayList<Photo>();
 		@Override
 		public ArrayList<Photo> execute(Connection conn) throws SQLException {	
@@ -355,7 +360,8 @@ public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException
 					preparedStatement.setInt(1, uID);
 				resultSet = preparedStatement.executeQuery();
 				if(resultSet.next()){
-					photos.add(getPhoto(resultSet));
+					getPhoto(newPhoto,resultSet);
+					photos.add(newPhoto);
 				} else {
 					System.out.println("NO PHOTOS FROM USER");
 				}
@@ -370,24 +376,27 @@ public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException
 	});
 }
 
+// show be good to go!
 @Override
 public ArrayList<Photo> getUserFollowingPhotos(final int uID, int hashtagID) throws SQLException {
 	return executeTransaction(new Transaction<ArrayList<Photo>>() {
 		ArrayList<Photo> photos = new ArrayList<Photo>();
+		Photo photo = new Photo();
 		@Override
 		public ArrayList<Photo> execute(Connection conn) throws SQLException {	
 			PreparedStatement preparedStatement = null;
 			try{
 				// Return a resultset That contains the photos from the hashtags the user is following.	
-				preparedStatement = conn.prepareStatement("(SELECT PHOTOID FROM USERHASHTAG u JOIN PHOTOHASHTAG p on u.USERID=uID "
+
+				preparedStatement = conn.prepareStatement("(SELECT PHOTOID, PH.USERID, PH.PHOTO FROM USERHASHTAG u JOIN PHOTOHASHTAG p on u.USERID=?"
 						+ "and u.HASHTAGID=p.HASHTAGID JOIN PHOTOS ph ON p.PHOTOID=p.id)");
+				preparedStatement.setInt(1, 1);
 				// Execute Search
 				resultSet = preparedStatement.executeQuery();
 				while(resultSet.next()){
-					photos.add(getPhoto(resultSet));
+					getPhoto(photo, resultSet);
+					photos.add(photo);
 				}
-				
-		
 			}
 			finally {
 				DBUtil.closeQuietly(resultSet);
@@ -471,17 +480,85 @@ public String getHashtagByID(int id) throws SQLException {
 
 }
 
+// USED FOR AUTOCOMPLETE FEATURE IN SEARCH
+@Override
+public ArrayList<String> autoCompleteSearch(final String entered) throws SQLException {
+	return executeTransaction(new Transaction<ArrayList<String>>() {
+		ArrayList<String> hashtags = new ArrayList<String>();
+		HashTag hashtag = new HashTag();
+		@Override
+		public ArrayList<String> execute(Connection conn) throws SQLException {
+			PreparedStatement preparedStatement = null;
+			try{
+				// Prepare statement
+				preparedStatement = conn.prepareStatement("SELECT * FROM HASHTAGS WHERE HASHTAGENAME LIKE '?%');");
+				preparedStatement.setString(1, entered);
+				// Execute Query
+				resultSet = preparedStatement.executeQuery();
+				
+				if(resultSet != null){
+					getHashtags(hashtag, resultSet);
+					hashtags.add(hashtag.gethashtagName());
+					
+				}
+				
+			} catch (SQLException e){
+				e.printStackTrace();
+			} finally {
+				DBUtil.closeQuietly(resultSet);
+				DBUtil.closeQuietly(preparedStatement);
+			}
+			return hashtags;
+		}
+
+	});
+
+}
+
+
 // Implemented - NEED TO TEST
 @Override
-public int getHashtagByName(String hashtagName) throws SQLException {
+public ArrayList<HashTag> getHashtagsFromPhoto(int photoID) throws SQLException {
+	return executeTransaction(new Transaction<ArrayList<HashTag>>() {
+		ArrayList<HashTag> hashtags = new ArrayList<HashTag>();
+		HashTag hashtag = new HashTag();
+		@Override
+		public ArrayList<HashTag> execute(Connection conn) throws SQLException {	
+			PreparedStatement preparedStatement = null;
+			try{
+				// Return a resultset That contains the hashtags from a single photo
+				preparedStatement = conn.prepareStatement("(SELECT H.ID, H.HASHTAGNAME FROM HASHTAGS H JOIN PHOTOS P WHERE P.ID=H.ID)");
+				// Execute Search
+				resultSet = preparedStatement.executeQuery();
+				while(resultSet.next()){
+					getHashtags(hashtag, resultSet);
+					hashtags.add(hashtag);
+					System.out.println("This photo has a hashtag of " + hashtag.gethashtagName() + "associated with it");
+				}
+			}
+			finally {
+				DBUtil.closeQuietly(resultSet);
+				DBUtil.closeQuietly(preparedStatement);
+			}
+			// Prints out number of photos
+			System.out.println("The number of photos is " + photos.size());
+			return hashtags;
+		}
+	});
+}
+
+// Implemented - NEED TO TEST
+@Override
+public int getHashtagByName(final String hashtagName) throws SQLException {
 	return executeTransaction(new Transaction<Integer>() {
 		@Override
 		public Integer execute(Connection conn) throws SQLException {
 			PreparedStatement preparedStatement = null;
 			try{
 				// Prepare statement
-				preparedStatement = conn.prepareStatement("SELECT * FROM HASHTAGS WHERE HASHTAGNAME = hashtagName");
+				preparedStatement = conn.prepareStatement("SELECT * FROM HASHTAGS WHERE HASHTAGNAME=?");
 				// Execute Query
+				preparedStatement.setString(1, hashtagName);
 				resultSet = preparedStatement.executeQuery();
 				
 				if(resultSet != null){
@@ -563,95 +640,6 @@ public User getUserString(String username) throws SQLException {
 	});	
 }
 
-
-
-/* Implemented and Working
-@Override
-public boolean addPhoto(final String fileName, final FileInputStream fis, final long filelength) throws SQLException {
-	return executeTransaction(new Transaction<Boolean>() {
-		@Override
-		public Boolean execute(Connection conn) throws SQLException {
-			
-			PreparedStatement preparedStatement = null;
-			try{
-				// CREATE FILE INPUT STREAM FROM FILE
-				preparedStatement = conn.prepareStatement(
-						"INSERT INTO PHOTOS (USERID, PHOTO) VALUES (?, ?)");
-					// Set Values to be inserted into DB
-					System.out.println("Setting values FOR USERID");
-					preparedStatement.setInt(1, 1);
-					System.out.println("Setting values FOR PHOTO");
-					preparedStatement.setBinaryStream(2, fis, filelength);
-					
-					// Update DATABASE
-					preparedStatement.executeUpdate();
-					System.out.println("Check database to see if updated");
-			}
-			finally
-			{
-				DBUtil.closeQuietly(preparedStatement);
-				DBUtil.closeQuietly(conn);
-			}
-		return true;
-		}
-	});
-}
-
-*/
-/*
-// FAKE DATABASE STUFFs
-private void initPhotos(){
-	if(!(new File("C:\\imagesFolder\\")).isDirectory()){
-		(new File("C:\\imagesFolder\\")).mkdirs();
-	}else{
-		
-			File directory = new File("C:\\imagesFolder\\");
-			for (File file : directory.listFiles()) {
-			    if (file.isFile()) {
-			       if (file.getName().endsWith(".jpg")||file.getName().endsWith(".png")) {
-			    	   System.out.println("Adding a photo");
-			    	   this.photos.add(new Photo());
-			       }
-			    } 
-			}
-		}
-
-}
-@Override
-public ArrayList<Photo> getPhotos(){
-	ArrayList<Photo> PICS = new ArrayList<Photo>();
-	
-	//for(int i=0;i<users.size(); i++){
-		File directory = new File("C:\\imagesFolder\\");
-
-		for (File file : directory.listFiles()) {
-		    if (file.isFile()) {
-		       if (file.getName().endsWith(".jpg")||file.getName().endsWith(".png")) {
-		           System.out.println(file.getAbsolutePath());
-		   
-		           PICS.add(new Photo());
-		       }
-		    } 
-		}
-	//}
-	return PICS;
-}
-public ArrayList<Photo> getUserPhotos(int uID) {
-	ArrayList<Photo> userPhotos = new ArrayList<Photo>();
-	for(int i=0; i<this.photos.size();i++){
-		if(this.photos.get(i).getuserID()==uID){
-			userPhotos.add(this.photos.get(i));
-		}
-	}
-	return userPhotos;
-}
-@Override
-public Photo getPhotoByID(int pID) {
-	return this.photos.get(pID);
-}
-
-*/
-
 @Override
 public Photo getPhotoByID(final int pID, boolean x) throws SQLException{
 	return executeTransaction(new Transaction<Photo>() {
@@ -661,28 +649,15 @@ public Photo getPhotoByID(final int pID, boolean x) throws SQLException{
 		public Photo execute(Connection conn) throws SQLException {	
 			PreparedStatement preparedStatement = null;
 			try{
-				// Return a resultset That contains the photos from the hashtags the user is following.	
+				// Return a resultSet That contains the photos from the hashtags the user is following.	
 				preparedStatement = conn.prepareStatement("SELECT * FROM PHOTOS WHERE ID = ?");
 				// Execute Search
 				preparedStatement.setInt(1, pID);
 				resultSet = preparedStatement.executeQuery();
 				
 				if(resultSet.first()){
-					
-					//ReqPhoto.setFileLength(resultSet.getLong("BLOB"));
-					/*ReqPhoto.setFIS(resultSet.getBlob("PHOTO").getBinaryStream());
-					ReqPhoto.setphotoID(resultSet.getInt("id"));
-					ReqPhoto.setuserID(resultSet.getInt("USERID"));
-					System.out.println(ReqPhoto.getphotoID());
-					System.out.println(ReqPhoto.getuserID());
-					System.out.println(ReqPhoto.getFIS());
-					
-					*/
-					ReqPhoto = getPhoto(resultSet);
-					
+					getPhoto(ReqPhoto, resultSet);	
 				}
-				
-		
 			}
 			finally {
 				DBUtil.closeQuietly(resultSet);
@@ -698,6 +673,26 @@ public Photo getPhotoByID(final int pID, boolean x) throws SQLException{
 
 
 ////////////  UTILITY METHODS  ///////////////
+
+//NEED TO FIGURE OUT FILELENGTH AND FIS
+private void getPhoto(Photo photo, ResultSet resultSet) throws SQLException {	
+	photo.setphotoID(resultSet.getInt("id"));
+	photo.setuserID(resultSet.getInt("USERID"));
+	photo.setFIS(resultSet.getBinaryStream("PHOTO"));
+	System.out.println("The photoID from the photo is " + photo.getphotoID());
+	System.out.println("The photo ID from the utility method is " + resultSet.getInt("id"));
+}
+/*
+private ArrayList<Photo> getArrayListPhotos(Photo photo, ResultSet resultSet) throws SQLException {
+	photo.setphotoID(resultSet.getInt("id"));
+	photo.setuserID(resultSet.getInt("USERID"));
+	photo.setFIS(resultSet.getBinaryStream("PHOTO"));
+	// Add photos
+	photos.add(photo);
+	return photos;
+}
+*/
+
 private void getUser(User user, ResultSet resultSet) throws SQLException {
 	user.setuserID(resultSet.getInt("id"));	
 	user.setUserName(resultSet.getString("USERNAME"));
@@ -712,17 +707,7 @@ private void getHashtags(HashTag hashtag, ResultSet resultSet) throws SQLExcepti
 	hashtag.sethashtagID(resultSet.getInt("id"));
 }
 
-// NEED TO FIGURE OUT FILELENGTH AND FIS
-private Photo getPhoto(ResultSet resultSet) throws SQLException {
-	Photo interPhoto = new Photo();
-	
-	//interPhoto.setFileLength(resultSet.getLong("BLOB"));
-	interPhoto.setFIS(resultSet.getBinaryStream("PHOTO"));
-	interPhoto.setphotoID(resultSet.getInt("id"));
-	interPhoto.setuserID(resultSet.getInt("USERID"));
-	
-	return interPhoto;
-}
+
 
 @Override
 public Photo getPhotoByID(int pID) {
@@ -735,6 +720,10 @@ public ArrayList<Photo> getPhotos() {
 	// TODO Auto-generated method stub
 	return null;
 }
+
+
+
+
 
 
 
