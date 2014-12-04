@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -32,11 +31,11 @@ import edu.ycp.cs481.srdesign.controllers.GetPhotosByHashtagString;
 /**
  * Servlet implementation class
 */
-@WebServlet("/ShowGallery")
+@WebServlet("/ShowUserGallery")
 @MultipartConfig
-public class ShowGallery extends HttpServlet {
+public class ShowUserGallery extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public Photo newPhoto = new Photo();
+
 	
     @Override
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
@@ -58,22 +57,19 @@ public class ShowGallery extends HttpServlet {
 		//searching gallery 
 		else {
 			System.out.println("searching for "+subject+"...");
-			GetPhotosByHashtagString getPhotos = new GetPhotosByHashtagString();
+			Get getPhotos = new GetPhotosByHashtagString();
 			try {
 				//temp=null;
 				// Creating arraylist of photos based on search subject
 				//System.out.println("Should be adding photos containing subect " + subject);
 				//System.out.println(temp);
-				temp = getPhotos.getPhotos(subject);
-				
-				System.out.println("The size of the temp array is " + temp.size());
-				/*
+				temp = getPhotos.GetPhotosByHashtagString(subject);
+				System.out.println(temp.size());
 				for(int i = 0; i < temp.size(); i++){
 					System.out.println("Counter is at " + i);
 					System.out.println("PhotoID is " + temp.get(i).getphotoID());
 					System.out.println("User ID is " + temp.get(i).getuserID());
 				}
-				*/
 				//System.out.println("The temp size is " + temp.size());
 			} catch (SQLException e) {
 				// Auto-generated catch block
@@ -81,19 +77,17 @@ public class ShowGallery extends HttpServlet {
 			}
 			
 		}
-		
 		// if temp.size==0, NO PHOTOS
 		// PRINT OUT MESSAGE ON WEBSITE
 		
-		Iterator<Photo> iter = temp.iterator();
-		while (iter.hasNext()){
-			newPhoto = iter.next();
-			//System.out.println(newPhoto.getuserID());
-			
+		
+		for(int i = 0; i < temp.size(); i++){
+			//temp.get(i).getphotoID()	
+			//System.out.println(temp.get(i))
+			//paths.add("image/"+i);
+			System.out.println("The PHOTO ID of temp photo " + i + " is " + temp.get(i).getphotoID());
 			// NEEDS TO BE FIXED, HARDCORDED
-			System.out.println("The photo ID is " + newPhoto.getphotoID());
-			paths.add("image/" + newPhoto.getphotoID());
-			//paths.add("image/"+(temp.get(i).getphotoID()-temp.size()+i+1));			
+			paths.add("image/"+(temp.get(i).getphotoID()-temp.size()+i+1));			
 		}
 		
 		// Store photos as photolist
@@ -101,7 +95,7 @@ public class ShowGallery extends HttpServlet {
 		//request.setAttribute("photoList", images);
 
 		request.setAttribute("photoList", paths);
-		request.getRequestDispatcher("/gallery.jsp").forward(request, response); 
+		request.getRequestDispatcher("/userGallery.jsp").forward(request, response); 
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

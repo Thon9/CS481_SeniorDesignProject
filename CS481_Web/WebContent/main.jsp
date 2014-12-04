@@ -45,16 +45,13 @@ input {
 	<div style = "float:left">
 		<button type="button" onClick="JavaScript:window.location='accountinformation.jsp';">Account Information</button>
 		<button type="button" onClick="JavaScript:window.location='Gallery';">Gallery</button>
+		<button type="button" onClick="JavaScript:window.location='ShowUserGallery';">User Uploads</button>
 	</div>
 	
 	<!--input type="text" name="description" /-->
 	<br>
 
 	<center>
-		<form action="${pageContext.servletContext.contextPath}/Gallery?hashTag=${request.getParameter(search_object)}">
-			 <input type="text" name="search_object" size="30" />
-			 <input type="submit" value="Search for HashTag" /> 
-		</form>
 			<br>
 			<a href="photo.jsp">Add Photo</a>
 			<br>
