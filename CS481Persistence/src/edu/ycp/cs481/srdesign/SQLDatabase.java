@@ -625,7 +625,7 @@ public ArrayList<HashTag> getHashtagsFromPhoto(int photoID) throws SQLException 
 				DBUtil.closeQuietly(preparedStatement);
 			}
 			// Prints out number of photos
-			System.out.println("The number of photos is " + photos.size());
+			System.out.println("The number of photos is " + hashtags.size());
 			return hashtags;
 		}
 	});
