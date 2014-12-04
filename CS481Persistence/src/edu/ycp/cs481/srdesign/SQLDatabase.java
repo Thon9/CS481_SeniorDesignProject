@@ -225,12 +225,10 @@ public ArrayList<Photo> getUserSearchPhotos(final String hashtagstring) throws S
 				preparedStatement.setString(1, hashtagstring);
  				resultSet = preparedStatement.executeQuery();
  				while(resultSet.next()){
- 					//System.out.println("Should be adding a photo to arrayList PHOTOS");
- 					//photos = getArrayListPhotos(newPhoto, resultSet);
  					Photo newPhoto = new Photo();
 					getPhoto(newPhoto, resultSet);
 					searchPhotos.add(newPhoto);
-					//System.out.println("PHOTO ADDED TO SEARCHPHOTOS");
+				
 				}
 			}
 			finally
@@ -350,7 +348,7 @@ public int addPhoto(final Photo newPhoto) throws SQLException {
 @Override
 public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException {
 	return executeTransaction(new Transaction<ArrayList<Photo>>() {
-		Photo newPhoto = new Photo();
+		
 		ArrayList<Photo> photos = new ArrayList<Photo>();
 		@Override
 		public ArrayList<Photo> execute(Connection conn) throws SQLException {	
@@ -360,6 +358,7 @@ public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException
 					preparedStatement.setInt(1, uID);
 				resultSet = preparedStatement.executeQuery();
 				if(resultSet.next()){
+					Photo newPhoto = new Photo();
 					getPhoto(newPhoto,resultSet);
 					photos.add(newPhoto);
 				} else {
@@ -381,7 +380,6 @@ public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException
 public ArrayList<Photo> getUserFollowingPhotos(final int uID, int hashtagID) throws SQLException {
 	return executeTransaction(new Transaction<ArrayList<Photo>>() {
 		ArrayList<Photo> photos = new ArrayList<Photo>();
-		Photo photo = new Photo();
 		@Override
 		public ArrayList<Photo> execute(Connection conn) throws SQLException {	
 			PreparedStatement preparedStatement = null;
@@ -394,6 +392,7 @@ public ArrayList<Photo> getUserFollowingPhotos(final int uID, int hashtagID) thr
 				// Execute Search
 				resultSet = preparedStatement.executeQuery();
 				while(resultSet.next()){
+					Photo photo = new Photo();
 					getPhoto(photo, resultSet);
 					photos.add(photo);
 				}
@@ -521,7 +520,7 @@ public ArrayList<String> autoCompleteSearch(final String entered) throws SQLExce
 public ArrayList<HashTag> getHashtagsFromPhoto(int photoID) throws SQLException {
 	return executeTransaction(new Transaction<ArrayList<HashTag>>() {
 		ArrayList<HashTag> hashtags = new ArrayList<HashTag>();
-		HashTag hashtag = new HashTag();
+		
 		@Override
 		public ArrayList<HashTag> execute(Connection conn) throws SQLException {	
 			PreparedStatement preparedStatement = null;
@@ -531,6 +530,7 @@ public ArrayList<HashTag> getHashtagsFromPhoto(int photoID) throws SQLException 
 				// Execute Search
 				resultSet = preparedStatement.executeQuery();
 				while(resultSet.next()){
+					HashTag hashtag = new HashTag();
 					getHashtags(hashtag, resultSet);
 					hashtags.add(hashtag);
 					System.out.println("This photo has a hashtag of " + hashtag.gethashtagName() + "associated with it");
