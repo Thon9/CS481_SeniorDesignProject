@@ -13,6 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import edu.ycp.cs481.srdesign.Photo;
+
+import edu.ycp.cs481.srdesign.controllers.AddPhotoController;
+import edu.ycp.cs481.srdesign.controllers.AutoCompleteHashTag;
+import edu.ycp.cs481.srdesign.controllers.GetAllPhotosController;
 import edu.ycp.cs481.srdesign.controllers.GetPhotosByHashtagString;
 
 /**
@@ -28,7 +32,17 @@ public class ShowGallery extends HttpServlet {
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 
     	String subject = request.getParameter("search_object");
-
+    	
+    	ArrayList<String> hashTags = new ArrayList<String>();
+    	//get list of string to autocomplete the textbox
+    	AutoCompleteHashTag autoCompleteController = new AutoCompleteHashTag();
+    	try {
+    		hashTags = autoCompleteController.getAutoCompleteSearch(subject);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	
     	//save the hashtag to the session
     	HttpSession session = request.getSession();
 		session.setAttribute("hashTag", subject);
@@ -88,7 +102,7 @@ public class ShowGallery extends HttpServlet {
 		// Store photos as photolist
 
 		//request.setAttribute("photoList", images);
-
+		request.setAttribute("search_object", hashTags);
 		request.setAttribute("photoList", paths);
 		request.getRequestDispatcher("/gallery.jsp").forward(request, response); 
     }
