@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -27,6 +28,7 @@ import edu.ycp.cs481.srdesign.Photo;
 import edu.ycp.cs481.srdesign.controllers.AddPhotoController;
 import edu.ycp.cs481.srdesign.controllers.GetAllPhotosController;
 import edu.ycp.cs481.srdesign.controllers.GetPhotosByHashtagString;
+import edu.ycp.cs481.srdesign.controllers.GetPhotosByUserID;
 
 /**
  * Servlet implementation class
@@ -40,30 +42,24 @@ public class ShowUserGallery extends HttpServlet {
     @Override
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 
-    	String subject = request.getParameter("search_object");
-    	
-    	System.out.println(subject);
     	ArrayList<Photo>temp = new ArrayList<Photo>();
-  
-		ArrayList<String> paths = new ArrayList<String>();
-		//show gallery normally
+    	ArrayList<String> paths = new ArrayList<String>();
 		
-	
-		if (subject == null || subject.isEmpty()){
-			System.out.println("no search subject detect showing gallery normally...");
-			// Print message 
-		}
-		
-		//searching gallery 
-		else {
-			System.out.println("searching for "+subject+"...");
-			Get getPhotos = new GetPhotosByHashtagString();
+    	//get user id
+    	HttpSession session = request.getSession();
+    	int userID = (int) session.getAttribute("userID");
+		//get the user uploaded photos
+    	GetPhotosByUserID getPhotos = new GetPhotosByUserID();
 			try {
+				temp = getPhotos.getUserPhotos(userID);
+				if (temp == null){
+					System.out.println("SUG: user has no uploaded photos");
+				}
 				//temp=null;
 				// Creating arraylist of photos based on search subject
 				//System.out.println("Should be adding photos containing subect " + subject);
 				//System.out.println(temp);
-				temp = getPhotos.GetPhotosByHashtagString(subject);
+				temp = getPhotos.getUserPhotos(userID);
 				System.out.println(temp.size());
 				for(int i = 0; i < temp.size(); i++){
 					System.out.println("Counter is at " + i);
@@ -75,24 +71,21 @@ public class ShowUserGallery extends HttpServlet {
 				// Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-		}
-		// if temp.size==0, NO PHOTOS
-		// PRINT OUT MESSAGE ON WEBSITE
-		
-		
-		for(int i = 0; i < temp.size(); i++){
-			//temp.get(i).getphotoID()	
-			//System.out.println(temp.get(i))
-			//paths.add("image/"+i);
-			System.out.println("The PHOTO ID of temp photo " + i + " is " + temp.get(i).getphotoID());
-			// NEEDS TO BE FIXED, HARDCORDED
-			paths.add("image/"+(temp.get(i).getphotoID()-temp.size()+i+1));			
-		}
-		
-		// Store photos as photolist
+			System.out.println(temp.size());
+			for(int i = 0; i < temp.size(); i++){
+				System.out.println("SUG: Counter is at " + i);
+				System.out.println("SUG: PhotoID is " + temp.get(i).getphotoID());
+				System.out.println("SUG: User ID is " + temp.get(i).getuserID());
 
-		//request.setAttribute("photoList", images);
+			}
+			//System.out.println("The temp size is " + temp.size());
+		
+			
+			for(int i = 0; i < temp.size(); i++){
+				System.out.println("SUG: The PHOTO ID of temp photo " + i + " is " + temp.get(i).getphotoID());
+				// NEEDS TO BE FIXED, HARDCORDED
+				paths.add("image/"+(temp.get(i).getphotoID()-temp.size()+i+1));			
+			}
 
 		request.setAttribute("photoList", paths);
 		request.getRequestDispatcher("/userGallery.jsp").forward(request, response); 
@@ -103,27 +96,3 @@ public class ShowUserGallery extends HttpServlet {
 	}
 	
 }
-
-/*
-/InputStream is = temp.get(i).getFIS();
-System.out.println(temp.get(i).getphotoID());
-System.out.println(temp.get(i).getuserID());
-System.out.println(temp.get(i).getFIS());
-
-//
-//File newImage = new File("C:\\imagesFolder\\"+subject+"\\"+temp.get(i).getphotoID());
-//String formatName="image/jpeg";
-// Write image to filePath
-//BufferedImage bufferedImage= ImageIO.read(temp.get(i).getFIS());
-//ImageIO.write(bufferedImage,formatName,newImage);
-
-if (newImage.toString().contains(subject)){
-	//remove the extension
-	String path = newImage.getName().toString();
-	if (path.indexOf(".") > 0){
-		path = path.substring(0, path.lastIndexOf("."));
-	}
-	paths.add("image/"+path);
-	System.out.println("doGet found "+path);
-}	
-*/

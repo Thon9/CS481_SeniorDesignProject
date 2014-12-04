@@ -488,7 +488,7 @@ public String getHashtagByID(int id) throws SQLException {
 @Override
 public ArrayList<String> autoCompleteSearch(final String entered) throws SQLException {
 	return executeTransaction(new Transaction<ArrayList<String>>() {
-		ArrayList<String> hashtags = new ArrayList<HashTag>();
+		ArrayList<String> hashtags = new ArrayList<String>();
 		HashTag hashtag = new HashTag();
 		@Override
 		public ArrayList<String> execute(Connection conn) throws SQLException {

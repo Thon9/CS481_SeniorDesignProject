@@ -63,9 +63,11 @@ span#search_bar {
 	
 	<!-- account and home button -->
 	<div style = "float:left">
-		<button type="button" onClick="JavaScript:window.location='main.jsp';">Home</button>
+		<button type="button" onClick="JavaScript:window.location='Home';">Home</button>
 		<button type="button" onClick="JavaScript:window.location='accountinformation.jsp';">Account Information</button>
 		<button type="button" onClick="JavaScript:window.location='Gallery';">Gallery</button>
+		<button type="button" onClick="JavaScript:window.location='ShowUserGallery';">User Uploads</button>
+		<button type="button" onClick="JavaScript:window.location='photo.jsp';">Add Photo</button>
 	</div>
 	<br>
 	<br>
@@ -86,7 +88,6 @@ span#search_bar {
 					<a href="${photo}" target="_blank"><img src="${photo}"></a>
 					<!-- img src=photo height="200px" width="200px" /-->
 		</c:forEach>
-		
 	</form>
 	</center>
 	<br>

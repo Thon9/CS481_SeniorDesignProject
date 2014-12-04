@@ -25,9 +25,15 @@ input {
 	<h1 align="center">Account Setting of ${userName}</h1>
 
 	<!--the top bar include home and logout /-->
+	<!-- Navigation buttons -->
 	<div style = "float:left">
 		<button type="button" onClick="JavaScript:window.location='main.jsp';">Home</button>
+		<button type="button" onClick="JavaScript:window.location='accountinformation.jsp';">Account Information</button>
+		<button type="button" onClick="JavaScript:window.location='Gallery';">Gallery</button>
+		<button type="button" onClick="JavaScript:window.location='ShowUserGallery';">User Uploads</button>
+		<button type="button" onClick="JavaScript:window.location='photo.jsp';">Add Photo</button>
 	</div>
+	
 	<div style = "float:right">
 	<form action="${pageContext.servletContext.contextPath}/Logout"
 			method="post">
