@@ -135,7 +135,7 @@ public class FakeDatabase implements IDatabase {
 		}
 		return true;
 	}
-	
+/*	
 	@Override
 	public ArrayList<Photo> getPhotos(){
 		ArrayList<Photo> PICS = new ArrayList<Photo>();
@@ -154,10 +154,8 @@ public class FakeDatabase implements IDatabase {
 		}
 		return PICS;
 	}
-
-	@Override
-
-	
+*/
+	@Override	
 	public int addPhoto(Photo newPhoto) {
 
 		OutputStream OStream = null;
@@ -234,12 +232,12 @@ public class FakeDatabase implements IDatabase {
 		}
 		return userPhotos;
 	}
-	
+/*	
 	@Override
 	public Photo getPhotoByID(int pID) {
 		return photos.get(pID);
 	}
-/*	public int getNumPhoto() {
+	public int getNumPhoto() {
 		return numPhotos;
 	}
 
@@ -278,14 +276,14 @@ public class FakeDatabase implements IDatabase {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+/*
 	@Override
 	public ArrayList<Integer> getUserSearchPhotos(String hashtagstring)
 			throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+*/
 	@Override
 	public Photo getPhotoByID(int pID, boolean x) throws SQLException {
 		// TODO Auto-generated method stub
@@ -296,6 +294,46 @@ public class FakeDatabase implements IDatabase {
 	public int addHashtag(HashTag hashtag) throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public int checkHashtagExistance(String hashtagName) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean deletePhoto(int PhotoID) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ArrayList<HashTag> getHashtagsFromPhoto(int photoID)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> autoCompleteSearch(String entered)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean deleteHashtagFromPhoto(int photoID, int hashtagID)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ArrayList<Photo> getUserSearchPhotos(String hashtagstring)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
