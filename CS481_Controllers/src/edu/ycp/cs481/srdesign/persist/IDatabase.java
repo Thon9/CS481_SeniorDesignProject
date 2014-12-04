@@ -67,6 +67,9 @@ public interface IDatabase {
 		public ArrayList<Photo> getPhotos();
 		*/
 		
+		// Disassociate Photo and Hashtag
+		public boolean deleteHashtagFromPhoto(int photoID, int hashtagID) throws SQLException;
+		
 		// FAKE DATABASE
 		public Photo getPhotoByID(int pID);
 		

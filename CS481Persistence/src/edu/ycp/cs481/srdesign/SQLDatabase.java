@@ -572,6 +572,32 @@ public ArrayList<String> autoCompleteSearch(final String entered) throws SQLExce
 
 }
 
+// Implemented - NEED TO TESET
+@Override
+public boolean deleteHashtagFromPhoto(final int photoID,final int hashtagID) throws SQLException {
+	return executeTransaction(new Transaction<Boolean>() {
+		@Override
+		public Boolean execute(Connection conn) throws SQLException {
+			PreparedStatement preparedStatement = null;
+			try{
+				// Prepare statement
+				preparedStatement = conn.prepareStatement("DELETE FROM PHOTOHASHTAG WHERE PHOTOID=? AND HASHTAGID=?");
+					preparedStatement.setInt(1, photoID);
+					preparedStatement.setInt(2, hashtagID);
+				// Execute Query
+				preparedStatement.executeUpdate();
+
+			} finally {
+				DBUtil.closeQuietly(resultSet);
+				DBUtil.closeQuietly(preparedStatement);
+			}
+		return true;
+		}
+
+	});	
+	
+}
+
 
 // Implemented - NEED TO TEST
 @Override
@@ -768,6 +794,7 @@ public ArrayList<Photo> getPhotos() {
 	// TODO Auto-generated method stub
 	return null;
 }
+
 
 
 
