@@ -1,31 +1,16 @@
-
-
 package edu.ycp.cs481.servlets;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 import edu.ycp.cs481.srdesign.Photo;
-import edu.ycp.cs481.srdesign.controllers.AddPhotoController;
-import edu.ycp.cs481.srdesign.controllers.GetAllPhotosController;
 import edu.ycp.cs481.srdesign.controllers.GetPhotosByHashtagString;
 
 /**
