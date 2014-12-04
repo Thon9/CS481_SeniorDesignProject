@@ -6,8 +6,10 @@ import edu.ycp.cs481.srdesign.persist.DatabaseProvider;
 import edu.ycp.cs481.srdesign.persist.IDatabase;
 
 public class GetAllPhotosController {
+	/*
 	public ArrayList<Photo> getAllPhotos() {
 		IDatabase db = DatabaseProvider.getInstance();
-		return db.getPhotos();
+		return db.getPhotos()
 	}
+	*/
 }
