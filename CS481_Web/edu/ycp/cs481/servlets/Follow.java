@@ -3,6 +3,7 @@
 package edu.ycp.cs481.servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -31,7 +32,7 @@ public class Follow extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		
+		int userID = (int) session.getAttribute("userID");
 		//do nothing with no hashtag to follow
 		if (session.getAttribute("hashTag") == null){
 			request.setAttribute("result", "no hashtag to follow");
@@ -41,13 +42,18 @@ public class Follow extends HttpServlet {
 		//follow hashtag
 		else {
 			AddFollowHashTag followController = new AddFollowHashTag();
-			followController.addFollowingHashTag(session.getAttribute("hashTag")) == true){
+			try {
+				followController.addFollowingHashTag(session.getAttribute("hashTag").toString(),userID);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 				
 			}
 			String hashtag = session.getAttribute("hashTag").toString();
 			System.out.println("Fol: Following "+hashtag);
 			response.sendRedirect(request.getContextPath()+"/main.jsp");
 		}
+	
 	}
-}
 

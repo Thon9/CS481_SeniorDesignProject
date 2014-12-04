@@ -37,12 +37,12 @@ public class Home extends HttpServlet {
 		//get user following hashtag photos
 		HttpSession session = request.getSession();
     	int userID = (int) session.getAttribute("userID");
-    	try {
-			temp = photoController.GetPhotosFollowingHashtag(userID, 0);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//    	try {
+//			temp = photoController.GetPhotosFollowingHashtag(userID, 0);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
     			
     	if (temp == null){
 			System.out.println("Home: user has no followed photos");

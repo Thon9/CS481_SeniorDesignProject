@@ -7,8 +7,8 @@ import edu.ycp.cs481.srdesign.persist.DatabaseProvider;
 import edu.ycp.cs481.srdesign.persist.IDatabase;
 
 public class AddFollowHashTag {
-//	public boolean addFollowingHashTag (String hashname) throws SQLException {
-//		IDatabase db = DatabaseProvider.getInstance();
-//		return db.addFollowingHashtagToUser(hashname);
-//	}
+	public boolean addFollowingHashTag (String hashname,int uID) throws SQLException {
+		IDatabase db = DatabaseProvider.getInstance();
+		return db.addFollowHashtagToUser(hashname, uID);
+	}
 }

@@ -98,9 +98,20 @@ span#search_bar {
 				name="search_object" value="${search_object}" size="20" /> 
 			
 			<!-- autocomplete textbox-->
+			<!-- 
 			<script type="text/javascript">
-				$("#search_object").autocomplete("gethashtag.jsp");
+				$(function() { 
+					var availItems = ["CATS", "DOGS", "KOALA", 
+					                   "BEAR"];
+				$("#search_object").autocomplete({
+					source: availItems, 
+					minLength: 0
+				}).focus(function(){
+						$(this).trigger('keydown.autocomplete');
+					});
+				});
 			</script>
+			 -->
 			<input type="submit" value="Enter" ></input>
 			</span>
 		</form>	
