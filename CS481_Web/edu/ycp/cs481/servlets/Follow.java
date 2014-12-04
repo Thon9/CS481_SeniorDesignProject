@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import edu.ycp.cs481.srdesign.controllers.AddFollowHashTag;
+import edu.ycp.cs481.srdesign.controllers.GetPhotosFollowingHashtag;
+
 /**
  * Servlet implementation class
 */
@@ -37,6 +40,10 @@ public class Follow extends HttpServlet {
 		
 		//follow hashtag
 		else {
+			AddFollowHashTag followController = new AddFollowHashTag();
+			followController.addFollowingHashTag(session.getAttribute("hashTag")) == true){
+				
+			}
 			String hashtag = session.getAttribute("hashTag").toString();
 			System.out.println("Fol: Following "+hashtag);
 			response.sendRedirect(request.getContextPath()+"/main.jsp");
