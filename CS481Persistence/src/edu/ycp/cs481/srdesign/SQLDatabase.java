@@ -466,7 +466,11 @@ public int checkHashtagExistance(final String hashtagName) throws SQLException {
 				DBUtil.closeQuietly(resultSet);
 				DBUtil.closeQuietly(preparedStatement);
 			}
-			return hashtag.gethashtagID();
+			if(hashtag != null){
+				return hashtag.gethashtagID();
+			} else {
+				return 0;
+			}
 		}
 
 	});
