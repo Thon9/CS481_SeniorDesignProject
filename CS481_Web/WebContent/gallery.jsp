@@ -97,10 +97,13 @@ span#search_bar {
 			search for: <input type="text"
 				name="search_object" value="${search_object}" size="20" /> 
 			
+			<!-- autocomplete textbox-->
+			<script type="text/javascript">
+				$("#search_object").autocomplete("gethashtag.jsp");
+			</script>
 			<input type="submit" value="Enter" ></input>
 			</span>
-		</form>
-		
+		</form>	
 	</div>
 	<!-- Follow button -->
 	<form action="${pageContext.servletContext.contextPath}/Follow" method="post">

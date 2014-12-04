@@ -27,6 +27,7 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 import edu.ycp.cs481.srdesign.Photo;
 import edu.ycp.cs481.srdesign.controllers.AddPhotoController;
+import edu.ycp.cs481.srdesign.controllers.AutoCompleteHashTag;
 import edu.ycp.cs481.srdesign.controllers.GetAllPhotosController;
 import edu.ycp.cs481.srdesign.controllers.GetPhotosByHashtagString;
 
@@ -43,7 +44,11 @@ public class ShowGallery extends HttpServlet {
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 
     	String subject = request.getParameter("search_object");
-
+    	ArrayList<String> hashTags = new ArrayList<String>();
+    	//get list of string to autocomplete the textbox
+    	AutoCompleteHashTag autoCompleteController = new AutoCompleteHashTag();
+    	hashTags = autoCompleteController.autoCompleteSearch(subject);
+    	
     	//save the hashtag to the session
     	HttpSession session = request.getSession();
 		session.setAttribute("hashTag", subject);
