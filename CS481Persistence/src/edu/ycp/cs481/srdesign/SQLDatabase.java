@@ -593,32 +593,19 @@ public boolean deleteHashtagFromPhoto(final int photoID,final int hashtagID) thr
 }
 
 @Override
-public boolean addFollowHashtagToUser(final String hashtagName, final int uID) throws SQLException {
+public boolean addFollowHashtagToUser(final int hashtagID, final int uID) throws SQLException {
 	return executeTransaction(new Transaction<Boolean>() {
 		@Override
 		public Boolean execute(Connection conn) throws SQLException {
 			PreparedStatement preparedStatement = null;
-			PreparedStatement preparedStatement2 = null;
-			
 			try{
-				// Prepare statement
-				HashTag hashtag = new HashTag();
-				
-				preparedStatement = conn.prepareStatement("SELECT * FROM HASHTAGS WHERE HASHTAGNAME=?");
-					preparedStatement.setString(1, hashtagName);
-				// Execute Query
-				preparedStatement.executeQuery();
-				if(resultSet.next()){
-					getHashtags(hashtag, resultSet);
-				}
-				
-				// Second prepared Statement
+		
 				preparedStatement = conn.prepareStatement("INSERT INTO USERHASHTAG (USERID, HASHTAGID) VALUES (?, ?");
-					preparedStatement.setInt(1, uID);
-					preparedStatement.setInt(2, hashtag.gethashtagID());
+				preparedStatement.setInt(1, uID);
+				preparedStatement.setInt(2, hashtagID);				
 				preparedStatement.executeUpdate();
-				System.out.println("The user with ID of " + uID + " is now following hashtag with id of" + hashtag.gethashtagID()); 
-			} finally {
+			
+				} finally {
 				DBUtil.closeQuietly(resultSet);
 				DBUtil.closeQuietly(preparedStatement);
 			}

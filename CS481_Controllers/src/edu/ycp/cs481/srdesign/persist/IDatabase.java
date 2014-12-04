@@ -81,7 +81,7 @@ public interface IDatabase {
 
 		Photo getPhotoByID(int pID, boolean x) throws SQLException;
 
-		boolean addFollowHashtagToUser(String hashtagName, int uID)
+		boolean addFollowHashtagToUser(int hashtagID, int uID)
 				throws SQLException;
 
 

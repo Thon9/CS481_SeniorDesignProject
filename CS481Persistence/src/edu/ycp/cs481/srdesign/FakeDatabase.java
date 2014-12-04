@@ -337,8 +337,9 @@ public class FakeDatabase implements IDatabase {
 	}
 
 
+
 	@Override
-	public boolean addFollowHashtagToUser(String hashtagName, int uID)
+	public boolean addFollowHashtagToUser(int hashtagID, int uID)
 			throws SQLException {
 		// TODO Auto-generated method stub
 		return false;
