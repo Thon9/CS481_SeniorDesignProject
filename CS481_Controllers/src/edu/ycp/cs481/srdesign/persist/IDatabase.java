@@ -27,6 +27,18 @@ public interface IDatabase {
 		// Add new photo to the SQLDatabase - mediumblob
 		//public boolean addPhoto(String fileName, FileInputStream fis, long filelength) throws SQLException;
 
+		// Checks to see if hashtag exists in database
+		/**
+		 * 
+		 * @param String hashtagName the string the user is searching for
+		 * @return int the ID of the hashtag in the database, or 0 if doesn't exist
+		 * 
+		 */
+		public int checkHashtagExistance (String hashtagName) throws SQLException;
+		
+		// Delete Photo from Database, must delete hashtag associations as well
+		public boolean deletePhoto(int PhotoID) throws SQLException;
+		
 		// Login handling for the User
 		public User login(String username, String password) throws SQLException;
 		
@@ -51,12 +63,9 @@ public interface IDatabase {
 		public ArrayList<HashTag> getHashtagsFromPhoto(int photoID) throws SQLException;
 		
 		public ArrayList<String> autoCompleteSearch (String entered) throws SQLException;
-		/* TESTING PURPOSES ONLY
-		public ArrayList<Photo> getPhotos();
-		*/
 		
-		// FAKE DATABASE
-		public Photo getPhotoByID(int pID);
+		// Disassociate Photo and Hashtag
+		public boolean deleteHashtagFromPhoto(int photoID, int hashtagID) throws SQLException;
 		
 		// Add Hashtag to HashTagTable
 		public int addHashtag(HashTag hashtag) throws SQLException;
@@ -69,10 +78,6 @@ public interface IDatabase {
 		
 		//Adds relation of hashtag to photo in database
 		public boolean addRelaHTP(int hashtagID, int photoID);
-
-		public ArrayList<Photo> getPhotos();
-
-		//public ArrayList<Photo> getUserPhotos(int uID);
 
 		Photo getPhotoByID(int pID, boolean x) throws SQLException;
 
