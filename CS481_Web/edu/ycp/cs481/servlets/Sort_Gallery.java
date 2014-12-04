@@ -48,7 +48,7 @@ public class Sort_Gallery extends HttpServlet {
 		//ArrayList<File> gallery  = controller.getAllPhotos();
 		//ArrayList<Photo> gallery  = new ArrayList<Photo>();
 
-		ArrayList<Photo> gallery  = controller.getAllPhotos();
+		//ArrayList<Photo> gallery  = controller.getAllPhotos();
 		
 		//go to gallery
 		if (sort_type == null || sort_type.contentEquals("sort by")){
@@ -67,7 +67,7 @@ public class Sort_Gallery extends HttpServlet {
 			//List<File> temp = gallery;
 
 			//get the photos
-			List<Photo> temp = gallery;
+			//List<Photo> temp = gallery;
 
 			List<String> paths = new ArrayList<String>();
 
@@ -75,11 +75,12 @@ public class Sort_Gallery extends HttpServlet {
 				//paths.add("image/"+i);
 
 			//sort by date which is base on id
+			/*
 			for(int i=0; i<temp.size(); i++){
 				paths.add("image/"+i);
 
 			}
-
+*/
 			//request.setAttribute("photoList", paths);
 
 			//sort by random
