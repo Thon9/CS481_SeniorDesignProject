@@ -216,22 +216,18 @@ public ArrayList<Photo> getUserSearchPhotos(final String hashtagstring) throws S
 		@Override 
 		public ArrayList<Photo> execute(Connection conn) throws SQLException {
 			ArrayList<Photo> searchPhotos = new ArrayList<Photo>();
-			Photo newPhoto = new Photo();
 			PreparedStatement preparedStatement = null;
 			try{
 				// Return a resultset That contains the photos from the hashtags the user is following.	
 				// CORRECT PREPARESTATEMENT
 				preparedStatement = conn.prepareStatement("(SELECT p.id,P.USERID,P.PHOTO FROM HASHTAGS H join PHOTOHASHTAG ph on h.HASHTAGNAME=? "
 				+ "AND h.id=ph.HASHTAGID JOIN PHOTOS p ON ph.PHOTOID=p.id)");
-				System.out.println("Prepared statement worked");
 				preparedStatement.setString(1, hashtagstring);
-				//System.out.println(hashtagstring);
- 				// Execute Search
  				resultSet = preparedStatement.executeQuery();
  				while(resultSet.next()){
  					//System.out.println("Should be adding a photo to arrayList PHOTOS");
-					System.out.println(resultSet.next());
  					//photos = getArrayListPhotos(newPhoto, resultSet);
+ 					Photo newPhoto = new Photo();
 					getPhoto(newPhoto, resultSet);
 					searchPhotos.add(newPhoto);
 					//System.out.println("PHOTO ADDED TO SEARCHPHOTOS");
@@ -683,6 +679,8 @@ private void getPhoto(Photo photo, ResultSet resultSet) throws SQLException {
 	photo.setphotoID(resultSet.getInt("id"));
 	photo.setuserID(resultSet.getInt("USERID"));
 	photo.setFIS(resultSet.getBinaryStream("PHOTO"));
+	System.out.println("The photoID from the photo is " + photo.getphotoID());
+	System.out.println("The photo ID from the utility method is " + resultSet.getInt("id"));
 }
 /*
 private ArrayList<Photo> getArrayListPhotos(Photo photo, ResultSet resultSet) throws SQLException {
