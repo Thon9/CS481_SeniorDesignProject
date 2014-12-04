@@ -16,16 +16,12 @@ User user = new User();
 Photo photo = new Photo();
 HashTag hashtag = new HashTag();
 
-private ArrayList<User>users;
-private ArrayList<Photo> photos;
-private ArrayList<HashTag>hashtags;
-private int userID = 1;
 
+private ArrayList<Photo> photos;
 
 public SQLDatabase(){
-	
-	
 }
+
 private String DATABASE_PATH = "jdbc:mysql://localhost/cs481";
 
 	// Create connection and statement
@@ -88,7 +84,6 @@ private Connection connect() throws SQLException{
 	} catch (ClassNotFoundException e) {
 		e.printStackTrace();
 	}
-	// System.out.println("Connecting to database " + DATABASE_PATH);
 	Connection conn = DriverManager.getConnection(DATABASE_PATH, "root", "password"); 
 	
 	return conn;
@@ -338,7 +333,6 @@ public int addPhoto(final Photo newPhoto) throws SQLException {
 	});
 }
 
-	
 // Implemented - NEED to TEST
 @Override
 public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException {
@@ -370,7 +364,7 @@ public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException
 	});
 }
 
-// show be good to go!
+// should be good to go!
 @Override
 public ArrayList<Photo> getUserFollowingPhotos(final int uID, int hashtagID) throws SQLException {
 	return executeTransaction(new Transaction<ArrayList<Photo>>() {
@@ -617,15 +611,13 @@ public ArrayList<HashTag> getHashtagsFromPhoto(int photoID) throws SQLException 
 					HashTag hashtag = new HashTag();
 					getHashtags(hashtag, resultSet);
 					hashtags.add(hashtag);
-					System.out.println("This photo has a hashtag of " + hashtag.gethashtagName() + "associated with it");
 				}
 			}
 			finally {
 				DBUtil.closeQuietly(resultSet);
 				DBUtil.closeQuietly(preparedStatement);
 			}
-			// Prints out number of photos
-			System.out.println("The number of photos is " + photos.size());
+
 			return hashtags;
 		}
 	});
@@ -748,7 +740,6 @@ public Photo getPhotoByID(final int pID, boolean x) throws SQLException{
 				DBUtil.closeQuietly(preparedStatement);
 			}
 			// Prints out number of photos
-			System.out.println("ID:	"+ ReqPhoto.getphotoID());
 			return ReqPhoto;
 		}
 
@@ -757,14 +748,10 @@ public Photo getPhotoByID(final int pID, boolean x) throws SQLException{
 
 
 ////////////  UTILITY METHODS  ///////////////
-
-//NEED TO FIGURE OUT FILELENGTH AND FIS
 private void getPhoto(Photo photo, ResultSet resultSet) throws SQLException {	
 	photo.setphotoID(resultSet.getInt("id"));
 	photo.setuserID(resultSet.getInt("USERID"));
 	photo.setFIS(resultSet.getBinaryStream("PHOTO"));
-	System.out.println("The photoID from the photo is " + photo.getphotoID());
-	System.out.println("The photo ID from the utility method is " + resultSet.getInt("id"));
 }
 
 private void getUser(User user, ResultSet resultSet) throws SQLException {
@@ -780,31 +767,6 @@ private void getHashtags(HashTag hashtag, ResultSet resultSet) throws SQLExcepti
 	hashtag.sethashtagName(resultSet.getString("HASHTAGNAME"));
 	hashtag.sethashtagID(resultSet.getInt("id"));
 }
-
-
-
-@Override
-public Photo getPhotoByID(int pID) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-@Override
-public ArrayList<Photo> getPhotos() {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-
-
-
-
-
-
-
-
-
-
 
 }
 

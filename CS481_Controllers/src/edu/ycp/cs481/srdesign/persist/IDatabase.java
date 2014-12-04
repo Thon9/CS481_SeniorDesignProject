@@ -63,15 +63,9 @@ public interface IDatabase {
 		public ArrayList<HashTag> getHashtagsFromPhoto(int photoID) throws SQLException;
 		
 		public ArrayList<String> autoCompleteSearch (String entered) throws SQLException;
-		/* TESTING PURPOSES ONLY
-		public ArrayList<Photo> getPhotos();
-		*/
 		
 		// Disassociate Photo and Hashtag
 		public boolean deleteHashtagFromPhoto(int photoID, int hashtagID) throws SQLException;
-		
-		// FAKE DATABASE
-		public Photo getPhotoByID(int pID);
 		
 		// Add Hashtag to HashTagTable
 		public int addHashtag(HashTag hashtag) throws SQLException;
@@ -84,10 +78,6 @@ public interface IDatabase {
 		
 		//Adds relation of hashtag to photo in database
 		public boolean addRelaHTP(int hashtagID, int photoID);
-
-		public ArrayList<Photo> getPhotos();
-
-		//public ArrayList<Photo> getUserPhotos(int uID);
 
 		Photo getPhotoByID(int pID, boolean x) throws SQLException;
 
