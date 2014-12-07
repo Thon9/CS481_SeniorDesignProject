@@ -370,15 +370,17 @@ public ArrayList<Photo> getUserFollowingPhotos(final int uID) throws SQLExceptio
 			try{
 				// Return a resultset That contains the photos from the hashtags the user is following.	
 
-				preparedStatement = conn.prepareStatement("(SELECT P.ID, P.USERID, P.PHOTO FROM PHOTOS P JOIN USERHASHTAG U ON U.USERID=? JOIN PHOTOHASHTAG PH ON PH.HASHTAGID=U.HASHTAGID "
+				preparedStatement = conn.prepareStatement("(SELECT P.ID, P.USERID, P.PHOTO FROM PHOTOS P JOIN USERHASHTAG U ON U.USERID =? JOIN PHOTOHASHTAG PH ON PH.HASHTAGID=U.HASHTAGID "
 						+ "AND PH.PHOTOID=P.ID");
 				preparedStatement.setInt(1, uID);
 				// Execute Search
 				resultSet = preparedStatement.executeQuery();
 				while(resultSet.next()){
 					Photo photo = new Photo();
+					System.out.println("Retrieving a photo");
 					getPhoto(photo, resultSet);
 					photos.add(photo);
+					System.out.println("Adding a photo to the ArrayList");
 				}
 			}
 			finally {
