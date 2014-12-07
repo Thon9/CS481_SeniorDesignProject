@@ -15,23 +15,13 @@ import edu.ycp.cs481.srdesign.controllers.GetPhotoByIdController;
 public class GetPhoto extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
-	 @Override
+	@Override
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		getImage(request, response);
 	}
 	
 	private static void getImage(HttpServletRequest request,HttpServletResponse response) {
-		
-		//image to get
-		String image = request.getRequestURI().substring((request.getRequestURI().lastIndexOf('/') + 1));
-		
-		System.out.println(image);
-		
-		if(image.endsWith(".jpg")){
-			image = image.substring(0, image.lastIndexOf("."));
-		}
-		System.out.println(image);
-		int imageId = Integer.parseInt(image);
+		int imageId = getImageID(request);
 		GetPhotoByIdController p = new GetPhotoByIdController();
 		Photo tmp = p.getPhotobyID(imageId);
 		System.out.println("temp now contains a photo");
@@ -61,5 +51,16 @@ public class GetPhoto extends HttpServlet{
 			//}
 		}
 		
+	}
+	
+	private static int getImageID(HttpServletRequest request){
+		//image to get
+		String image = request.getRequestURI().substring((request.getRequestURI().lastIndexOf('/') + 1));
+	
+		if(image.endsWith(".jpg")){
+			image = image.substring(0, image.lastIndexOf("."));
+		}
+		
+		return Integer.parseInt(image);
 	}
 }
