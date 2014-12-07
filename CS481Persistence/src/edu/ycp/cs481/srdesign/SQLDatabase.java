@@ -360,17 +360,18 @@ public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException
 
 // should be good to go!
 @Override
-public ArrayList<Photo> getUserFollowingPhotos(final int uID, int hashtagID) throws SQLException {
+public ArrayList<Photo> getUserFollowingPhotos(final int uID) throws SQLException {
 	return executeTransaction(new Transaction<ArrayList<Photo>>() {
-		ArrayList<Photo> photos = new ArrayList<Photo>();
+		
 		@Override
 		public ArrayList<Photo> execute(Connection conn) throws SQLException {	
 			PreparedStatement preparedStatement = null;
+			ArrayList<Photo> photos = new ArrayList<Photo>();
 			try{
 				// Return a resultset That contains the photos from the hashtags the user is following.	
 
-				preparedStatement = conn.prepareStatement("(SELECT PHOTOID, PH.USERID, PH.PHOTO FROM USERHASHTAG u JOIN PHOTOHASHTAG p on u.USERID=?"
-						+ "and u.HASHTAGID=p.HASHTAGID JOIN PHOTOS ph ON p.PHOTOID=p.id)");
+				preparedStatement = conn.prepareStatement("(SELECT P.ID, P.USERID, P.PHOTO FROM PHOTOS P JOIN USERHASHTAG U ON U.USERID=? JOIN PHOTOHASHTAG PH ON PH.HASHTAGID=U.HASHTAGID "
+						+ "AND PH.PHOTOID=P.ID");
 				preparedStatement.setInt(1, uID);
 				// Execute Search
 				resultSet = preparedStatement.executeQuery();

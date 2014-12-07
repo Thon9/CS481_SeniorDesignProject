@@ -253,13 +253,6 @@ public class FakeDatabase implements IDatabase {
 	}
 
 	@Override
-	public ArrayList<Photo> getUserFollowingPhotos(int uID, int hashtagID)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String getHashtagByID(int id) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
@@ -343,6 +336,12 @@ public class FakeDatabase implements IDatabase {
 			throws SQLException {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public ArrayList<Photo> getUserFollowingPhotos(int uID) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
