@@ -7,7 +7,7 @@ import edu.ycp.cs481.srdesign.persist.DatabaseProvider;
 
 
 public class AutoCompleteHashTag {
-	public ArrayList<String> getAutoCompleteSearch(String entered) throws SQLException{
-		return DatabaseProvider.getInstance().autoCompleteSearch(entered);
+	public ArrayList<String> getAutoCompleteSearch() throws SQLException{
+		return DatabaseProvider.getInstance().returnAllHashtags();
 	}
 }

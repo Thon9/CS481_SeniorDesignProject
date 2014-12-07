@@ -12,15 +12,13 @@
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script>
   $(function() {
-    var availableHashtags = [
-       $("autocomplete")
-    ];
+    //var availableHashtags = ${autocomplete};
+    var availableHashtags = ["DOGSGSGSGS","DGAWDGAW"];
     $( "#hashtags" ).autocomplete({
       source: availableHashtags
     });
   });
   </script>
-
 <title>User Page</title>
 <style type="text/css">
 body {
@@ -58,6 +56,7 @@ span#search_bar {
 </head>
 
 <h1 align=center>MyPhotoSpace 2 Gallery</h1>
+
 <body>
 	<!-- user page selection -->
 	<!-- logout button -->
@@ -67,7 +66,7 @@ span#search_bar {
 		<input type="submit" value="Logout" />
 	</form>
 	</div>
-	
+	${autocomplete}
 	<!-- account and home button -->
 	<div style = "float:left">
 		<button type="button" onClick="JavaScript:window.location='Home';">Home</button>

@@ -51,13 +51,15 @@ public class ShowGallery extends HttpServlet {
     	HttpSession session = request.getSession();
     	AutoCompleteHashTag autoCompleteController = new AutoCompleteHashTag();
     	try {
-    		hashTags = autoCompleteController.getAutoCompleteSearch(subject);
+    		hashTags = autoCompleteController.getAutoCompleteSearch();
     		session.setAttribute("autocomplete", hashTags);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-    	System.out.println("SG: list of avaliable hashTags: "+ hashTags);
+    	for (int i = 0; i < hashTags.size();i++){
+    		System.out.println("SG: list of avaliable hashTags: "+ hashTags.get(i));
+    	}
     	//save the hashtag to the session for following
     	session.setAttribute("hashTag", subject);
 		

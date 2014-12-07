@@ -544,7 +544,7 @@ public ArrayList<String> returnAllHashtags() throws SQLException {
 				preparedStatement = conn.prepareStatement("SELECT * FROM HASHTAGS");
 				// Execute Query
 				resultSet = preparedStatement.executeQuery();
-				if(resultSet.next()){
+				while(resultSet.next()){
 					HashTag hashtag = new HashTag();
 					getHashtags(hashtag, resultSet);
 					hashtags.add(hashtag.gethashtagName());	
