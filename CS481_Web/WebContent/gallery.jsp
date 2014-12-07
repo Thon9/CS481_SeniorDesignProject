@@ -53,6 +53,9 @@ span#sort_bar {
 span#search_bar {
 	float: right;
 }
+form {
+    display: inline;
+}
 </style>
 </head>
 
@@ -127,6 +130,11 @@ span#search_bar {
 	<!-- Follow button -->
 	<form action="${pageContext.servletContext.contextPath}/Follow" method="post">
 			<input type="submit" value="Follow ${hashTag}"></input>
+	</form>
+	
+	<!-- unfollow button -->
+	<form action="${pageContext.servletContext.contextPath}/UnFollow" method="post">
+			<input type="submit" value="UnFollow ${hashTag}"></input>
 	</form>
 	${result}
 	<h2 align=center>${hashTag}</h2>
