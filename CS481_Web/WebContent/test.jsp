@@ -1,61 +1,51 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Hidden test page</title>
+  <meta charset="utf-8">
+  <title>jQuery UI Autocomplete - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script>
+  $(function() {
+    var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  });
+  </script>
 </head>
 <body>
-<head>
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <script type="text/javascript" src="JS/jquery-1.4.2.min.js"></script>
-    <script src="JS/jquery.autocomplete.js"></script>
-</head>
-<%@page import="java.util.Iterator"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.ArrayList"%>
-<%
-    String countries[] = {
-                            "Afghanistan",
-                            "Albania",
-                            "Algeria",
-                            "Andorra",
-                            "Angola",
-                            "Antigua and Barbuda",
-                            "Argentina",
-                            "Armenia",
-                            "Yemen",
-                            "Zambia",
-                            "Zimbabwe"
-                            };
  
-    String query = (String)request.getParameter("q");
-    //System.out.println("1"+request.getParameterNames().nextElement());
-    response.setHeader("Content-Type", "text/html");
-    int cnt=1;
-    for(int i=0;i<countries.length;i++)
-    {
-        if(countries[i].toUpperCase().startsWith(query.toUpperCase()))
-        {
-            out.print(countries[i]+"\n");
-            if(cnt>=10){
-                break;
-            }
-            cnt++;
-        }
-    }
-%>
-
-<body>
-    <div style="width: 300px; margin: 50px auto;">
-        <b>Country</b>   : <input type="text" id="country" name="country" class="input_text"/>
-    </div>
+<div class="ui-widget">
+  <label for="tags">Tags: </label>
+  <input id="tags">
+</div>
+ 
  
 </body>
-<script>
-    jQuery(function(){
-        $("#country").autocomplete("list.jsp");
-    });
-</script>
 </html>
