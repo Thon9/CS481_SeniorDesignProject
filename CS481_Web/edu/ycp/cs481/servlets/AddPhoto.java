@@ -75,7 +75,7 @@ public class AddPhoto extends HttpServlet {
 					for(int i=0; i<tagsParsed.size(); i++){
 						HashTag tempH = new HashTag();
 						tempH.sethashtagName(tagsParsed.get(i));
-						System.out.println(tagsParsed.get(i));
+						//System.out.println(tagsParsed.get(i));
 						int hashID = addHCont.addHashtag(tempH);
 						
 						hTPCont.addRelaHTP(hashID, photoId);

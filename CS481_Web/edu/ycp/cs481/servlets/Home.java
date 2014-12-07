@@ -32,13 +32,23 @@ public class Home extends HttpServlet {
 
     	ArrayList<Photo>temp = new ArrayList<Photo>();
     	ArrayList<String> paths = new ArrayList<String>();
+		GetPhotosFollowingHashtag photoController = new GetPhotosFollowingHashtag();
 		
-    	//TODO: get the hashtag followed by user
-		
+		//get user following hashtag photos
+		HttpSession session = request.getSession();
+    	int userID = (int) session.getAttribute("userID");
+//    	try {
+//			temp = photoController.GetPhotosFollowingHashtag(userID, 0);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+    			
     	if (temp == null){
 			System.out.println("Home: user has no followed photos");
 		}
 		else {
+			
 			System.out.println(temp.size());
 			for(int i = 0; i < temp.size(); i++){
 				System.out.println("Home: Counter is at " + i);

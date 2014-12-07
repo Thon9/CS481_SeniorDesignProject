@@ -72,14 +72,14 @@ function selectedValues(){
 				
 					<c:forEach var="tag" items="${tagList}">
 					
-						<form id="boxes" action="${pageContext.servletContext.contextPath}/editPhoto/${pID}/${tag.hashtagID}" method="post">
+						<form id="boxes" action="${pageContext.servletContext.contextPath}/removeTag/${pID}/${tag.hashtagID}" method=post>
 							<table>
 							<tr>
 								<td><center><p>"${tag.hashtagName}"</p></center></td>
 								<td><center><input type="submit" value="Delete" ></center></td>
 							</tr>
 							</table>
-							</form>
+						</form>
 							
 					</c:forEach>
 					 
@@ -87,6 +87,16 @@ function selectedValues(){
 			</td>
 		</tr>
 	</table>
+	
+	<br>
+	<br>
+	<center>
+	<form action="${pageContext.servletContext.contextPath}/editPhoto/${pID}" method=post>
+			<p>Enter Hashtag(s) to add: <input type="text" name="hashTags" /><i>(Separate Hashtags by # {e.g. #cats #fluffy...})</i></p>
+		<br><br>
+			<input type="submit" />
+	</form>
+	</center>
 	
 	
 </body>
