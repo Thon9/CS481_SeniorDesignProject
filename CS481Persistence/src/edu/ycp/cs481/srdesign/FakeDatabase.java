@@ -344,6 +344,12 @@ public class FakeDatabase implements IDatabase {
 		return null;
 	}
 
+	@Override
+	public ArrayList<String> returnAllHashtags() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 	

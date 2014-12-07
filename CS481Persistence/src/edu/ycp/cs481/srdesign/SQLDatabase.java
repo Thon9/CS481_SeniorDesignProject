@@ -436,7 +436,6 @@ public boolean addRelaHTP(final int hashtagID, final int photoID) {
 @Override
 public int checkHashtagExistance(final String hashtagName) throws SQLException {
 	return executeTransaction(new Transaction<Integer>() {
-		HashTag hashtag = new HashTag();
 		@Override
 		public Integer execute(Connection conn) throws SQLException {
 			PreparedStatement preparedStatement = null;
@@ -445,13 +444,15 @@ public int checkHashtagExistance(final String hashtagName) throws SQLException {
 				hashtag.sethashtagID(0);
 				hashtag.sethashtagName("NOT FOUND");
 				// Prepare statement
-				preparedStatement = conn.prepareStatement("SELECT * FROM HASHTAGS WHERE HASHTAGENAME LIKE '?%');");
-				preparedStatement.setString(1, hashtagName);
+				preparedStatement = conn.prepareStatement("SELECT * FROM HASHTAGS WHERE HASHTAGNAME LIKE ?");
+				String preparedString = "'%" + hashtagName + "%'";
+				preparedStatement.setString(1, preparedString);
 				// Execute Query
 				resultSet = preparedStatement.executeQuery();
 				
 				if(resultSet.next()){
 					getHashtags(hashtag, resultSet);			
+					System.out.println("Hashtag found with name of " + hashtagName);
 				}
 				
 			} catch (SQLException e){
@@ -460,6 +461,7 @@ public int checkHashtagExistance(final String hashtagName) throws SQLException {
 				DBUtil.closeQuietly(resultSet);
 				DBUtil.closeQuietly(preparedStatement);
 			}
+			System.out.println("The hashtag with a name of " + hashtagName + " has an id of " + hashtag.gethashtagID());
 			return hashtag.gethashtagID();
 		}
 
@@ -523,6 +525,38 @@ public String getHashtagByID(int id) throws SQLException {
 				DBUtil.closeQuietly(preparedStatement);
 			}
 			return hashtag.gethashtagName();
+		}
+
+	});
+
+}
+
+//USED FOR AUTOCOMPLETE FEATURE IN SEARCH
+@Override
+public ArrayList<String> returnAllHashtags() throws SQLException {
+	return executeTransaction(new Transaction<ArrayList<String>>() {
+		@Override
+		public ArrayList<String> execute(Connection conn) throws SQLException {
+			ArrayList<String> hashtags = new ArrayList<String>();
+			PreparedStatement preparedStatement = null;
+			try{
+				// Prepare statement
+				preparedStatement = conn.prepareStatement("SELECT * FROM HASHTAGS");
+				// Execute Query
+				resultSet = preparedStatement.executeQuery();
+				if(resultSet.next()){
+					HashTag hashtag = new HashTag();
+					getHashtags(hashtag, resultSet);
+					hashtags.add(hashtag.gethashtagName());	
+				}
+				
+			} catch (SQLException e){
+				e.printStackTrace();
+			} finally {
+				DBUtil.closeQuietly(resultSet);
+				DBUtil.closeQuietly(preparedStatement);
+			}
+			return hashtags;
 		}
 
 	});
@@ -626,7 +660,7 @@ public ArrayList<HashTag> getHashtagsFromPhoto(int photoID) throws SQLException 
 			PreparedStatement preparedStatement = null;
 			try{
 				// Return a resultset That contains the hashtags from a single photo
-				preparedStatement = conn.prepareStatement("(SELECT H.ID, H.HASHTAGNAME FROM HASHTAGS H JOIN PHOTOHASHTAG P WHERE P.ID=H.ID)");
+				preparedStatement = conn.prepareStatement("SELECT H.ID, H.HASHTAGNAME FROM HASHTAGS H JOIN PHOTOHASHTAG Ph WHERE PH.PHOTOID=H.ID AND PH.HASHTAGID=H.ID");
 				// Execute Search
 				resultSet = preparedStatement.executeQuery();
 				while(resultSet.next()){
