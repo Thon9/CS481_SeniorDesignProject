@@ -105,7 +105,7 @@ public class AddPhoto extends HttpServlet {
 				
 				request.setAttribute("result", "true");
 				//request.setAttribute("photoList", paths);
-				request.getRequestDispatcher("/main.jsp").forward(request, response); 
+				request.getRequestDispatcher("/photo.jsp").forward(request, response); 
 			}else {//if not a valid photo of file
 				System.out.println("Invalid Photo input");
 				request.setAttribute("result", "false");

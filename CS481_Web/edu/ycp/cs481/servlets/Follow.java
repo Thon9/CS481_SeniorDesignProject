@@ -57,7 +57,7 @@ public class Follow extends HttpServlet {
 			}
 			String hashtag = session.getAttribute("hashTag").toString();
 			System.out.println("Fol: Following "+hashtag);
-			response.sendRedirect(request.getContextPath()+"/main.jsp");
+			response.sendRedirect(request.getContextPath()+"/Home");
 		}
 	
 	}
