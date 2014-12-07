@@ -558,7 +558,7 @@ public ArrayList<String> autoCompleteSearch(final String entered) throws SQLExce
 				DBUtil.closeQuietly(resultSet);
 				DBUtil.closeQuietly(preparedStatement);
 			}
-			hashtags.add(" ");
+			//hashtags.add(" ");
 			return hashtags;
 		}
 
@@ -652,6 +652,7 @@ public ArrayList<HashTag> getHashtagsFromPhoto(int photoID) throws SQLException 
 public int getHashtagByName(final String hashtagName) throws SQLException {
 	return executeTransaction(new Transaction<Integer>() {
 		int return_value = 0;
+		HashTag hashtag = new HashTag();
 		@Override
 		public Integer execute(Connection conn) throws SQLException {
 			PreparedStatement preparedStatement = null;
@@ -660,12 +661,14 @@ public int getHashtagByName(final String hashtagName) throws SQLException {
 				preparedStatement = conn.prepareStatement("SELECT * FROM HASHTAGS WHERE HASHTAGNAME=?");
 				// Execute Query
 				preparedStatement.setString(1, hashtagName);
-				preparedStatement.executeQuery();
-				if(resultSet != null){
+				System.out.println("Searching for hashtag with name of "+ hashtagName);
+				resultSet = preparedStatement.executeQuery();
+				if(resultSet.next()){
 					getHashtags(hashtag, resultSet);
+					System.out.println("Hashtag name is " + hashtag.gethashtagName() + " and hashtagID is " + hashtag.gethashtagID());
 				}
 				if (hashtag == null){
-					return 0;
+					System.out.println("Could not find hashtag");
 				}
 				else {
 					return_value = hashtag.gethashtagID();
