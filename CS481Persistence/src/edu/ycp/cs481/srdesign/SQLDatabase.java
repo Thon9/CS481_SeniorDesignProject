@@ -267,7 +267,7 @@ public boolean checkUserFollowingHashtag(final int hashtagID, final int uID) thr
 			boolean flag = false;
 			try{	
 				// Prepare statement
-				preparedStatement = conn.prepareStatement("SELECT H.HASHTAGID, H.HASHTAG NAME FROM HASHTAGS H JOIN USERHASHTAG U WHERE U.USERID=? AND U.HASHTAGID=?");
+				preparedStatement = conn.prepareStatement("SELECT H.ID, H.HASHTAGNAME FROM HASHTAGS H JOIN USERHASHTAG U WHERE U.USERID=? AND U.HASHTAGID=?");
 				preparedStatement.setInt(1, uID);
 				preparedStatement.setInt(2, hashtagID);
 				// Execute Query
