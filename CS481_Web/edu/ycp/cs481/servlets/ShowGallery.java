@@ -34,18 +34,20 @@ public class ShowGallery extends HttpServlet {
     	String subject = request.getParameter("search_object");
     	
     	ArrayList<String> hashTags = new ArrayList<String>();
+    	
     	//get list of string to autocomplete the textbox
+    	HttpSession session = request.getSession();
     	AutoCompleteHashTag autoCompleteController = new AutoCompleteHashTag();
     	try {
     		hashTags = autoCompleteController.getAutoCompleteSearch(subject);
+    		session.setAttribute("autocomplete", hashTags);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-    	
-    	//save the hashtag to the session
-    	HttpSession session = request.getSession();
-		session.setAttribute("hashTag", subject);
+    	System.out.println("SG: list of avaliable hashTags: "+ hashTags);
+    	//save the hashtag to the session for following
+    	session.setAttribute("hashTag", subject);
 		
     	System.out.println(subject);
     	ArrayList<Photo>temp = new ArrayList<Photo>();

@@ -61,11 +61,13 @@ public class ShowUserGallery extends HttpServlet {
 				//System.out.println(temp);
 				temp = getPhotos.getUserPhotos(userID);
 				System.out.println(temp.size());
+				/*
 				for(int i = 0; i < temp.size(); i++){
 					System.out.println("Counter is at " + i);
 					System.out.println("PhotoID is " + temp.get(i).getphotoID());
 					System.out.println("User ID is " + temp.get(i).getuserID());
 				}
+				*/
 				//System.out.println("The temp size is " + temp.size());
 			} catch (SQLException e) {
 				// Auto-generated catch block
@@ -84,7 +86,7 @@ public class ShowUserGallery extends HttpServlet {
 			for(int i = 0; i < temp.size(); i++){
 				System.out.println("SUG: The PHOTO ID of temp photo " + i + " is " + temp.get(i).getphotoID());
 				// NEEDS TO BE FIXED, HARDCORDED
-				paths.add("image/"+(temp.get(i).getphotoID()-temp.size()+i+1));			
+				paths.add("image/"+temp.get(i).getphotoID());			
 			}
 
 		request.setAttribute("photoList", paths);

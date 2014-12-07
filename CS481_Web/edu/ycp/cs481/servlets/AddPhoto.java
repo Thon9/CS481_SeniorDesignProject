@@ -18,6 +18,7 @@ import edu.ycp.cs481.srdesign.HashTag;
 import edu.ycp.cs481.srdesign.Photo;
 import edu.ycp.cs481.srdesign.controllers.AddHashtagController;
 import edu.ycp.cs481.srdesign.controllers.AddPhotoController;
+import edu.ycp.cs481.srdesign.controllers.CheckHashtagExistController;
 import edu.ycp.cs481.srdesign.controllers.HashToPhotoRelaController;
 
 /**
@@ -61,6 +62,7 @@ public class AddPhoto extends HttpServlet {
 				AddPhotoController addPCont = new AddPhotoController();
 				AddHashtagController addHCont = new AddHashtagController(); 
 				HashToPhotoRelaController hTPCont = new HashToPhotoRelaController();
+				CheckHashtagExistController hashtagexist = new CheckHashtagExistController();
 
 
 				Photo nPhoto = new Photo();
@@ -76,10 +78,29 @@ public class AddPhoto extends HttpServlet {
 						HashTag tempH = new HashTag();
 						tempH.sethashtagName(tagsParsed.get(i));
 						//System.out.println(tagsParsed.get(i));
-						int hashID = addHCont.addHashtag(tempH);
+						//int hashID = addHCont.addHashtag(tempH);
 						
-						hTPCont.addRelaHTP(hashID, photoId);
+						//hTPCont.addRelaHTP(hashID, photoId);
 						
+						// Either returns hashtag ID or 0 if it doesn't exist
+						int hashtagid = hashtagexist.checkHashtagExistence(tagsParsed.get(i));
+						// Hashtag does not exist
+						//HashTag tempH = new HashTag();
+						if(hashtagid == 0){
+							//tempH.sethashtagName(tagsParsed.get(i));
+							System.out.println(tempH);
+							// 
+							hashtagid = addHCont.addHashtag(tempH);
+							//hTPCont.addRelaHTP(hashtagid, photoId);
+							System.out.println("HASHTAG DOES NOT EXIST, CREATED ONE");
+						} else {
+							//tempH.sethashtagName(tagsParsed.get(i));
+							System.out.println(tagsParsed.get(i));
+							System.out.println("HASHTAG EXISTS, RELATING PHOTO TO HASHTAG ALREADY CREATED IN DATABASE"); 
+							//hTPCont.addRelaHTP(hashtagid, photoId);
+						}
+						
+						hTPCont.addRelaHTP(hashtagid, photoId);
 						
 					}
 					
@@ -89,26 +110,10 @@ public class AddPhoto extends HttpServlet {
 					System.out.println("DID NOT WORK");
 				}
 
-				/*
-				int userId = 0;//session.getAttribute("userid"); 
-				nPhoto.setuserID(userId);//NEEDZ TO BE CHANGED!!!!!!!!!!!!!!!!!!!!!!
-			
-				controller.addPhoto(nPhoto);
-				 */			
-				/*
-				GetAllPhotosController getCont = new GetAllPhotosController();
-				List<Photo> temp = getCont.getAllPhotos();
 				
-				List<String> paths = new ArrayList<String>();
-				
-				for(int i=0; i<temp.size(); i++){
-					System.out.println(temp.get(i).getFile().toPath());
-					paths.add("image/"+i);
-				}
-				*/
 				request.setAttribute("result", "true");
 				//request.setAttribute("photoList", paths);
-				request.getRequestDispatcher("/main.jsp").forward(request, response); 
+				request.getRequestDispatcher("/photo.jsp").forward(request, response); 
 			}else {//if not a valid photo of file
 				System.out.println("Invalid Photo input");
 				request.setAttribute("result", "false");

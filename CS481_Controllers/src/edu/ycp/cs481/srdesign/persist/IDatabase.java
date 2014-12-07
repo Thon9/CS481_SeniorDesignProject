@@ -55,7 +55,7 @@ public interface IDatabase {
 		public ArrayList<Photo> getUserUploadedPhotos(int uID) throws SQLException;
 		
 		// Get Photos User is Following
-		public ArrayList<Photo> getUserFollowingPhotos(int uID, int hashtagID) throws SQLException;
+		public ArrayList<Photo> getUserFollowingPhotos(int uID) throws SQLException;
 		
 		public ArrayList<Photo> getUserSearchPhotos(String hashtagstring) throws SQLException;
 		
@@ -79,10 +79,12 @@ public interface IDatabase {
 		//Adds relation of hashtag to photo in database
 		public boolean addRelaHTP(int hashtagID, int photoID);
 
-		Photo getPhotoByID(int pID, boolean x) throws SQLException;
+		public Photo getPhotoByID(int pID, boolean x) throws SQLException;
 
 		boolean addFollowHashtagToUser(int hashtagID, int uID)
 				throws SQLException;
+
+		public ArrayList<String> returnAllHashtags() throws SQLException;
 
 
 

@@ -37,12 +37,12 @@ public class Home extends HttpServlet {
 		//get user following hashtag photos
 		HttpSession session = request.getSession();
     	int userID = (int) session.getAttribute("userID");
-//    	try {
-//			temp = photoController.GetPhotosFollowingHashtag(userID, 0);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+    	try {
+			temp = photoController.GetPhotosFollowingHashtagID(userID);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     			
     	if (temp == null){
 			System.out.println("Home: user has no followed photos");
@@ -58,8 +58,7 @@ public class Home extends HttpServlet {
 			
 			for(int i = 0; i < temp.size(); i++){
 				System.out.println("Home: The PHOTO ID of temp photo " + i + " is " + temp.get(i).getphotoID());
-				// NEEDS TO BE FIXED, HARDCORDED
-				paths.add("image/"+(temp.get(i).getphotoID()-temp.size()+i+1));			
+				paths.add("image/"+temp.get(i).getphotoID());			
 			}
 		}
 		request.setAttribute("photoList", paths);

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import edu.ycp.cs481.srdesign.controllers.AddFollowHashTag;
+import edu.ycp.cs481.srdesign.controllers.GetHashtagIDFromString;
 import edu.ycp.cs481.srdesign.controllers.GetPhotosFollowingHashtag;
 
 /**
@@ -33,6 +34,8 @@ public class Follow extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		int userID = (int) session.getAttribute("userID");
+		GetHashtagIDFromString hashIDcont = new GetHashtagIDFromString();
+		
 		//do nothing with no hashtag to follow
 		if (session.getAttribute("hashTag") == null){
 			request.setAttribute("result", "no hashtag to follow");
@@ -43,7 +46,9 @@ public class Follow extends HttpServlet {
 		else {
 			AddFollowHashTag followController = new AddFollowHashTag();
 			try {
-				followController.addFollowingHashTag(session.getAttribute("hashTag").toString(),userID);
+				System.out.println("Follow: " + session.getAttribute("hashTag").toString());
+				int hashID = hashIDcont.getHashtagID(session.getAttribute("hashTag").toString());
+				followController.addFollowingHashTag(hashID,userID);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -52,7 +57,7 @@ public class Follow extends HttpServlet {
 			}
 			String hashtag = session.getAttribute("hashTag").toString();
 			System.out.println("Fol: Following "+hashtag);
-			response.sendRedirect(request.getContextPath()+"/main.jsp");
+			response.sendRedirect(request.getContextPath()+"/Home");
 		}
 	
 	}

@@ -258,7 +258,6 @@ public boolean deleteUser(final int userID) throws SQLException {
 //Implemented - Need to be TESTED
 @Override
 public boolean checkExistence(final String username) throws SQLException {
-	
 	return executeTransaction(new Transaction<Boolean>() {
 		@Override
 		public Boolean execute(Connection conn) throws SQLException {
@@ -271,7 +270,7 @@ public boolean checkExistence(final String username) throws SQLException {
 				// Execute Query
 				resultSet = preparedStatement.executeQuery();
 				
-				if(resultSet != null){
+				if(resultSet.next()){
 					flag = true;
 				}
 				
@@ -335,23 +334,20 @@ public int addPhoto(final Photo newPhoto) throws SQLException {
 @Override
 public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException {
 	return executeTransaction(new Transaction<ArrayList<Photo>>() {
-		
-		ArrayList<Photo> photos = new ArrayList<Photo>();
 		@Override
 		public ArrayList<Photo> execute(Connection conn) throws SQLException {	
+			ArrayList<Photo> photos = new ArrayList<Photo>();
 			PreparedStatement preparedStatement = null;
 			try{
-				preparedStatement = conn.prepareStatement("SELECT * FROM PHOTOS where USERID=?");
+				preparedStatement = conn.prepareStatement("SELECT id,USERID, PHOTO FROM PHOTOS WHERE USERID =?");
 					preparedStatement.setInt(1, uID);
 				resultSet = preparedStatement.executeQuery();
-				if(resultSet.next()){
+				while(resultSet.next()){
 					Photo newPhoto = new Photo();
 					getPhoto(newPhoto,resultSet);
+					System.out.println("adding a photo to the arrayList");
 					photos.add(newPhoto);
-				} else {
-					System.out.println("NO PHOTOS FROM USER");
-				}
-								
+				} 			
 			} finally {
 				DBUtil.closeQuietly(resultSet);
 				DBUtil.closeQuietly(preparedStatement);
@@ -364,24 +360,27 @@ public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException
 
 // should be good to go!
 @Override
-public ArrayList<Photo> getUserFollowingPhotos(final int uID, int hashtagID) throws SQLException {
+public ArrayList<Photo> getUserFollowingPhotos(final int uID) throws SQLException {
 	return executeTransaction(new Transaction<ArrayList<Photo>>() {
-		ArrayList<Photo> photos = new ArrayList<Photo>();
+		
 		@Override
 		public ArrayList<Photo> execute(Connection conn) throws SQLException {	
 			PreparedStatement preparedStatement = null;
+			ArrayList<Photo> photos = new ArrayList<Photo>();
 			try{
 				// Return a resultset That contains the photos from the hashtags the user is following.	
 
-				preparedStatement = conn.prepareStatement("(SELECT PHOTOID, PH.USERID, PH.PHOTO FROM USERHASHTAG u JOIN PHOTOHASHTAG p on u.USERID=?"
-						+ "and u.HASHTAGID=p.HASHTAGID JOIN PHOTOS ph ON p.PHOTOID=p.id)");
+				preparedStatement = conn.prepareStatement("SELECT P.ID, P.USERID, P.PHOTO FROM PHOTOS P JOIN USERHASHTAG U ON U.USERID=? JOIN PHOTOHASHTAG PH ON PH.HASHTAGID=U.HASHTAGID "
+						+ "AND PH.PHOTOID=P.ID");
 				preparedStatement.setInt(1, uID);
 				// Execute Search
 				resultSet = preparedStatement.executeQuery();
 				while(resultSet.next()){
 					Photo photo = new Photo();
+					System.out.println("Retrieving a photo");
 					getPhoto(photo, resultSet);
 					photos.add(photo);
+					System.out.println("Adding a photo to the ArrayList");
 				}
 			}
 			finally {
@@ -441,15 +440,19 @@ public int checkHashtagExistance(final String hashtagName) throws SQLException {
 		@Override
 		public Integer execute(Connection conn) throws SQLException {
 			PreparedStatement preparedStatement = null;
+			
+			
 			try{
+				
 				// Prepare statement
-				preparedStatement = conn.prepareStatement("SELECT * FROM HASHTAGS WHERE HASHTAGENAME LIKE '?%');");
+				preparedStatement = conn.prepareStatement("SELECT ID, HASHTAGNAME FROM HASHTAGS WHERE HASHTAGNAME=?");
 				preparedStatement.setString(1, hashtagName);
 				// Execute Query
 				resultSet = preparedStatement.executeQuery();
 				
-				if(resultSet != null){
+				if(resultSet.next()){
 					getHashtags(hashtag, resultSet);			
+					System.out.println("Hashtag found with name of " + hashtagName);
 				}
 				
 			} catch (SQLException e){
@@ -458,10 +461,11 @@ public int checkHashtagExistance(final String hashtagName) throws SQLException {
 				DBUtil.closeQuietly(resultSet);
 				DBUtil.closeQuietly(preparedStatement);
 			}
-			if(hashtag != null){
-				return hashtag.gethashtagID();
-			} else {
+			if(hashtag == null){
 				return 0;
+			} else {
+				System.out.println("The hashtag with a name of " + hashtagName + " has an id of " + hashtag.gethashtagID());
+				return hashtag.gethashtagID();
 			}
 		}
 
@@ -531,6 +535,38 @@ public String getHashtagByID(int id) throws SQLException {
 
 }
 
+//USED FOR AUTOCOMPLETE FEATURE IN SEARCH
+@Override
+public ArrayList<String> returnAllHashtags() throws SQLException {
+	return executeTransaction(new Transaction<ArrayList<String>>() {
+		@Override
+		public ArrayList<String> execute(Connection conn) throws SQLException {
+			ArrayList<String> hashtags = new ArrayList<String>();
+			PreparedStatement preparedStatement = null;
+			try{
+				// Prepare statement
+				preparedStatement = conn.prepareStatement("SELECT * FROM HASHTAGS");
+				// Execute Query
+				resultSet = preparedStatement.executeQuery();
+				if(resultSet.next()){
+					HashTag hashtag = new HashTag();
+					getHashtags(hashtag, resultSet);
+					hashtags.add(hashtag.gethashtagName());	
+				}
+				
+			} catch (SQLException e){
+				e.printStackTrace();
+			} finally {
+				DBUtil.closeQuietly(resultSet);
+				DBUtil.closeQuietly(preparedStatement);
+			}
+			return hashtags;
+		}
+
+	});
+
+}
+
 // USED FOR AUTOCOMPLETE FEATURE IN SEARCH
 @Override
 public ArrayList<String> autoCompleteSearch(final String entered) throws SQLException {
@@ -558,7 +594,7 @@ public ArrayList<String> autoCompleteSearch(final String entered) throws SQLExce
 				DBUtil.closeQuietly(resultSet);
 				DBUtil.closeQuietly(preparedStatement);
 			}
-			hashtags.add(" ");
+			//hashtags.add(" ");
 			return hashtags;
 		}
 
@@ -600,7 +636,7 @@ public boolean addFollowHashtagToUser(final int hashtagID, final int uID) throws
 			PreparedStatement preparedStatement = null;
 			try{
 		
-				preparedStatement = conn.prepareStatement("INSERT INTO USERHASHTAG (USERID, HASHTAGID) VALUES (?, ?");
+				preparedStatement = conn.prepareStatement("INSERT INTO USERHASHTAG (USERID, HASHTAGID) VALUES (?, ?)");
 				preparedStatement.setInt(1, uID);
 				preparedStatement.setInt(2, hashtagID);				
 				preparedStatement.executeUpdate();
@@ -633,6 +669,7 @@ public ArrayList<HashTag> getHashtagsFromPhoto(final int photoID) throws SQLExce
 				
 				preparedStatement.setInt(1, photoID);
 				
+				preparedStatement = conn.prepareStatement("SELECT H.ID, H.HASHTAGNAME FROM HASHTAGS H JOIN PHOTOHASHTAG Ph WHERE PH.PHOTOID=H.ID AND PH.HASHTAGID=H.ID");
 				// Execute Search
 				resultSet = preparedStatement.executeQuery();
 				while(resultSet.next()){
@@ -657,6 +694,8 @@ public ArrayList<HashTag> getHashtagsFromPhoto(final int photoID) throws SQLExce
 @Override
 public int getHashtagByName(final String hashtagName) throws SQLException {
 	return executeTransaction(new Transaction<Integer>() {
+		int return_value = 0;
+		HashTag hashtag = new HashTag();
 		@Override
 		public Integer execute(Connection conn) throws SQLException {
 			PreparedStatement preparedStatement = null;
@@ -665,19 +704,25 @@ public int getHashtagByName(final String hashtagName) throws SQLException {
 				preparedStatement = conn.prepareStatement("SELECT * FROM HASHTAGS WHERE HASHTAGNAME=?");
 				// Execute Query
 				preparedStatement.setString(1, hashtagName);
+				System.out.println("Searching for hashtag with name of "+ hashtagName);
 				resultSet = preparedStatement.executeQuery();
-				
-				if(resultSet != null){
+				if(resultSet.next()){
 					getHashtags(hashtag, resultSet);
+					System.out.println("Hashtag name is " + hashtag.gethashtagName() + " and hashtagID is " + hashtag.gethashtagID());
 				}
-				
+				if (hashtag == null){
+					System.out.println("Could not find hashtag");
+				}
+				else {
+					return_value = hashtag.gethashtagID();
+				}
 			} catch (SQLException e){
 				e.printStackTrace();
 			} finally {
 				DBUtil.closeQuietly(resultSet);
 				DBUtil.closeQuietly(preparedStatement);
 			}
-			return hashtag.gethashtagID();
+			return return_value;
 		}
 
 	});
