@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import edu.ycp.cs481.srdesign.controllers.AddFollowHashTag;
+import edu.ycp.cs481.srdesign.controllers.CheckUserFollowingHashtagController;
 import edu.ycp.cs481.srdesign.controllers.GetHashtagIDFromString;
 import edu.ycp.cs481.srdesign.controllers.GetPhotosFollowingHashtag;
 
@@ -45,10 +46,16 @@ public class Follow extends HttpServlet {
 		//follow hashtag
 		else {
 			AddFollowHashTag followController = new AddFollowHashTag();
+			CheckUserFollowingHashtagController checkfollowing = new CheckUserFollowingHashtagController();
 			try {
 				System.out.println("Follow: " + session.getAttribute("hashTag").toString());
 				int hashID = hashIDcont.getHashtagID(session.getAttribute("hashTag").toString());
-				followController.addFollowingHashTag(hashID,userID);
+				boolean following = checkfollowing.checkUserFollowingHashtag(hashID, userID);
+				if(!following){
+					followController.addFollowingHashTag(hashID,userID);
+				} else {
+					System.out.println("The user is already following " + session.getAttribute("hashTag"));
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
