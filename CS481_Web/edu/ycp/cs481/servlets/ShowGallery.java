@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import edu.ycp.cs481.srdesign.Photo;
-
+import edu.ycp.cs481.srdesign.PhotoUI;
 import edu.ycp.cs481.srdesign.controllers.AddPhotoController;
 import edu.ycp.cs481.srdesign.controllers.AutoCompleteHashTag;
 import edu.ycp.cs481.srdesign.controllers.GetAllPhotosController;
@@ -51,7 +52,7 @@ public class ShowGallery extends HttpServlet {
 		
     	System.out.println(subject);
     	ArrayList<Photo>temp = new ArrayList<Photo>();
-		ArrayList<String> paths = new ArrayList<String>();
+		ArrayList<PhotoUI> paths = new ArrayList<PhotoUI>();
 		
 		
 	
@@ -97,7 +98,8 @@ public class ShowGallery extends HttpServlet {
 			
 			// NEEDS TO BE FIXED, HARDCORDED
 			System.out.println("The photo ID is " + newPhoto.getphotoID());
-			paths.add("image/" + newPhoto.getphotoID());
+			paths.add(new PhotoUI("image/"+newPhoto.getphotoID(), "editPhoto/"+newPhoto.getphotoID()));
+			//paths.add("image/" + newPhoto.getphotoID());
 			//paths.add("image/"+(temp.get(i).getphotoID()-temp.size()+i+1));			
 		}
 		

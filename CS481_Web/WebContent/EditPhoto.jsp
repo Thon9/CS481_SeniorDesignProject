@@ -6,37 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<script>
-function selectedValues(){
-	var checkboxes = document.getElementsByName("chkBxs");
-	var toDelete = [];
-	
-	for (var i=0; i<checkboxes.length; i++) {
-		if (checkboxes[i].checked) {
-			toDelete.push(checkboxes[i].value);
-		}
-	}
-	
-	var f = document.getElementById("boxes");
-	//f.appendChild(toDelete);
-	
-	for(var key in toDelete) {
-        if(toDelete.hasOwnProperty(key)) {
-            var hiddenField = document.createElement("input");
-            hiddenField.setAttribute("type", "hidden");
-            hiddenField.setAttribute("name", key);
-            hiddenField.setAttribute("value", toDelete[key]);
-
-            f.appendChild(hiddenField);
-         }
-    }
-	
-	
-	f.submit;
-	
-}
-</script>
-
 <title>Edit Photo</title>
 </head>
 <body>
@@ -72,11 +41,11 @@ function selectedValues(){
 				
 					<c:forEach var="tag" items="${tagList}">
 					
-						<form id="boxes" action="${pageContext.servletContext.contextPath}/removeTag/${pID}/${tag.hashtagID}" method=post>
+						<form action="${pageContext.servletContext.contextPath}/removeTag/${pID}/${tag.hashtagID}" method=post>
 							<table>
 							<tr>
 								<td><center><p>"${tag.hashtagName}"</p></center></td>
-								<td><center><input type="submit" value="Delete" ></center></td>
+								<td><center><input type="submit" value="Delete"/></center></td>
 							</tr>
 							</table>
 						</form>

@@ -145,7 +145,7 @@ span#search_bar {
 			
 	<form enctype="multipart/form-data" action="${pageContext.servletContext.contextPath}/ShowGallery">
 		<c:forEach var="photo" items="${photoList}">
-					<a href="${photo}" target="_blank"><img src="${photo}"></a>
+					<a href="${photo.editImagePath}" ><img src="${photo.imagePath}"></a>
 					<!-- img src=photo height="200px" width="200px" /-->
 		</c:forEach>
 		
