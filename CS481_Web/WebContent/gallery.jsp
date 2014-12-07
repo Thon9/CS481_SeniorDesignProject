@@ -95,10 +95,10 @@ span#search_bar {
 		<form action="${pageContext.servletContext.contextPath}/Gallery?${request.getParameter(search_object)}">
 			<span id="search_bar"> 
 			search for: <input type="text"
-				name="search_object" value="${search_object}" size="20" /> 
+				name="search_object" value="" size="20" /> 
 			
 			<!-- autocomplete textbox-->
-			<!-- 
+			<!-- ${search_object}
 			<script type="text/javascript">
 				$(function() { 
 					var availItems = ["CATS", "DOGS", "KOALA", 

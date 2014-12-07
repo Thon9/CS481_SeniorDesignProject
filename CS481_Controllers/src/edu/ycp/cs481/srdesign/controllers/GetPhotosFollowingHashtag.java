@@ -7,7 +7,7 @@ import edu.ycp.cs481.srdesign.Photo;
 import edu.ycp.cs481.srdesign.persist.DatabaseProvider;
 
 public class GetPhotosFollowingHashtag {
-	public ArrayList<Photo> GetPhotosFollowingHashtag(final int uID) throws SQLException{
+	public ArrayList<Photo> GetPhotosFollowingHashtagID(final int uID) throws SQLException{
 		return DatabaseProvider.getInstance().getUserFollowingPhotos(uID);
 	}
 }
