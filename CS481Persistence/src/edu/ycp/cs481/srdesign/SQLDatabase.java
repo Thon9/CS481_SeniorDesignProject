@@ -208,16 +208,16 @@ public ArrayList<Photo> getUserSearchPhotos(final String hashtagstring) throws S
 			try{
 				// Return a resultset That contains the photos from the hashtags the user is following.	
 				// CORRECT PREPARESTATEMENT
-				preparedStatement = conn.prepareStatement("(SELECT p.id,P.USERID,P.PHOTO FROM HASHTAGS H join PHOTOHASHTAG ph on h.HASHTAGNAME =?"
-				+ "AND h.id=ph.HASHTAGID JOIN PHOTOS p ON ph.PHOTOID=p.id)");
-				String prepareString = new String("'" + hashtagstring + "'");
-				preparedStatement.setString(1, prepareString);
+				preparedStatement = conn.prepareStatement("SELECT p.id,P.USERID,P.PHOTO FROM HASHTAGS H join PHOTOHASHTAG ph on h.HASHTAGNAME=?"
+				+ "AND h.id=ph.HASHTAGID JOIN PHOTOS p ON ph.PHOTOID=p.id");
+				//String prepareString = new String("'" + hashtagstring + "'");
+				preparedStatement.setString(1, hashtagstring);
  				resultSet = preparedStatement.executeQuery();
  				while(resultSet.next()){
  					Photo newPhoto = new Photo();
 					getPhoto(newPhoto, resultSet);
 					searchPhotos.add(newPhoto);
-				
+					System.out.println("Adding new photo to arrayList that user searched for");
 				}
 			}
 			finally
