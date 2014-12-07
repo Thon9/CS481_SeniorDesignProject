@@ -86,6 +86,7 @@ public interface IDatabase {
 
 		public ArrayList<String> returnAllHashtags() throws SQLException;
 
+		public boolean checkUserFollowingHashtag(int hashtagID, int uID) throws SQLException;
 
 
 		

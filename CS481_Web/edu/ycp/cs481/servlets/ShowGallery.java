@@ -45,9 +45,11 @@ public class ShowGallery extends HttpServlet {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+    	System.out.println("SG: list of avaliable hashTags: "+ hashTags);
     	for (int i = 0; i < hashTags.size();i++){
     		System.out.println("SG: list of avaliable hashTags: "+ hashTags.get(i));
     	}
+
     	//save the hashtag to the session for following
     	session.setAttribute("hashTag", subject);
 		
@@ -74,33 +76,20 @@ public class ShowGallery extends HttpServlet {
 				temp = getPhotos.getPhotos(subject);
 				
 				System.out.println("The size of the temp array is " + temp.size());
-				/*
-				for(int i = 0; i < temp.size(); i++){
-					System.out.println("Counter is at " + i);
-					System.out.println("PhotoID is " + temp.get(i).getphotoID());
-					System.out.println("User ID is " + temp.get(i).getuserID());
-				}
-				*/
-				//System.out.println("The temp size is " + temp.size());
+			
 			} catch (SQLException e) {
 				// Auto-generated catch block
 				e.printStackTrace();
 			}
 			
 		}
-		
-		// if temp.size==0, NO PHOTOS
-		// PRINT OUT MESSAGE ON WEBSITE
+
 		
 		Iterator<Photo> iter = temp.iterator();
 		while (iter.hasNext()){
 			newPhoto = iter.next();
-			//System.out.println(newPhoto.getuserID());
-			
-			// NEEDS TO BE FIXED, HARDCORDED
 			System.out.println("The photo ID is " + newPhoto.getphotoID());
-			paths.add("image/" + newPhoto.getphotoID());
-			//paths.add("image/"+(temp.get(i).getphotoID()-temp.size()+i+1));			
+			paths.add("image/" + newPhoto.getphotoID());		
 		}
 		
 		// Store photos as photolist
