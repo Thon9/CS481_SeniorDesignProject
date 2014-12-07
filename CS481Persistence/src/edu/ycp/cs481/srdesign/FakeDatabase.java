@@ -17,7 +17,7 @@ import edu.ycp.cs481.srdesign.HashTag;
 import edu.ycp.cs481.srdesign.persist.IDatabase;
 
 
-public class FakeDatabase implements IDatabase {
+public abstract class FakeDatabase implements IDatabase {
 	private ArrayList<User>users;
 	private ArrayList<Photo> photos;
 	private ArrayList<HashTag>hashtags;

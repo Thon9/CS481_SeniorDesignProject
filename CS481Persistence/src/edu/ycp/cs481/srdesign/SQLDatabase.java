@@ -256,6 +256,41 @@ public boolean deleteUser(final int userID) throws SQLException {
 	
 }
 
+
+@Override
+public boolean checkUserFollowingHashtag(final int hashtagID, final int uID) throws SQLException {
+	return executeTransaction(new Transaction<Boolean>() {
+		HashTag hashtag = new HashTag();
+		@Override
+		public Boolean execute(Connection conn) throws SQLException {
+			PreparedStatement preparedStatement = null;
+			boolean flag = false;
+			try{	
+				// Prepare statement
+				preparedStatement = conn.prepareStatement("SELECT H.HASHTAGID, H.HASHTAG NAME FROM HASHTAGS H JOIN USERHASHTAG U WHERE U.USERID=? AND U.HASHTAGID=?");
+				preparedStatement.setInt(1, uID);
+				preparedStatement.setInt(2, hashtagID);
+				// Execute Query
+				resultSet = preparedStatement.executeQuery();
+				
+				if(resultSet.next()){
+					getHashtags(hashtag, resultSet);			
+					System.out.println("user is following hashtag");
+					flag = true;
+				}
+			} catch (SQLException e){
+				e.printStackTrace();
+			} finally {
+				DBUtil.closeQuietly(resultSet);
+				DBUtil.closeQuietly(preparedStatement);
+			}
+			System.out.println(flag);
+			return flag;
+		}
+	});
+}
+
+
 //Implemented - Need to be TESTED
 @Override
 public boolean checkExistence(final String username) throws SQLException {
@@ -843,6 +878,7 @@ private void getHashtags(HashTag hashtag, ResultSet resultSet) throws SQLExcepti
 	hashtag.sethashtagName(resultSet.getString("HASHTAGNAME"));
 	hashtag.sethashtagID(resultSet.getInt("id"));
 }
+
 
 
 }

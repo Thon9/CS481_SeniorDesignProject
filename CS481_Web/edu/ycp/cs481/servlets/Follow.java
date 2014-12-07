@@ -48,6 +48,7 @@ public class Follow extends HttpServlet {
 			try {
 				System.out.println("Follow: " + session.getAttribute("hashTag").toString());
 				int hashID = hashIDcont.getHashtagID(session.getAttribute("hashTag").toString());
+				
 				followController.addFollowingHashTag(hashID,userID);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
