@@ -79,7 +79,7 @@ public interface IDatabase {
 		//Adds relation of hashtag to photo in database
 		public boolean addRelaHTP(int hashtagID, int photoID);
 
-		Photo getPhotoByID(int pID, boolean x) throws SQLException;
+		public Photo getPhotoByID(int pID, boolean x) throws SQLException;
 
 		boolean addFollowHashtagToUser(int hashtagID, int uID)
 				throws SQLException;

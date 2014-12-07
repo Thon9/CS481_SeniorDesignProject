@@ -258,7 +258,6 @@ public boolean deleteUser(final int userID) throws SQLException {
 //Implemented - Need to be TESTED
 @Override
 public boolean checkExistence(final String username) throws SQLException {
-	
 	return executeTransaction(new Transaction<Boolean>() {
 		@Override
 		public Boolean execute(Connection conn) throws SQLException {
@@ -271,7 +270,7 @@ public boolean checkExistence(final String username) throws SQLException {
 				// Execute Query
 				resultSet = preparedStatement.executeQuery();
 				
-				if(resultSet != null){
+				if(resultSet.next()){
 					flag = true;
 				}
 				
@@ -335,23 +334,20 @@ public int addPhoto(final Photo newPhoto) throws SQLException {
 @Override
 public ArrayList<Photo> getUserUploadedPhotos(final int uID) throws SQLException {
 	return executeTransaction(new Transaction<ArrayList<Photo>>() {
-		
-		ArrayList<Photo> photos = new ArrayList<Photo>();
 		@Override
 		public ArrayList<Photo> execute(Connection conn) throws SQLException {	
+			ArrayList<Photo> photos = new ArrayList<Photo>();
 			PreparedStatement preparedStatement = null;
 			try{
-				preparedStatement = conn.prepareStatement("SELECT * FROM PHOTOS where USERID=?");
+				preparedStatement = conn.prepareStatement("SELECT id,USERID, PHOTO FROM PHOTOS WHERE USERID =?");
 					preparedStatement.setInt(1, uID);
 				resultSet = preparedStatement.executeQuery();
-				if(resultSet.next()){
+				while(resultSet.next()){
 					Photo newPhoto = new Photo();
 					getPhoto(newPhoto,resultSet);
+					System.out.println("adding a photo to the arrayList");
 					photos.add(newPhoto);
-				} else {
-					System.out.println("NO PHOTOS FROM USER");
-				}
-								
+				} 			
 			} finally {
 				DBUtil.closeQuietly(resultSet);
 				DBUtil.closeQuietly(preparedStatement);
@@ -441,14 +437,17 @@ public int checkHashtagExistance(final String hashtagName) throws SQLException {
 		@Override
 		public Integer execute(Connection conn) throws SQLException {
 			PreparedStatement preparedStatement = null;
+			HashTag hashtag = new HashTag();
 			try{
+				hashtag.sethashtagID(0);
+				hashtag.sethashtagName("NOT FOUND");
 				// Prepare statement
 				preparedStatement = conn.prepareStatement("SELECT * FROM HASHTAGS WHERE HASHTAGENAME LIKE '?%');");
 				preparedStatement.setString(1, hashtagName);
 				// Execute Query
 				resultSet = preparedStatement.executeQuery();
 				
-				if(resultSet != null){
+				if(resultSet.next()){
 					getHashtags(hashtag, resultSet);			
 				}
 				
@@ -458,11 +457,7 @@ public int checkHashtagExistance(final String hashtagName) throws SQLException {
 				DBUtil.closeQuietly(resultSet);
 				DBUtil.closeQuietly(preparedStatement);
 			}
-			if(hashtag != null){
-				return hashtag.gethashtagID();
-			} else {
-				return 0;
-			}
+			return hashtag.gethashtagID();
 		}
 
 	});
