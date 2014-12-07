@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import edu.ycp.cs481.srdesign.Photo;
+import edu.ycp.cs481.srdesign.PhotoUI;
 import edu.ycp.cs481.srdesign.controllers.GetPhotosByUserID;
 import edu.ycp.cs481.srdesign.controllers.GetPhotosFollowingHashtag;
 
@@ -31,7 +32,7 @@ public class Home extends HttpServlet {
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 
     	ArrayList<Photo>temp = new ArrayList<Photo>();
-    	ArrayList<String> paths = new ArrayList<String>();
+    	ArrayList<PhotoUI> paths = new ArrayList<PhotoUI>();
 		GetPhotosFollowingHashtag photoController = new GetPhotosFollowingHashtag();
 		
 		//get user following hashtag photos
@@ -58,7 +59,8 @@ public class Home extends HttpServlet {
 			
 			for(int i = 0; i < temp.size(); i++){
 				System.out.println("Home: The PHOTO ID of temp photo " + i + " is " + temp.get(i).getphotoID());
-				paths.add("image/"+temp.get(i).getphotoID());			
+				paths.add(new PhotoUI("image/"+temp.get(i).getphotoID(), "editPhoto/"+temp.get(i).getphotoID()));
+				//paths.add("image/"+temp.get(i).getphotoID());			
 			}
 		}
 		request.setAttribute("photoList", paths);
