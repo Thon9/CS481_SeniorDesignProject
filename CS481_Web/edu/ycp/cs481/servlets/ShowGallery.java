@@ -48,12 +48,12 @@ public class ShowGallery extends HttpServlet {
     	ArrayList<String> hashTags = new ArrayList<String>();
     	//get list of string to autocomplete the textbox
     	AutoCompleteHashTag autoCompleteController = new AutoCompleteHashTag();
-    	try {
-    		hashTags = autoCompleteController.getAutoCompleteSearch(subject);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//    	try {
+//    		hashTags = autoCompleteController.getAutoCompleteSearch(subject);
+//		} catch (SQLException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
     	
     	//save the hashtag to the session
     	HttpSession session = request.getSession();
