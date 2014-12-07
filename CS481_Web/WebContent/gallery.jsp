@@ -12,8 +12,9 @@
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script>
   $(function() {
-    //var availableHashtags = ${autocomplete};
-    var availableHashtags = ["DOGSGSGSGS","DGAWDGAW"];
+    var availableHashtags = ${autocomplete};
+    //var availableHashtags = ["DOGSGSGSGS","DGAWDGAW"];
+    
     $( "#hashtags" ).autocomplete({
       source: availableHashtags
     });
