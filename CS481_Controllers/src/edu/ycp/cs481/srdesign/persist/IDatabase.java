@@ -84,6 +84,8 @@ public interface IDatabase {
 		boolean addFollowHashtagToUser(int hashtagID, int uID)
 				throws SQLException;
 
+		public ArrayList<String> returnAllHashtags() throws SQLException;
+
 
 
 		
