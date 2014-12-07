@@ -17,6 +17,7 @@ import edu.ycp.cs481.srdesign.controllers.AddFollowHashTag;
 import edu.ycp.cs481.srdesign.controllers.CheckUserFollowingHashtagController;
 import edu.ycp.cs481.srdesign.controllers.GetHashtagIDFromString;
 import edu.ycp.cs481.srdesign.controllers.GetPhotosFollowingHashtag;
+import edu.ycp.cs481.srdesign.controllers.UserUnfollowHashtagController;
 
 /**
  * Servlet implementation class
@@ -43,18 +44,19 @@ public class UnFollow extends HttpServlet {
 			this.doGet(request, response);
 		}
 		
-		//follow hashtag
+		//unfollow hashtag
 		else {
-			AddFollowHashTag followController = new AddFollowHashTag();
+			// Controllers to check if user is following hashtag and unfollow
 			CheckUserFollowingHashtagController checkfollowing = new CheckUserFollowingHashtagController();
+			UserUnfollowHashtagController unfollow = new UserUnfollowHashtagController();
 			try {
 				System.out.println("UnFollow: " + session.getAttribute("hashTag").toString());
 				int hashID = hashIDcont.getHashtagID(session.getAttribute("hashTag").toString());
 				boolean following = checkfollowing.checkUserFollowingHashtag(hashID, userID);
-				if(!following){
-					followController.addFollowingHashTag(hashID,userID);
+				if(following){
+					unfollow.userUnfollowHashtag(hashID, userID);
 				} else {
-					System.out.println("The user is already following " + session.getAttribute("hashTag"));
+					System.out.println("The user is not following this hashtag");
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -62,8 +64,6 @@ public class UnFollow extends HttpServlet {
 			}
 				
 			}
-			String hashtag = session.getAttribute("hashTag").toString();
-			System.out.println("UnFol: UnFollowing "+hashtag);
 			response.sendRedirect(request.getContextPath()+"/Home");
 		}
 	
