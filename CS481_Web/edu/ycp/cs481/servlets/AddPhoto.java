@@ -75,24 +75,32 @@ public class AddPhoto extends HttpServlet {
 					
 					
 					for(int i=0; i<tagsParsed.size(); i++){
+						HashTag tempH = new HashTag();
+						tempH.sethashtagName(tagsParsed.get(i));
+						//System.out.println(tagsParsed.get(i));
+						//int hashID = addHCont.addHashtag(tempH);
+						
+						//hTPCont.addRelaHTP(hashID, photoId);
+						
 						// Either returns hashtag ID or 0 if it doesn't exist
 						int hashtagid = hashtagexist.checkHashtagExistence(tagsParsed.get(i));
 						// Hashtag does not exist
+						//HashTag tempH = new HashTag();
 						if(hashtagid == 0){
-							HashTag tempH = new HashTag();
-							tempH.sethashtagName(tagsParsed.get(i));
-							System.out.println(tagsParsed.get(i));
+							//tempH.sethashtagName(tagsParsed.get(i));
+							System.out.println(tempH);
 							// 
-							int hashID = addHCont.addHashtag(tempH);
-							hTPCont.addRelaHTP(hashID, photoId);
+							hashtagid = addHCont.addHashtag(tempH);
+							//hTPCont.addRelaHTP(hashtagid, photoId);
 							System.out.println("HASHTAG DOES NOT EXIST, CREATED ONE");
 						} else {
-							HashTag tempH = new HashTag();
-							tempH.sethashtagName(tagsParsed.get(i));
+							//tempH.sethashtagName(tagsParsed.get(i));
 							System.out.println(tagsParsed.get(i));
 							System.out.println("HASHTAG EXISTS, RELATING PHOTO TO HASHTAG ALREADY CREATED IN DATABASE"); 
-							hTPCont.addRelaHTP(hashtagid, photoId);
+							//hTPCont.addRelaHTP(hashtagid, photoId);
 						}
+						
+						hTPCont.addRelaHTP(hashtagid, photoId);
 						
 					}
 					

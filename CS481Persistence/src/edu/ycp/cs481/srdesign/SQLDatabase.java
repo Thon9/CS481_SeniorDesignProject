@@ -208,9 +208,10 @@ public ArrayList<Photo> getUserSearchPhotos(final String hashtagstring) throws S
 			try{
 				// Return a resultset That contains the photos from the hashtags the user is following.	
 				// CORRECT PREPARESTATEMENT
-				preparedStatement = conn.prepareStatement("(SELECT p.id,P.USERID,P.PHOTO FROM HASHTAGS H join PHOTOHASHTAG ph on h.HASHTAGNAME='?' "
+				preparedStatement = conn.prepareStatement("(SELECT p.id,P.USERID,P.PHOTO FROM HASHTAGS H join PHOTOHASHTAG ph on h.HASHTAGNAME =?"
 				+ "AND h.id=ph.HASHTAGID JOIN PHOTOS p ON ph.PHOTOID=p.id)");
-				preparedStatement.setString(1, hashtagstring);
+				String prepareString = new String("'" + hashtagstring + "'");
+				preparedStatement.setString(1, prepareString);
  				resultSet = preparedStatement.executeQuery();
  				while(resultSet.next()){
  					Photo newPhoto = new Photo();
@@ -548,7 +549,7 @@ public ArrayList<String> returnAllHashtags() throws SQLException {
 				preparedStatement = conn.prepareStatement("SELECT * FROM HASHTAGS");
 				// Execute Query
 				resultSet = preparedStatement.executeQuery();
-				if(resultSet.next()){
+				while(resultSet.next()){
 					HashTag hashtag = new HashTag();
 					getHashtags(hashtag, resultSet);
 					hashtags.add(hashtag.gethashtagName());	
@@ -655,7 +656,7 @@ public boolean addFollowHashtagToUser(final int hashtagID, final int uID) throws
 
 // Implemented - NEED TO TEST
 @Override
-public ArrayList<HashTag> getHashtagsFromPhoto(int photoID) throws SQLException {
+public ArrayList<HashTag> getHashtagsFromPhoto(final int photoID) throws SQLException {
 	return executeTransaction(new Transaction<ArrayList<HashTag>>() {
 		ArrayList<HashTag> hashtags = new ArrayList<HashTag>();
 		
@@ -664,6 +665,11 @@ public ArrayList<HashTag> getHashtagsFromPhoto(int photoID) throws SQLException 
 			PreparedStatement preparedStatement = null;
 			try{
 				// Return a resultset That contains the hashtags from a single photo
+				//preparedStatement = conn.prepareStatement("SELECT H.ID, H.HASHTAGNAME FROM HASHTAGS H JOIN PHOTOHASHTAG P WHERE P.PHOTOID=?");
+				preparedStatement = conn.prepareStatement("SELECT H.ID, H.HASHTAGNAME FROM HASHTAGS H JOIN PHOTOHASHTAG P ON P.PHOTOID=? AND P.HASHTAGID=H.ID");
+				
+				preparedStatement.setInt(1, photoID);
+				
 				preparedStatement = conn.prepareStatement("SELECT H.ID, H.HASHTAGNAME FROM HASHTAGS H JOIN PHOTOHASHTAG Ph WHERE PH.PHOTOID=H.ID AND PH.HASHTAGID=H.ID");
 				// Execute Search
 				resultSet = preparedStatement.executeQuery();
@@ -677,6 +683,8 @@ public ArrayList<HashTag> getHashtagsFromPhoto(int photoID) throws SQLException 
 				DBUtil.closeQuietly(resultSet);
 				DBUtil.closeQuietly(preparedStatement);
 			}
+			// Prints out number of photos
+			System.out.println("The number of photos is " + hashtags.size());
 
 			return hashtags;
 		}

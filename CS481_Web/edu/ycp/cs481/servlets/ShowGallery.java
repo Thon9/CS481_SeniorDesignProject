@@ -1,19 +1,9 @@
-
-
 package edu.ycp.cs481.servlets;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
-
-import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -21,11 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
-
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 import edu.ycp.cs481.srdesign.Photo;
+
 import edu.ycp.cs481.srdesign.controllers.AddPhotoController;
 import edu.ycp.cs481.srdesign.controllers.AutoCompleteHashTag;
 import edu.ycp.cs481.srdesign.controllers.GetAllPhotosController;
@@ -51,14 +39,17 @@ public class ShowGallery extends HttpServlet {
     	HttpSession session = request.getSession();
     	AutoCompleteHashTag autoCompleteController = new AutoCompleteHashTag();
     	try {
-    		hashTags = autoCompleteController.getAutoCompleteSearch(subject);
+    		hashTags = autoCompleteController.getAutoCompleteSearch();
     		session.setAttribute("autocomplete", hashTags);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
     	System.out.println("SG: list of avaliable hashTags: "+ hashTags);
+    	for (int i = 0; i < hashTags.size();i++){
+    		System.out.println("SG: list of avaliable hashTags: "+ hashTags.get(i));
+    	}
+
     	//save the hashtag to the session for following
     	session.setAttribute("hashTag", subject);
 		
