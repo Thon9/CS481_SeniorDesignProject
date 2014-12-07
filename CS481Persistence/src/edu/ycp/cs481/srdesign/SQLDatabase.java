@@ -600,7 +600,7 @@ public boolean addFollowHashtagToUser(final int hashtagID, final int uID) throws
 			PreparedStatement preparedStatement = null;
 			try{
 		
-				preparedStatement = conn.prepareStatement("INSERT INTO USERHASHTAG (USERID, HASHTAGID) VALUES (?, ?");
+				preparedStatement = conn.prepareStatement("INSERT INTO USERHASHTAG (USERID, HASHTAGID) VALUES (?, ?)");
 				preparedStatement.setInt(1, uID);
 				preparedStatement.setInt(2, hashtagID);				
 				preparedStatement.executeUpdate();
@@ -651,6 +651,7 @@ public ArrayList<HashTag> getHashtagsFromPhoto(int photoID) throws SQLException 
 @Override
 public int getHashtagByName(final String hashtagName) throws SQLException {
 	return executeTransaction(new Transaction<Integer>() {
+		int return_value = 0;
 		@Override
 		public Integer execute(Connection conn) throws SQLException {
 			PreparedStatement preparedStatement = null;
@@ -659,19 +660,23 @@ public int getHashtagByName(final String hashtagName) throws SQLException {
 				preparedStatement = conn.prepareStatement("SELECT * FROM HASHTAGS WHERE HASHTAGNAME=?");
 				// Execute Query
 				preparedStatement.setString(1, hashtagName);
-				resultSet = preparedStatement.executeQuery();
-				
+				preparedStatement.executeQuery();
 				if(resultSet != null){
 					getHashtags(hashtag, resultSet);
 				}
-				
+				if (hashtag == null){
+					return 0;
+				}
+				else {
+					return_value = hashtag.gethashtagID();
+				}
 			} catch (SQLException e){
 				e.printStackTrace();
 			} finally {
 				DBUtil.closeQuietly(resultSet);
 				DBUtil.closeQuietly(preparedStatement);
 			}
-			return hashtag.gethashtagID();
+			return return_value;
 		}
 
 	});
