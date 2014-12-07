@@ -256,6 +256,30 @@ public boolean deleteUser(final int userID) throws SQLException {
 	
 }
 
+@Override
+public boolean userUnfollowHashtag(final int hashtagID,final int uID) throws SQLException {
+	return executeTransaction(new Transaction<Boolean>() {
+		@Override
+		public Boolean execute(Connection conn) throws SQLException {
+			PreparedStatement preparedStatement = null;
+			try{
+				// Prepare statement
+				preparedStatement = conn.prepareStatement("DELETE FROM USERHASHTAG WHERE USERID=? AND HASHTAGID=?");
+					preparedStatement.setInt(1, uID);
+					preparedStatement.setInt(2, hashtagID);
+				// Execute Query
+				preparedStatement.executeUpdate();
+				System.out.println("User is now unfollowing hashtag with ID of " + hashtagID);
+			} finally {
+				DBUtil.closeQuietly(resultSet);
+				DBUtil.closeQuietly(preparedStatement);
+			}
+		return true;
+		}
+	});	
+	
+}
+
 
 @Override
 public boolean checkUserFollowingHashtag(final int hashtagID, final int uID) throws SQLException {
@@ -878,6 +902,7 @@ private void getHashtags(HashTag hashtag, ResultSet resultSet) throws SQLExcepti
 	hashtag.sethashtagName(resultSet.getString("HASHTAGNAME"));
 	hashtag.sethashtagID(resultSet.getInt("id"));
 }
+
 
 
 
