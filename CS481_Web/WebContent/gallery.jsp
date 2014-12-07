@@ -53,6 +53,9 @@ span#sort_bar {
 span#search_bar {
 	float: right;
 }
+form {
+    display: inline;
+}
 </style>
 </head>
 
@@ -128,6 +131,11 @@ span#search_bar {
 	<form action="${pageContext.servletContext.contextPath}/Follow" method="post">
 			<input type="submit" value="Follow ${hashTag}"></input>
 	</form>
+	
+	<!-- unfollow button -->
+	<form action="${pageContext.servletContext.contextPath}/UnFollow" method="post">
+			<input type="submit" value="UnFollow ${hashTag}"></input>
+	</form>
 	${result}
 	<h2 align=center>${hashTag}</h2>
 	<br>
@@ -145,7 +153,7 @@ span#search_bar {
 			
 	<form enctype="multipart/form-data" action="${pageContext.servletContext.contextPath}/ShowGallery">
 		<c:forEach var="photo" items="${photoList}">
-					<a href="${photo}" target="_blank"><img src="${photo}"></a>
+					<a href="${photo.editImagePath}" ><img src="${photo.imagePath}"></a>
 					<!-- img src=photo height="200px" width="200px" /-->
 		</c:forEach>
 		

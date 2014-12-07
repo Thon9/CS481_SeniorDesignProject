@@ -25,6 +25,7 @@ import javax.servlet.http.Part;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 import edu.ycp.cs481.srdesign.Photo;
+import edu.ycp.cs481.srdesign.PhotoUI;
 import edu.ycp.cs481.srdesign.controllers.AddPhotoController;
 import edu.ycp.cs481.srdesign.controllers.GetAllPhotosController;
 import edu.ycp.cs481.srdesign.controllers.GetPhotosByHashtagString;
@@ -43,7 +44,7 @@ public class ShowUserGallery extends HttpServlet {
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 
     	ArrayList<Photo>temp = new ArrayList<Photo>();
-    	ArrayList<String> paths = new ArrayList<String>();
+    	ArrayList<PhotoUI> paths = new ArrayList<PhotoUI>();
 		
     	//get user id
     	HttpSession session = request.getSession();
@@ -86,7 +87,8 @@ public class ShowUserGallery extends HttpServlet {
 			for(int i = 0; i < temp.size(); i++){
 				System.out.println("SUG: The PHOTO ID of temp photo " + i + " is " + temp.get(i).getphotoID());
 				// NEEDS TO BE FIXED, HARDCORDED
-				paths.add("image/"+temp.get(i).getphotoID());			
+				paths.add(new PhotoUI("image/"+temp.get(i).getphotoID(), "editPhoto/"+temp.get(i).getphotoID()));
+				//paths.add("image/"+temp.get(i).getphotoID());			
 			}
 
 		request.setAttribute("photoList", paths);

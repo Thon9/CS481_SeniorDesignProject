@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs481.srdesign.HashTag;
 import edu.ycp.cs481.srdesign.controllers.AddHashtagController;
+import edu.ycp.cs481.srdesign.controllers.CheckHashtagExistController;
 import edu.ycp.cs481.srdesign.controllers.GetHashtagsFromPhotoController;
 import edu.ycp.cs481.srdesign.controllers.GetPhotoByIdController;
 import edu.ycp.cs481.srdesign.controllers.HashToPhotoRelaController;
@@ -73,16 +74,23 @@ public class EditPhoto extends HttpServlet{
 			HashTag tempH = new HashTag();
 			tempH.sethashtagName(tagsParsed.get(i));
 			System.out.println(tagsParsed.get(i));
+			CheckHashtagExistController hashtagexist = new CheckHashtagExistController();
 			int hashID;
-			try {
-				hashID = addHCont.addHashtag(tempH);
+			try{
+				hashID = hashtagexist.checkHashtagExistence(tagsParsed.get(i));
+				
+				if(hashID == 0){
+					System.out.println(tempH);
+					hashID = addHCont.addHashtag(tempH);
+					System.out.println("HASHTAG DOES NOT EXIST, CREATED ONE");
+				} else {
+					System.out.println(tagsParsed.get(i));
+					System.out.println("HASHTAG EXISTS, RELATING PHOTO TO HASHTAG ALREADY CREATED IN DATABASE"); 
+				}
 				hTPCont.addRelaHTP(hashID, photoId);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+			}catch(Exception e){
 				e.printStackTrace();
-			}
-			
-			
+			}			
 		}
 		 doGet(request, response);
 		//response.setStatus(HttpServletResponse.SC_OK);
