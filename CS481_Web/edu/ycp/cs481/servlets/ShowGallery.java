@@ -33,7 +33,6 @@ public class ShowGallery extends HttpServlet {
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 
     	String subject = request.getParameter("search_object");
-    	
     	ArrayList<String> hashTags = new ArrayList<String>();
     	
     	//get list of string to autocomplete the textbox
@@ -41,15 +40,15 @@ public class ShowGallery extends HttpServlet {
     	AutoCompleteHashTag autoCompleteController = new AutoCompleteHashTag();
     	try {
     		hashTags = autoCompleteController.getAutoCompleteSearch();
+    		//add the quotation for each tags
+    		for (int i=0;i<hashTags.size();i++){
+    			hashTags.set(i, "\""+hashTags.get(i)+"\"");
+    		}
     		session.setAttribute("autocomplete", hashTags);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-    	System.out.println("SG: list of avaliable hashTags: "+ hashTags);
-    	for (int i = 0; i < hashTags.size();i++){
-    		System.out.println("SG: list of avaliable hashTags: "+ hashTags.get(i));
-    	}
 
     	//save the hashtag to the session for following
     	session.setAttribute("hashTag", subject);
@@ -70,12 +69,7 @@ public class ShowGallery extends HttpServlet {
 			System.out.println("searching for "+subject+"...");
 			GetPhotosByHashtagString getPhotos = new GetPhotosByHashtagString();
 			try {
-				//temp=null;
-				// Creating arraylist of photos based on search subject
-				//System.out.println("Should be adding photos containing subect " + subject);
-				//System.out.println(temp);
 				temp = getPhotos.getPhotos(subject);
-				
 				System.out.println("The size of the temp array is " + temp.size());
 			
 			} catch (SQLException e) {
@@ -93,9 +87,6 @@ public class ShowGallery extends HttpServlet {
 			paths.add(new PhotoUI("image/"+newPhoto.getphotoID(), "editPhoto/"+newPhoto.getphotoID()));
 		}
 		
-		// Store photos as photolist
-
-		//request.setAttribute("photoList", images);
 		request.setAttribute("search_object", hashTags);
 		request.setAttribute("photoList", paths);
 		request.getRequestDispatcher("/gallery.jsp").forward(request, response); 
@@ -106,27 +97,3 @@ public class ShowGallery extends HttpServlet {
 	}
 	
 }
-
-/*
-/InputStream is = temp.get(i).getFIS();
-System.out.println(temp.get(i).getphotoID());
-System.out.println(temp.get(i).getuserID());
-System.out.println(temp.get(i).getFIS());
-
-//
-//File newImage = new File("C:\\imagesFolder\\"+subject+"\\"+temp.get(i).getphotoID());
-//String formatName="image/jpeg";
-// Write image to filePath
-//BufferedImage bufferedImage= ImageIO.read(temp.get(i).getFIS());
-//ImageIO.write(bufferedImage,formatName,newImage);
-
-if (newImage.toString().contains(subject)){
-	//remove the extension
-	String path = newImage.getName().toString();
-	if (path.indexOf(".") > 0){
-		path = path.substring(0, path.lastIndexOf("."));
-	}
-	paths.add("image/"+path);
-	System.out.println("doGet found "+path);
-}	
-*/
