@@ -13,12 +13,15 @@
 <script>
   $(function() {
     var availableHashtags = ${autocomplete};
-    //var availableHashtags = ["DOGSGSGSGS","DGAWDGAW"];
+    //var availableHashtags = ["DOGSGSGSGS","DGAWDGAW","asdasdasdasdasdasd"];
+  //  <c:forEach var="String" items="${autocomplete}">
     
-    $( "#hashtags" ).autocomplete({
+   // </c:forEach>
+     $( "#hashtags" ).autocomplete({
       source: availableHashtags
     });
   });
+  
   </script>
 <title>User Page</title>
 <style type="text/css">

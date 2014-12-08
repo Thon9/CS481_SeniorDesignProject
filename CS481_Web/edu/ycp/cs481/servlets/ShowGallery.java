@@ -41,12 +41,17 @@ public class ShowGallery extends HttpServlet {
     	AutoCompleteHashTag autoCompleteController = new AutoCompleteHashTag();
     	try {
     		hashTags = autoCompleteController.getAutoCompleteSearch();
+    		//add the quotaion for each tags
+    		for (int i=0;i<hashTags.size();i++){
+    			hashTags.set(i, "\""+hashTags.get(i)+"\"");
+    		}
     		session.setAttribute("autocomplete", hashTags);
+    		//session.setAttribute("autocomplete", "[\"DOGSSSSS\"]");
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-    	System.out.println("SG: list of avaliable hashTags: "+ hashTags);
+    	//System.out.println("SG: list of avaliable hashTags: "+ hashTags);
     	for (int i = 0; i < hashTags.size();i++){
     		System.out.println("SG: list of avaliable hashTags: "+ hashTags.get(i));
     	}
