@@ -88,15 +88,15 @@ public class AddPhoto extends HttpServlet {
 						//HashTag tempH = new HashTag();
 						if(hashtagid == 0){
 							//tempH.sethashtagName(tagsParsed.get(i));
-							System.out.println(tempH);
+							//System.out.println(tempH);
 							// 
 							hashtagid = addHCont.addHashtag(tempH);
 							//hTPCont.addRelaHTP(hashtagid, photoId);
-							System.out.println("HASHTAG DOES NOT EXIST, CREATED ONE");
+							//System.out.println("HASHTAG DOES NOT EXIST, CREATED ONE");
 						} else {
 							//tempH.sethashtagName(tagsParsed.get(i));
-							System.out.println(tagsParsed.get(i));
-							System.out.println("HASHTAG EXISTS, RELATING PHOTO TO HASHTAG ALREADY CREATED IN DATABASE"); 
+							//System.out.println(tagsParsed.get(i));
+							//System.out.println("HASHTAG EXISTS, RELATING PHOTO TO HASHTAG ALREADY CREATED IN DATABASE"); 
 							//hTPCont.addRelaHTP(hashtagid, photoId);
 						}
 						

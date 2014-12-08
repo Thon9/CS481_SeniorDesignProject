@@ -7,7 +7,43 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <title>Edit Photo</title>
+<style type="text/css">
+body {
+	background-size: 100%;
+	background-color: #cccccc;
+}
+
+img {
+	width: 100%;
+	max-width: 500px;
+	max-height: 500px;
+}
+
+input {
+	border-radius: 15px;
+}
+
+button {
+	border-radius: 15px;
+}
+
+select {
+	border-radius: 15px;
+}
+
+span#sort_bar {
+	float: left;
+}
+
+span#search_bar {
+	float: right;
+}
+form {
+    display: inline;
+}
+</style>
 </head>
+<h1 align="center">Edit Photo</h1>
 <body>
 	<div style = "float:right">
 	<form action="${pageContext.servletContext.contextPath}/Logout"
@@ -31,7 +67,7 @@
 		<tr>
 			<td>
 				<!-- image column -->
-				<a href="${pageContext.servletContext.contextPath}/${photo}" target="_blank"><img height="300" width="300" src="${pageContext.servletContext.contextPath}/${photo}"></a>
+				<a href="${pageContext.servletContext.contextPath}/${photo}" target="_blank"><img src="${pageContext.servletContext.contextPath}/${photo}"></a>
 			</td>
 			
 		</tr>
