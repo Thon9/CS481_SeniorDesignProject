@@ -18,20 +18,21 @@ public class RemoveTag extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int hashid  = getHashID(request);
-		System.out.println("The photo has a hashtagID of " + hashid);
 		int imageid = getImageID(request);
-		System.out.println("The photo has an imageID of " + imageid);
-		deleteHashtagFromPhotoController deleteHFPCont = new deleteHashtagFromPhotoController();
 		
-		System.out.println("tag to delete:	"+hashid);
+		// Controllers needed
+		deleteHashtagFromPhotoController deleteHFPCont = new deleteHashtagFromPhotoController();
+	
 		try {
 			deleteHFPCont.deleteRelation(imageid, hashid);
+			System.out.println("delete hashtag id of " + hashid + " from image with id of " + imageid);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		response.setStatus(HttpServletResponse.SC_OK);
 		response.sendRedirect("http://localhost:8080/CS481_Web/editPhoto/"+imageid);
+		
 		//request.getRequestDispatcher("/EditPhoto.jsp/"+imageid);//.forward(request, response);
 	
 	}

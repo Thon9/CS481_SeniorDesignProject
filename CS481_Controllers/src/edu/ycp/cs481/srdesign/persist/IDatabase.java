@@ -90,6 +90,7 @@ public interface IDatabase {
 		
 		public boolean userUnfollowHashtag(int hashtagID, int uID) throws SQLException;
 
+		public boolean checkPhotoHashtagIDRelation (int photoID, int hashtagID) throws SQLException;
 
 		
 }
