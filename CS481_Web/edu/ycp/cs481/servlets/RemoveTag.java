@@ -18,7 +18,9 @@ public class RemoveTag extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int hashid  = getHashID(request);
+		System.out.println("The photo has a hashtagID of " + hashid);
 		int imageid = getImageID(request);
+		System.out.println("The photo has an imageID of " + imageid);
 		deleteHashtagFromPhotoController deleteHFPCont = new deleteHashtagFromPhotoController();
 		
 		System.out.println("tag to delete:	"+hashid);
