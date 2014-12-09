@@ -7,7 +7,43 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <title>Edit Photo</title>
+<style type="text/css">
+body {
+	background-size: 100%;
+	background-color: #cccccc;
+}
+
+img {
+	width: 100%;
+	max-width: 500px;
+	max-height: 500px;
+}
+
+input {
+	border-radius: 15px;
+}
+
+button {
+	border-radius: 15px;
+}
+
+select {
+	border-radius: 15px;
+}
+
+span#sort_bar {
+	float: left;
+}
+
+span#search_bar {
+	float: right;
+}
+form {
+    display: inline;
+}
+</style>
 </head>
+<h1 align="center">Edit Photo</h1>
 <body>
 	<div style = "float:right">
 	<form action="${pageContext.servletContext.contextPath}/Logout"
@@ -18,11 +54,27 @@
 	
 	<!-- account and home button -->
 	<div style = "float:left">
-		<button type="button" onClick="JavaScript:window.location='Home';">Home</button>
+	<form action="${pageContext.servletContext.contextPath}/Home"
+			method="get">
+		<input type="submit" value="Home" />
+	</form><form action="${pageContext.servletContext.contextPath}/accountinformation.jsp"
+			method="post">
+		<input type="submit" value="Account Information" />
+	</form><form action="${pageContext.servletContext.contextPath}/Gallery"
+			method="get">
+		<input type="submit" value="Gallery" />
+	</form><form action="${pageContext.servletContext.contextPath}/ShowUserGallery"
+			method="get">
+		<input type="submit" value="User Uploads" />
+	</form><form action="${pageContext.servletContext.contextPath}/photo.jsp"
+			method="post">
+		<input type="submit" value="Add Photo" />
+	</form>
+		<!-- button type="button" onClick="JavaScript:window.location='Home';">Home</button>
 		<button type="button" onClick="JavaScript:window.location='accountinformation.jsp';">Account Information</button>
 		<button type="button" onClick="JavaScript:window.location='Gallery';">Gallery</button>
 		<button type="button" onClick="JavaScript:window.location='ShowUserGallery';">User Uploads</button>
-		<button type="button" onClick="JavaScript:window.location='photo.jsp';">Add Photo</button>
+		<button type="button" onClick="JavaScript:window.location='photo.jsp';">Add Photo</button-->
 	</div>
 	<br>
 	<br>
@@ -31,7 +83,7 @@
 		<tr>
 			<td>
 				<!-- image column -->
-				<a href="${pageContext.servletContext.contextPath}/${photo}" target="_blank"><img height="300" width="300" src="${pageContext.servletContext.contextPath}/${photo}"></a>
+				<a href="${pageContext.servletContext.contextPath}/${photo}" target="_blank"><img src="${pageContext.servletContext.contextPath}/${photo}"></a>
 			</td>
 			
 		</tr>

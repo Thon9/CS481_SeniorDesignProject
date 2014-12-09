@@ -59,7 +59,7 @@ public class Home extends HttpServlet {
 			
 			for(int i = 0; i < temp.size(); i++){
 				System.out.println("Home: The PHOTO ID of temp photo " + i + " is " + temp.get(i).getphotoID());
-				paths.add(new PhotoUI("image/"+temp.get(i).getphotoID(), "editPhoto/"+temp.get(i).getphotoID()));
+				paths.add(new PhotoUI("image/"+temp.get(i).getphotoID(), "image/"+temp.get(i).getphotoID()));
 				//paths.add("image/"+temp.get(i).getphotoID());			
 			}
 		}

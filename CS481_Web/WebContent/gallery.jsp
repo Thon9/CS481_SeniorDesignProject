@@ -11,11 +11,10 @@
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script>
+  //autocomplete fuction
   $(function() {
     var availableHashtags = ${autocomplete};
-    //var availableHashtags = ["DOGSGSGSGS","DGAWDGAW"];
-    
-    $( "#hashtags" ).autocomplete({
+     $( "#hashtags" ).autocomplete({
       source: availableHashtags
     });
   });
@@ -70,7 +69,6 @@ form {
 		<input type="submit" value="Logout" />
 	</form>
 	</div>
-	${autocomplete}
 	<!-- account and home button -->
 	<div style = "float:left">
 		<button type="button" onClick="JavaScript:window.location='Home';">Home</button>
@@ -107,22 +105,6 @@ form {
 			
 			search for: <input type="text"
 				name="search_object" id="hashtags" size="20" /> 
-			
-			<!-- autocomplete textbox-->
-			<!-- ${search_object}
-			<script type="text/javascript">
-				$(function() { 
-					var availItems = ["CATS", "DOGS", "KOALA", 
-					                   "BEAR"];
-				$("#search_object").autocomplete({
-					source: availItems, 
-					minLength: 0
-				}).focus(function(){
-						$(this).trigger('keydown.autocomplete');
-					});
-				});
-			</script>
-			 -->
 			<input type="submit" value="Enter" ></input>
 			</span>
 		</form>	
@@ -141,20 +123,10 @@ form {
 	<br>
 	<br>
 	<center>
-	<!--
-		<a href="test_images/test1.jpg" target="_blank"><img
-			src="test_images/test1.jpg"></a> <a href="test_images/test2.jpg"
-			target="_blank"><img src="test_images/test2.jpg"></a> <a
-			href="photo.jsp" target="_blank"><img src="test_images/test3.jpg"></a>
-		<a href="test_images/test1.jpg" target="_blank"><img
-			src="test_images/test1.jpg"></a> <a href="test_images/test2.jpg"
-			target="_blank"><img src="test_images/test2.jpg"></a>
-	/-->	
 			
 	<form enctype="multipart/form-data" action="${pageContext.servletContext.contextPath}/ShowGallery">
 		<c:forEach var="photo" items="${photoList}">
 					<a href="${photo.editImagePath}" ><img src="${photo.imagePath}"></a>
-					<!-- img src=photo height="200px" width="200px" /-->
 		</c:forEach>
 		
 	</form>

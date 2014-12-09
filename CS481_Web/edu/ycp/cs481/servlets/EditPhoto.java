@@ -18,6 +18,7 @@ import edu.ycp.cs481.srdesign.controllers.CheckHashtagExistController;
 import edu.ycp.cs481.srdesign.controllers.GetHashtagsFromPhotoController;
 import edu.ycp.cs481.srdesign.controllers.GetPhotoByIdController;
 import edu.ycp.cs481.srdesign.controllers.HashToPhotoRelaController;
+import edu.ycp.cs481.srdesign.controllers.checkPhotoHashtagIDRelationController;
 import edu.ycp.cs481.srdesign.controllers.deleteHashtagFromPhotoController;
 
 
@@ -42,7 +43,8 @@ public class EditPhoto extends HttpServlet{
 		}
 		
 		for(int i=0;i<tags.size();i++){
-			System.out.println("tagIDs:	"+tags.get(i).gethashtagName()+" "+tags.get(i).gethashtagID());
+			
+			// System.out.println("tagIDs:	"+tags.get(i).gethashtagName()+" "+tags.get(i).gethashtagID());
 			//tagStrings.add(tags.get(i).gethashtagName());
 		}
 		
@@ -50,7 +52,10 @@ public class EditPhoto extends HttpServlet{
 		/**
 		 * use pID to send back pID later
 		 */
+		
+		// request.removeAttribute("photo");
 		request.setAttribute("photo", imagePath);
+		// request.removeAttribute("tagList");
 		request.setAttribute("tagList", tags);
 		response.setStatus(HttpServletResponse.SC_OK);
 		request.getRequestDispatcher("/EditPhoto.jsp").forward(request, response);
@@ -61,36 +66,47 @@ public class EditPhoto extends HttpServlet{
 		
 		int photoId  = getImageID(request);
 		//int photoId = Integer.parseInt(request.getParameter("pID"));
+		System.out.println("The photo ID is " + photoId);
 		
 		String tagsUnparsed = request.getParameter("hashTags");
-		
-		
-		System.out.println(photoId);
-		System.out.println(tagsUnparsed);
-		
-		
+			
+		// Parses tags, adds them to ArrayList
 		ArrayList<String> tagsParsed = parseHashtags(tagsUnparsed);
+		
+		// Controllers needed to handle operatiosn
 		AddHashtagController addHCont = new AddHashtagController();
 		HashToPhotoRelaController hTPCont = new HashToPhotoRelaController();
+		CheckHashtagExistController hashtagexist = new CheckHashtagExistController();
+		checkPhotoHashtagIDRelationController checkphotohashtagid = new checkPhotoHashtagIDRelationController();
 		
-		for(int i=0; i<tagsParsed.size(); i++){
-			HashTag tempH = new HashTag();
+		// Variables needed 
+		int hashID = 0;
+		HashTag tempH = new HashTag();
+		
+		for(int i=0; i<tagsParsed.size(); i++){	
 			tempH.sethashtagName(tagsParsed.get(i));
-			System.out.println(tagsParsed.get(i));
-			CheckHashtagExistController hashtagexist = new CheckHashtagExistController();
-			int hashID;
+			// Test print to make sure hashtagname is set
+			System.out.println("Setting hashtag name to " + tagsParsed.get(i));		
 			try{
 				hashID = hashtagexist.checkHashtagExistence(tagsParsed.get(i));
-				
+				// Checking to see if hashtag exists
 				if(hashID == 0){
 					System.out.println(tempH);
 					hashID = addHCont.addHashtag(tempH);
 					System.out.println("HASHTAG DOES NOT EXIST, CREATED ONE");
+					
 				} else {
 					System.out.println(tagsParsed.get(i));
 					System.out.println("HASHTAG EXISTS, RELATING PHOTO TO HASHTAG ALREADY CREATED IN DATABASE"); 
 				}
+				
+				/////////////////////////////////
+				// Need to check to see if photo already has hashtag associated with it
+				if(checkphotohashtagid.checkPhotoHashtagIDRelation(photoId, hashID)){
+					System.out.println("HASHTAG ALREADY EXISTS");
+				} else {
 				hTPCont.addRelaHTP(hashID, photoId);
+				}
 			}catch(Exception e){
 				e.printStackTrace();
 			}			
