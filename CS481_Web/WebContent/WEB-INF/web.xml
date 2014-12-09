@@ -42,6 +42,7 @@
   	<servlet-name>AutoCompleteHashTags</servlet-name>
   	<servlet-class>edu.ycp.cs481.servlets.AutoCompleteHashTags</servlet-class>
   </servlet>
+  
   <!-- Servlet mappings (mapping of paths to servlets). -->
   
   <servlet-mapping>
@@ -63,4 +64,5 @@
   	<servlet-name>AutoCompleteHashTags</servlet-name>
   	<url-pattern>/AutoCompleteHashTags/*</url-pattern>
   </servlet-mapping>
+  
 </web-app>
