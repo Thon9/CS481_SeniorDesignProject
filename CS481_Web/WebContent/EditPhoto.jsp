@@ -54,11 +54,31 @@ form {
 	
 	<!-- account and home button -->
 	<div style = "float:left">
-		<button type="button" onClick="JavaScript:window.location='Home';">Home</button>
+	<form action="${pageContext.servletContext.contextPath}/Home"
+			method="get">
+		<input type="submit" value="Home" />
+	</form><form action="${pageContext.servletContext.contextPath}/accountinformation.jsp"
+			method="post">
+		<input type="submit" value="Account Information" />
+	</form><form action="${pageContext.servletContext.contextPath}/Gallery"
+			method="get">
+		<input type="submit" value="Gallery" />
+	</form><form action="${pageContext.servletContext.contextPath}/ShowUserGallery"
+			method="get">
+		<input type="submit" value="User Uploads" />
+	</form><form action="${pageContext.servletContext.contextPath}/photo.jsp"
+			method="post">
+		<input type="submit" value="Add Photo" />
+	</form><form action="${pageContext.servletContext.contextPath}/HashTagFollows"
+			method="post">
+		<input type="submit" value="Followed Hashtags" />
+	</form>
+		<!-- button type="button" onClick="JavaScript:window.location='Home';">Home</button>
 		<button type="button" onClick="JavaScript:window.location='accountinformation.jsp';">Account Information</button>
 		<button type="button" onClick="JavaScript:window.location='Gallery';">Gallery</button>
 		<button type="button" onClick="JavaScript:window.location='ShowUserGallery';">User Uploads</button>
-		<button type="button" onClick="JavaScript:window.location='photo.jsp';">Add Photo</button>
+		<button type="button" onClick="JavaScript:window.location='photo.jsp';">Add Photo</button
+		<button type="button" onClick="JavaScript:window.location='HashTagFollows';">Followed Hashtags</button>-->
 	</div>
 	<br>
 	<br>

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,16 +23,17 @@ import edu.ycp.cs481.srdesign.controllers.deleteHashtagFromPhotoController;
 
 
 @WebServlet("/editPhoto/*")
+@MultipartConfig
 public class EditPhoto extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
 	@Override
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-		int imageID = getHashID(request);
+		int imageID = getImageID(request);
 		String imagePath = "image/" + imageID;
 		GetHashtagsFromPhotoController photoHashtags = new GetHashtagsFromPhotoController();
 		ArrayList<HashTag> tags = new ArrayList<HashTag>();
-		ArrayList<String> tagStrings = new ArrayList<String>();
+		//ArrayList<String> tagStrings = new ArrayList<String>();
 		
 		try {
 			tags = photoHashtags.getHashtagsFromPhoto(imageID);
@@ -43,7 +45,7 @@ public class EditPhoto extends HttpServlet{
 		for(int i=0;i<tags.size();i++){
 			
 			// System.out.println("tagIDs:	"+tags.get(i).gethashtagName()+" "+tags.get(i).gethashtagID());
-			tagStrings.add(tags.get(i).gethashtagName());
+			//tagStrings.add(tags.get(i).gethashtagName());
 		}
 		
 		request.setAttribute("pID", imageID);
@@ -62,7 +64,8 @@ public class EditPhoto extends HttpServlet{
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int photoId  = getHashID(request);
+		int photoId  = getImageID(request);
+		//int photoId = Integer.parseInt(request.getParameter("pID"));
 		System.out.println("The photo ID is " + photoId);
 		
 		String tagsUnparsed = request.getParameter("hashTags");
@@ -112,15 +115,15 @@ public class EditPhoto extends HttpServlet{
 		//response.setStatus(HttpServletResponse.SC_OK);
 		//request.getRequestDispatcher("/EditPhoto.jsp/"+photoId);//.forward(request, response);
 	}
-	
+	/*
 	private static int getImageID(HttpServletRequest request){
 		String temp = request.getRequestURI().substring(0, request.getRequestURI().lastIndexOf('/'));
 		
 		String image = temp.substring(temp.lastIndexOf('/')+1);
 		return Integer.parseInt(image);
-	}
+	}*/
 	
-	private static int getHashID(HttpServletRequest request){
+	private static int getImageID(HttpServletRequest request){
 		String image = request.getRequestURI().substring((request.getRequestURI().lastIndexOf('/') + 1));
 		return Integer.parseInt(image);
 	}

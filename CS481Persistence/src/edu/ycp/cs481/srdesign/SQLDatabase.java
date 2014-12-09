@@ -793,6 +793,8 @@ public ArrayList<HashTag> getHashtagsFromPhoto(final int photoID) throws SQLExce
 				// Return a resultset That contains the hashtags from a single photo
 				preparedStatement = conn.prepareStatement("SELECT H.ID, H.HASHTAGNAME FROM HASHTAGS H JOIN PHOTOHASHTAG P WHERE P.PHOTOID=? AND H.ID=P.HASHTAGID");
 				preparedStatement.setInt(1, photoID);
+				
+				//preparedStatement = conn.prepareStatement("SELECT H.ID, H.HASHTAGNAME FROM HASHTAGS H JOIN PHOTOHASHTAG Ph WHERE PH.PHOTOID=H AND PH.HASHTAGID=H.ID");
 				// Execute Search
 				resultSet = preparedStatement.executeQuery();
 				while(resultSet.next()){

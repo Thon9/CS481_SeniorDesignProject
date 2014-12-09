@@ -82,7 +82,7 @@ form {
 	<br>
 	
 	<div style = "float:left">
-	<!-- Sort tab -->
+	<!-- Sort tab
 		<form action="${pageContext.servletContext.contextPath}/Sort_Gallery"
 			method="post">
 			<span id="sort_bar"> 
@@ -96,6 +96,7 @@ form {
 			<input type="submit" name="sort"></input>
 			</span>
 		</form>
+		 -->
 	</div>
 	
 	

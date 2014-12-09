@@ -84,7 +84,7 @@ public class ShowGallery extends HttpServlet {
 		while (iter.hasNext()){
 			newPhoto = iter.next();
 			System.out.println("The photo ID is " + newPhoto.getphotoID());
-			paths.add(new PhotoUI("image/"+newPhoto.getphotoID(), "editPhoto/"+newPhoto.getphotoID()));
+			paths.add(new PhotoUI("image/"+newPhoto.getphotoID(), "image/"+newPhoto.getphotoID()));
 		}
 		
 		request.setAttribute("search_object", hashTags);
