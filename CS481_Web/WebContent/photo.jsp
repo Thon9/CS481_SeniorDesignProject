@@ -46,6 +46,7 @@ input {
 		<button type="button" onClick="JavaScript:window.location='Gallery';">Gallery</button>
 		<button type="button" onClick="JavaScript:window.location='ShowUserGallery';">User Uploads</button>
 		<button type="button" onClick="JavaScript:window.location='photo.jsp';">Add Photo</button>
+		<button type="button" onClick="JavaScript:window.location='HashTagFollows';">Followed Hashtags</button>
 	</div>
 
 	<br>
