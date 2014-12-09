@@ -455,6 +455,41 @@ public ArrayList<Photo> getUserFollowingPhotos(final int uID) throws SQLExceptio
 	});
 }
 
+// Returns all hashtags the user is following
+@Override
+public ArrayList<HashTag> getUserFollowingHashtags(final int uID) throws SQLException {
+return executeTransaction(new Transaction<ArrayList<HashTag>>() {
+		
+		@Override
+		public ArrayList<HashTag> execute(Connection conn) throws SQLException {	
+			PreparedStatement preparedStatement = null;
+			ArrayList<HashTag> followinghashtags = new ArrayList<HashTag>();
+			try{
+				// Return a resultset That contains the photos from the hashtags the user is following.	
+
+				preparedStatement = conn.prepareStatement("SELECT H.ID, H.HASHTAGNAME FROM HASHTAGS H JOIN USERHASHTAG UH ON UH.USERID=? AND UH.HASHTAGID=H.ID");
+				preparedStatement.setInt(1, uID);
+				// Execute Search
+				resultSet = preparedStatement.executeQuery();
+				while(resultSet.next()){
+					HashTag hashtag = new HashTag();
+					System.out.println("Grabbing a hashtag user if following");
+					getHashtags(hashtag, resultSet);
+					followinghashtags.add(hashtag);
+				}
+			}
+			finally {
+				DBUtil.closeQuietly(resultSet);
+				DBUtil.closeQuietly(preparedStatement);
+			}
+			// Prints out number of photos
+			System.out.println("The user is following " + followinghashtags.size() + " hashtags");
+			return followinghashtags;
+		}
+
+	});
+}
+
 // Related a photo to a Hashtag
 @Override
 public boolean addRelaHTP(final int hashtagID, final int photoID) {
@@ -627,7 +662,7 @@ public ArrayList<String> returnAllHashtags() throws SQLException {
 
 }
 
-// USED FOR AUTOCOMPLETE FEATURE IN SEARCH
+// NO LONGER USED
 @Override
 public ArrayList<String> autoCompleteSearch(final String entered) throws SQLException {
 	return executeTransaction(new Transaction<ArrayList<String>>() {
@@ -662,7 +697,7 @@ public ArrayList<String> autoCompleteSearch(final String entered) throws SQLExce
 
 }
 
-// Implemented - NEED TO TESET
+// WORKING
 @Override
 public boolean deleteHashtagFromPhoto(final int photoID,final int hashtagID) throws SQLException {
 	return executeTransaction(new Transaction<Boolean>() {
@@ -929,11 +964,6 @@ private void getHashtags(HashTag hashtag, ResultSet resultSet) throws SQLExcepti
 	hashtag.sethashtagName(resultSet.getString("HASHTAGNAME"));
 	hashtag.sethashtagID(resultSet.getInt("id"));
 }
-
-
-
-
-
 
 
 }
