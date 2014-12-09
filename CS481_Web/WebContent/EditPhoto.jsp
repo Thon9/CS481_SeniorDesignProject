@@ -117,7 +117,7 @@ form {
 	<br>
 	<center>
 	<form action="${pageContext.servletContext.contextPath}/editPhoto/${pID}" method=post>
-			<p>Enter Hashtag(s) to add: <input type="text" name="hashTags" /><i>(Separate Hashtags by # {e.g. #cats #fluffy...})</i></p>
+			<p>Enter Hashtag(s) to add: <input type="text" name="hashTags" value="#"/><i>(Separate Hashtags by # {e.g. #cats #fluffy...})</i></p>
 		<br><br>
 			<input type="submit" />
 	</form>

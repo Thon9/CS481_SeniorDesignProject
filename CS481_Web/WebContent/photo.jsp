@@ -57,7 +57,7 @@ input {
 	<form enctype="multipart/form-data"action="${pageContext.servletContext.contextPath}/AddPhoto" method=post>
 			<input type="file" name="uploadFile" />
 		<br><br>
-			<p>Enter Hashtag(s): <input type="text" name="hashTags" /><i>(Separate Hashtags by # {e.g. #cats #fluffy...})</i></p>
+			<p>Enter Hashtag(s): <input type="text" name="hashTags" value="#"/><i>(Separate Hashtags by # {e.g. #cats #fluffy...})</i></p>
 		<br><br>
 			<input type="submit" />
 	</form>
