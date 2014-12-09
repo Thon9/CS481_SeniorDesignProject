@@ -100,6 +100,7 @@ public User login(final String username, final String password) throws SQLExcept
 		@Override
 		public User execute(Connection conn) throws SQLException {	
 			PreparedStatement preparedStatement = null;
+			User userLogin = new User();
 			try{
 				preparedStatement = conn.prepareStatement("SELECT * FROM USERS where USERNAME=? AND PASSWORD=?");
 					preparedStatement.setString(1, username);
@@ -107,16 +108,17 @@ public User login(final String username, final String password) throws SQLExcept
 				resultSet = preparedStatement.executeQuery();
 				if(resultSet.next()){
 					System.out.println("Username is " +  resultSet.getString("USERNAME"));
-					getUser(user, resultSet);
+					getUser(userLogin, resultSet);
 				} else {
 					System.out.println("NO USERS AVAIBLE");
+					return null;
 				}
 								
 			} finally {
 				DBUtil.closeQuietly(resultSet);
 				DBUtil.closeQuietly(preparedStatement);
 			}
-			return user;
+			return userLogin;
 		}
 
 	});

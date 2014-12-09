@@ -105,6 +105,7 @@ form {
 		<form action="${pageContext.servletContext.contextPath}/Gallery?${request.getParameter(search_object)}">
 			<span id="search_bar"> 
 			
+			
 			search for: <input type="text"
 				name="search_object" id="hashtags" size="20" /> 
 			<input type="submit" value="Enter" ></input>
